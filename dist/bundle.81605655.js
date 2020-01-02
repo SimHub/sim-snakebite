@@ -310,53 +310,70 @@ function () {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
-    this.snake = new snake_1.default(0, 0, null, null, 'right').snake();
+    this.direction = this.getRandomDirection();
+    this.posX = Math.floor(Math.random() * this.canvas.width);
+    this.posY = Math.floor(Math.random() * this.canvas.height);
+    this.snake = new snake_1.default(this.posX, this.posY, null, null, this.direction).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
     this.enemyColor;
     this.player = null;
     this.apple = {};
-    this.direction = 'right';
     this.enemyDirection = 'left';
     this.speed = 200;
     this.countEnemys = 0;
     this.enemyPosX = null;
-    this.enemyPosY = null; // this.snl;
+    this.enemyPosY = null;
+    this.newEnemyIDs = []; // this.snl;
     // this.socket.emit('start', 'start');
     // console.log('SNAKE UH ', this.snake);
 
     this.socket.on('clientId', function (id) {
       _this.clientId = id;
-      _this.snake[0].id = id; // console.log('ENENY-COLOR: ', this.enemyColor);
+      _this.snake[0].id = id;
+      console.log('PLAYERS-SNAKE ', _this.snake[0]); // console.log('ENENY-COLOR: ', this.enemyColor);
       // console.log('CLIENT: ', this.clientId);
 
-      _this.socket.emit('enemyId');
+      _this.socket.emit('enemyId', _this.snake[0]);
     });
     this.socket.on('enemyId', function (id) {
-      _this.snakeEnemys.clear(); // console.log(id);
+      _this.snakeEnemys.clear();
 
+      console.log(id); //#############
+      // let newEnemyIDs = id.filter(item => item !== this.clientId);
+      // this.newEnemyIDs.push([id]);
 
-      var newEnemyIDs = id.filter(function (item) {
-        return item !== _this.clientId;
-      }); // console.log(newEnemyIDs);
+      _this.newEnemyIDs = id;
+      console.log(_this.newEnemyIDs); //[...newEnemyIDs].forEach(_id => {
 
-      _toConsumableArray(newEnemyIDs).forEach(function (_id) {
-        // console.log(_id);
-        // if (this.clientId !== _id) {
-        _this.enemyPosX = Math.floor(Math.random() * _this.canvas.width);
-        _this.enemyPosY = Math.floor(Math.random() * _this.canvas.height);
-        _this.enemyColor = _this.getRandomColor(); // console.log('ENEMYS: ', _id);
+      _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
+        console.log(_id);
 
-        var snl = new snake_1.default(_this.enemyPosX, _this.enemyPosY, _id, _this.enemyColor, _this.enemyDirection).enemySnake(); // console.log('WHHHHH SNL ENEMYID ', snl[0].enemyId);
-        // console.log(this.snakeEnemys.has(snl[0].enemyId));
+        if (_id.id !== _this.clientId) {
+          // if (this.clientId !== _id) {
+          //        this.enemyPosX = Math.floor(Math.random() * this.canvas.width);
+          //      this.enemyPosY = Math.floor(Math.random() * this.canvas.height);
+          _this.enemyColor = _this.getRandomColor(); // console.log('ENEMYS: ', _id);
+          // let snl = new SnakePlayer(
+          // this.enemyPosX,
+          // this.enemyPosY,
+          // _id,
+          // this.enemyColor,
+          // this.enemyDirection,
+          // ).enemySnake();
 
-        _this.snakeEnemys.add(snl); // }
-        // else {
-        // console.log('CLIENT: ', id);
-        // }
+          var snl = new snake_1.default(_id.x, _id.y, _id.id, _this.enemyColor, _id.direction).enemySnake(); // console.log('WHHHHH SNL ENEMYID ', snl[0].enemyId);
+          // console.log(this.snakeEnemys.has(snl[0].enemyId));
 
-      }); // console.log('SNAKE-ENEMYS: ', this.snakeEnemys);
+          _this.snakeEnemys.add(snl); // }
+          // else {
+          // console.log('CLIENT: ', id);
+          // }
 
+        }
+      });
+
+      console.log('SNAKE-ENEMYS: ', _this.snakeEnemys);
     });
     this.socket.on('enemyDirection', function (data) {
       _this.snakeEnemys.forEach(function (i, k) {
@@ -436,7 +453,8 @@ function () {
       var _this3 = this;
 
       // console.log(this)
-      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
+
       this.context.fillStyle = 'red';
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); //  ENEMY /////
       // console.log(this.snakeEnemys);
@@ -471,18 +489,18 @@ function () {
       // console.log(this.snakeEnemys);
       this.snakeEnemys.forEach(function (enemy, k) {
         for (var i = enemy.length - 1; i >= 0; i--) {
-          if (i === 0 && enemy[i].x === _this4.apple.x && enemy[i].y === _this4.apple.y) {
-            enemy.push({});
-            _this4.speed *= 0.99;
-
-            _this4.setApple();
-
-            var c = document.createElement('i');
-            c.classList.add('nes-icon', 'coin');
-
-            _this4.coin.appendChild(c);
-          }
-
+          // if (
+          // i === 0 &&
+          // enemy[i].x === this.apple.x &&
+          // enemy[i].y === this.apple.y
+          // ) {
+          // enemy.push({});
+          // this.speed *= 0.99;
+          // this.setApple();
+          // const c = document.createElement('i');
+          // c.classList.add('nes-icon', 'coin');
+          // this.coin.appendChild(c);
+          // }
           var s = enemy[i];
 
           if (i == 0) {
@@ -629,6 +647,12 @@ function () {
       this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
       this.setApple();
       this.draw();
+    }
+  }, {
+    key: "getRandomDirection",
+    value: function getRandomDirection() {
+      var items = ['up', 'down', 'left', 'right'];
+      return items[Math.floor(Math.random() * items.length)];
     }
   }, {
     key: "getRandomColor",
@@ -10431,7 +10455,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49175" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58923" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

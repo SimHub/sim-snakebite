@@ -18,6 +18,7 @@ let setEnemyId = [];
 let clientID;
 let clientIDs;
 let count = 0;
+let snakeArr = [];
 
 function onConnection(socket) {
   clientID = socket.client.id;
@@ -31,7 +32,10 @@ function onConnection(socket) {
     socket.emit("init", msg);
     socket.emit("clientId", clientID);
     socket.on("enemyId", msg => {
-      io.emit("enemyId", setEnemyId);
+      snakeArr.push(msg);
+      // io.emit("enemyId", setEnemyId);
+      //socket.broadcast.emit("enemyId", msg);
+      io.emit("enemyId", snakeArr);
     });
   });
   socket.on("start", msg => {

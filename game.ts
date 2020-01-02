@@ -17,6 +17,9 @@ export default class Snake {
   private countEnemys: number;
   private enemyPosX: number;
   private enemyPosY: number;
+  private newEnemyIDs: [];
+  private posX: number;
+  private posY: number;
   private snl: any;
   public snake: any;
   public player: any;
@@ -54,18 +57,27 @@ export default class Snake {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
-    this.snake = new SnakePlayer(0, 0, null, null, 'right').snake();
+    this.direction = this.getRandomDirection();
+    this.posX = Math.floor(Math.random() * this.canvas.width);
+    this.posY = Math.floor(Math.random() * this.canvas.height);
+    this.snake = new SnakePlayer(
+      this.posX,
+      this.posY,
+      null,
+      null,
+      this.direction,
+    ).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
     this.enemyColor;
     this.player = null;
     this.apple = {};
-    this.direction = 'right';
     this.enemyDirection = 'left';
     this.speed = 200;
     this.countEnemys = 0;
     this.enemyPosX = null;
     this.enemyPosY = null;
+    this.newEnemyIDs = [];
     // this.snl;
 
     // this.socket.emit('start', 'start');
@@ -73,41 +85,55 @@ export default class Snake {
     this.socket.on('clientId', id => {
       this.clientId = id;
       this.snake[0].id = id;
+      console.log('PLAYERS-SNAKE ', this.snake[0]);
       // console.log('ENENY-COLOR: ', this.enemyColor);
       // console.log('CLIENT: ', this.clientId);
-      this.socket.emit('enemyId');
+      this.socket.emit('enemyId', this.snake[0]);
     });
 
     this.socket.on('enemyId', id => {
       this.snakeEnemys.clear();
-      // console.log(id);
+      console.log(id); //#############
 
-      let newEnemyIDs = id.filter(item => item !== this.clientId);
-      // console.log(newEnemyIDs);
-      [...newEnemyIDs].forEach(_id => {
-        // console.log(_id);
-        // if (this.clientId !== _id) {
-        this.enemyPosX = Math.floor(Math.random() * this.canvas.width);
-        this.enemyPosY = Math.floor(Math.random() * this.canvas.height);
-        this.enemyColor = this.getRandomColor();
-        // console.log('ENEMYS: ', _id);
-        let snl = new SnakePlayer(
-          this.enemyPosX,
-          this.enemyPosY,
-          _id,
-          this.enemyColor,
-          this.enemyDirection,
-        ).enemySnake();
-        // console.log('WHHHHH SNL ENEMYID ', snl[0].enemyId);
-        // console.log(this.snakeEnemys.has(snl[0].enemyId));
+      // let newEnemyIDs = id.filter(item => item !== this.clientId);
+      // this.newEnemyIDs.push([id]);
+      this.newEnemyIDs=id;
+      console.log(this.newEnemyIDs);
+      //[...newEnemyIDs].forEach(_id => {
+      [...this.newEnemyIDs].forEach(_id => {
+        console.log(_id);
 
-        this.snakeEnemys.add(snl);
-        // }
-        // else {
-        // console.log('CLIENT: ', id);
-        // }
+        if (_id.id !== this.clientId) {
+          // if (this.clientId !== _id) {
+          //        this.enemyPosX = Math.floor(Math.random() * this.canvas.width);
+          //      this.enemyPosY = Math.floor(Math.random() * this.canvas.height);
+          this.enemyColor = this.getRandomColor();
+          // console.log('ENEMYS: ', _id);
+          // let snl = new SnakePlayer(
+          // this.enemyPosX,
+          // this.enemyPosY,
+          // _id,
+          // this.enemyColor,
+          // this.enemyDirection,
+          // ).enemySnake();
+          let snl = new SnakePlayer(
+            _id.x,
+            _id.y,
+            _id.id,
+            this.enemyColor,
+            _id.direction,
+          ).enemySnake();
+          // console.log('WHHHHH SNL ENEMYID ', snl[0].enemyId);
+          // console.log(this.snakeEnemys.has(snl[0].enemyId));
+
+          this.snakeEnemys.add(snl);
+          // }
+          // else {
+          // console.log('CLIENT: ', id);
+          // }
+        }
       });
-      // console.log('SNAKE-ENEMYS: ', this.snakeEnemys);
+      console.log('SNAKE-ENEMYS: ', this.snakeEnemys);
     });
 
     this.socket.on('enemyDirection', data => {
@@ -178,6 +204,7 @@ export default class Snake {
     // console.log(this)
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
+    // APPLE ///
     this.context.fillStyle = 'red';
     this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
 
@@ -208,19 +235,19 @@ export default class Snake {
     // console.log(this.snakeEnemys);
     this.snakeEnemys.forEach((enemy, k) => {
       for (let i = enemy.length - 1; i >= 0; i--) {
-        if (
-          i === 0 &&
-          enemy[i].x === this.apple.x &&
-          enemy[i].y === this.apple.y
-        ) {
-          enemy.push({});
+        // if (
+          // i === 0 &&
+          // enemy[i].x === this.apple.x &&
+          // enemy[i].y === this.apple.y
+        // ) {
+          // enemy.push({});
 
-          this.speed *= 0.99;
-          this.setApple();
-          const c = document.createElement('i');
-          c.classList.add('nes-icon', 'coin');
-          this.coin.appendChild(c);
-        }
+          // this.speed *= 0.99;
+          // this.setApple();
+          // const c = document.createElement('i');
+          // c.classList.add('nes-icon', 'coin');
+          // this.coin.appendChild(c);
+        // }
         const s = enemy[i];
         if (i == 0) {
           // switch (this.enemyDirection) {
@@ -361,6 +388,10 @@ export default class Snake {
 
     this.setApple();
     this.draw();
+  }
+  getRandomDirection() {
+    let items = ['up', 'down', 'left', 'right'];
+    return items[Math.floor(Math.random() * items.length)];
   }
   getRandomColor() {
     // var letters = '0123456789ABCDEF';
