@@ -129,24 +129,22 @@ export default class Snake {
     });
 
     this.socket.on('tail', enemy => {
-      // console.log(enemy);
       this.snakeEnemys.forEach(i => {
-        // console.log(enemy[0].id);
-        // console.log(i[0]); /// *Todo
         if (enemy[0].id === i[0].enemyId) {
           i.push({});
-          // console.log('PUSH TAIL');
-          // console.log(i);
         }
       });
-      // console.log(this.snakeEnemys);
     });
 
-    /*    this.socket.on('apple', a => {
-      // console.log('APPLE: ', a);
-      this.apple = a;
+    this.socket.on('snakeTick', enemy => {
+      // console.log('ENEMY SNAKE TICK', enemy);
+      this.snakeEnemys.forEach(i => {
+        if (enemy.id === i[0].enemyId) {
+          i[0].x=enemy.x;
+          i[0].y=enemy.y;
+        }
+      });
     });
-*/
     this.socket.on('start', data => {
       // console.log(data);
       const startBtn: HTMLElement = document.querySelector('#startBtn');
@@ -269,9 +267,6 @@ export default class Snake {
   }
   tick() {
     for (let i = this.snake.length - 1; i >= 0; i--) {
-      // console.log("SNAKE-X: ",this.snake[i].x ,"APPLE-X: ",this.apple.x)
-      // console.log("SNAKE-Y: ",this.snake[i].y,"APPLE-Y: ",this.apple.y)
-      // console.log(i);
       if (
         i === 0 &&
         this.snake[i].x === this.apple.x &&
@@ -322,6 +317,8 @@ export default class Snake {
         this.snake[i].y = this.snake[i - 1].y;
       }
     }
+
+    this.socket.emit('snakeTick', this.snake[0]);
 
     window.setTimeout(() => this.tick(), this.speed);
     this.directionLock = false;

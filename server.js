@@ -59,6 +59,9 @@ function onConnection(socket) {
     socket.emit("snake", snake);
     io.emit("snake", snake);
   });
+  socket.on("snakeTick", snake => {
+    socket.broadcast.emit("snakeTick", snake);
+  });
   socket.on("tail", data => {
     socket.broadcast.emit("tail", data);
   });

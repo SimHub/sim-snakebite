@@ -358,23 +358,21 @@ function () {
       });
     });
     this.socket.on('tail', function (enemy) {
-      // console.log(enemy);
       _this.snakeEnemys.forEach(function (i) {
-        // console.log(enemy[0].id);
-        // console.log(i[0]); /// *Todo
         if (enemy[0].id === i[0].enemyId) {
-          i.push({}); // console.log('PUSH TAIL');
-          // console.log(i);
+          i.push({});
         }
-      }); // console.log(this.snakeEnemys);
-
+      });
     });
-    /*    this.socket.on('apple', a => {
-      // console.log('APPLE: ', a);
-      this.apple = a;
+    this.socket.on('snakeTick', function (enemy) {
+      // console.log('ENEMY SNAKE TICK', enemy);
+      _this.snakeEnemys.forEach(function (i) {
+        if (enemy.id === i[0].enemyId) {
+          i[0].x = enemy.x;
+          i[0].y = enemy.y;
+        }
+      });
     });
-    */
-
     this.socket.on('start', function (data) {
       // console.log(data);
       var startBtn = document.querySelector('#startBtn');
@@ -519,9 +517,6 @@ function () {
       var _this6 = this;
 
       for (var i = this.snake.length - 1; i >= 0; i--) {
-        // console.log("SNAKE-X: ",this.snake[i].x ,"APPLE-X: ",this.apple.x)
-        // console.log("SNAKE-Y: ",this.snake[i].y,"APPLE-Y: ",this.apple.y)
-        // console.log(i);
         if (i === 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
           this.snake.push({});
           this.socket.emit('tail', this.snake);
@@ -564,6 +559,7 @@ function () {
         }
       }
 
+      this.socket.emit('snakeTick', this.snake[0]);
       window.setTimeout(function () {
         return _this6.tick();
       }, this.speed);
@@ -10431,7 +10427,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49191" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53672" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
