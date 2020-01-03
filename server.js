@@ -39,7 +39,7 @@ function onConnection(socket) {
     });
   });
   socket.on("start", msg => {
-    console.log(msg);
+    // console.log(msg);
     io.emit("start", msg);
   });
 
@@ -47,15 +47,15 @@ function onConnection(socket) {
     io.emit("direction", { id: clientID, direction });
   });
   socket.on("enemyDirection", direction => {
-    console.log("ENEMY-DIRECTION-SERVER ", direction);
+    // console.log("ENEMY-DIRECTION-SERVER ", direction);
     socket.broadcast.emit("enemyDirection", direction);
   });
   socket.on("apple", apple => {
-    console.log("APPLE: ", apple);
+    // console.log("APPLE: ", apple);
     io.emit("apple", apple);
   });
   socket.on("snake", snake => {
-    console.log("SNAKE: ", snake);
+    // console.log("SNAKE: ", snake);
     socket.emit("snake", snake);
     io.emit("snake", snake);
   });

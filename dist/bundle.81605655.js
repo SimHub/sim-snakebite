@@ -279,7 +279,7 @@ var __importDefault = this && this.__importDefault || function (mod) {
 
 Object.defineProperty(exports, "__esModule", {
   value: true
-}); // import io from 'socket.io-client';
+});
 
 var snake_1 = __importDefault(require("./snake"));
 
@@ -310,9 +310,11 @@ function () {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
-    this.direction = this.getRandomDirection();
-    this.posX = Math.floor(Math.random() * this.canvas.width);
-    this.posY = Math.floor(Math.random() * this.canvas.height);
+    this.direction = this.getRandomDirection(); //this.posX = Math.floor(Math.random() * this.canvas.width);
+    //this.posY = Math.floor(Math.random() * this.canvas.height);
+
+    this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
+    this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
     this.snake = new snake_1.default(this.posX, this.posY, null, null, this.direction).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
@@ -324,56 +326,29 @@ function () {
     this.countEnemys = 0;
     this.enemyPosX = null;
     this.enemyPosY = null;
-    this.newEnemyIDs = []; // this.snl;
-    // this.socket.emit('start', 'start');
-    // console.log('SNAKE UH ', this.snake);
-
+    this.newEnemyIDs = [];
     this.socket.on('clientId', function (id) {
       _this.clientId = id;
-      _this.snake[0].id = id;
-      console.log('PLAYERS-SNAKE ', _this.snake[0]); // console.log('ENENY-COLOR: ', this.enemyColor);
-      // console.log('CLIENT: ', this.clientId);
+      _this.snake[0].id = id; // console.log('PLAYERS-SNAKE ', this.snake[0]);
 
       _this.socket.emit('enemyId', _this.snake[0]);
     });
     this.socket.on('enemyId', function (id) {
-      _this.snakeEnemys.clear();
+      _this.snakeEnemys.clear(); // console.log(id); //#############
 
-      console.log(id); //#############
-      // let newEnemyIDs = id.filter(item => item !== this.clientId);
-      // this.newEnemyIDs.push([id]);
 
-      _this.newEnemyIDs = id;
-      console.log(_this.newEnemyIDs); //[...newEnemyIDs].forEach(_id => {
+      _this.newEnemyIDs = id; // console.log(this.newEnemyIDs);
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
-        console.log(_id);
-
+        // console.log(_id);
         if (_id.id !== _this.clientId) {
-          // if (this.clientId !== _id) {
-          //        this.enemyPosX = Math.floor(Math.random() * this.canvas.width);
-          //      this.enemyPosY = Math.floor(Math.random() * this.canvas.height);
-          _this.enemyColor = _this.getRandomColor(); // console.log('ENEMYS: ', _id);
-          // let snl = new SnakePlayer(
-          // this.enemyPosX,
-          // this.enemyPosY,
-          // _id,
-          // this.enemyColor,
-          // this.enemyDirection,
-          // ).enemySnake();
+          _this.enemyColor = _this.getRandomColor();
+          var snl = new snake_1.default(_id.x, _id.y, _id.id, _this.enemyColor, _id.direction).enemySnake();
 
-          var snl = new snake_1.default(_id.x, _id.y, _id.id, _this.enemyColor, _id.direction).enemySnake(); // console.log('WHHHHH SNL ENEMYID ', snl[0].enemyId);
-          // console.log(this.snakeEnemys.has(snl[0].enemyId));
-
-          _this.snakeEnemys.add(snl); // }
-          // else {
-          // console.log('CLIENT: ', id);
-          // }
-
+          _this.snakeEnemys.add(snl);
         }
-      });
+      }); // console.log('SNAKE-ENEMYS: ', this.snakeEnemys);
 
-      console.log('SNAKE-ENEMYS: ', _this.snakeEnemys);
     });
     this.socket.on('enemyDirection', function (data) {
       _this.snakeEnemys.forEach(function (i, k) {
@@ -385,22 +360,21 @@ function () {
     this.socket.on('tail', function (enemy) {
       // console.log(enemy);
       _this.snakeEnemys.forEach(function (i) {
-        console.log(enemy[0].id);
-        console.log(i[0]); /// *Todo
-
+        // console.log(enemy[0].id);
+        // console.log(i[0]); /// *Todo
         if (enemy[0].id === i[0].enemyId) {
-          i.push({});
-          console.log('PUSH TAIL');
-          console.log(i);
+          i.push({}); // console.log('PUSH TAIL');
+          // console.log(i);
         }
-      });
+      }); // console.log(this.snakeEnemys);
 
-      console.log(_this.snakeEnemys);
     });
-    this.socket.on('apple', function (a) {
+    /*    this.socket.on('apple', a => {
       // console.log('APPLE: ', a);
-      _this.apple = a;
+      this.apple = a;
     });
+    */
+
     this.socket.on('start', function (data) {
       // console.log(data);
       var startBtn = document.querySelector('#startBtn');
@@ -426,10 +400,8 @@ function () {
 
       window.setTimeout(function () {
         return _this2.tick();
-      }, this.speed);
-      window.setTimeout(function () {
-        return _this2.enemyTick();
-      }, this.speed);
+      }, this.speed); // window.setTimeout(() => this.enemyTick(), this.speed);
+
       window.requestAnimationFrame(function () {
         return _this2.draw();
       });
@@ -443,30 +415,32 @@ function () {
   }, {
     key: "setApple",
     value: function setApple() {
+      var _this3 = this;
+
       this.apple.x = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
       this.apple.y = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
       this.socket.emit('apple', this.apple);
+      this.socket.on('apple', function (a) {
+        // console.log('APPLE: ', a);
+        _this3.apple = a;
+      });
     }
   }, {
     key: "draw",
     value: function draw() {
-      var _this3 = this;
+      var _this4 = this;
 
-      // console.log(this)
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
 
       this.context.fillStyle = 'red';
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); //  ENEMY /////
-      // console.log(this.snakeEnemys);
 
       this.snakeEnemys.forEach(function (enemy, k) {
-        // console.log('snakeEnemys - DARWING');
         for (var i = 0; i < enemy.length; i += 1) {
-          // console.log(enemy[i]);
           var s = enemy[i];
-          _this3.context.fillStyle = s.color;
+          _this4.context.fillStyle = s.color;
 
-          _this3.context.fillRect(s.x, s.y, _this3.size, _this3.size);
+          _this4.context.fillRect(s.x, s.y, _this4.size, _this4.size);
         }
       }); /// PLAYER /////
 
@@ -477,14 +451,14 @@ function () {
       }
 
       window.requestAnimationFrame(function () {
-        return _this3.draw();
+        return _this4.draw();
       });
     } // end draw
 
   }, {
     key: "enemyTick",
     value: function enemyTick() {
-      var _this4 = this;
+      var _this5 = this;
 
       // console.log(this.snakeEnemys);
       this.snakeEnemys.forEach(function (enemy, k) {
@@ -507,19 +481,19 @@ function () {
             // switch (this.enemyDirection) {
             switch (s.direction) {
               case 'right':
-                if (s.x > _this4.canvas.width) s.x = 0;else s.x += _this4.size;
+                if (s.x > _this5.canvas.width) s.x = 0;else s.x += _this5.size;
                 break;
 
               case 'down':
-                if (s.y > _this4.canvas.height) s.y = 0;else s.y += _this4.size;
+                if (s.y > _this5.canvas.height) s.y = 0;else s.y += _this5.size;
                 break;
 
               case 'left':
-                if (s.x < 0) s.x = _this4.xEnd;else s.x -= _this4.size;
+                if (s.x < 0) s.x = _this5.xEnd;else s.x -= _this5.size;
                 break;
 
               case 'up':
-                if (s.y < 0) s.y = _this4.yEnd;else s.y -= _this4.size;
+                if (s.y < 0) s.y = _this5.yEnd;else s.y -= _this5.size;
             }
 
             for (var j = 1; j < enemy.length; j += 1) {
@@ -535,16 +509,19 @@ function () {
         }
       });
       window.setTimeout(function () {
-        return _this4.enemyTick();
+        return _this5.enemyTick();
       }, this.speed);
       this.directionLock = false;
     }
   }, {
     key: "tick",
     value: function tick() {
-      var _this5 = this;
+      var _this6 = this;
 
       for (var i = this.snake.length - 1; i >= 0; i--) {
+        // console.log("SNAKE-X: ",this.snake[i].x ,"APPLE-X: ",this.apple.x)
+        // console.log("SNAKE-Y: ",this.snake[i].y,"APPLE-Y: ",this.apple.y)
+        // console.log(i);
         if (i === 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
           this.snake.push({});
           this.socket.emit('tail', this.snake);
@@ -552,8 +529,7 @@ function () {
           this.setApple();
           var c = document.createElement('i');
           c.classList.add('nes-icon', 'coin');
-          this.coin.appendChild(c);
-          console.log('PLAYER GOT APPLE', this.snake[i]);
+          this.coin.appendChild(c); // console.log('PLAYER GOT APPLE', this.snake[i]);
         }
 
         var s = this.snake[i];
@@ -589,7 +565,7 @@ function () {
       }
 
       window.setTimeout(function () {
-        return _this5.tick();
+        return _this6.tick();
       }, this.speed);
       this.directionLock = false;
     }
@@ -10455,7 +10431,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58923" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49191" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
