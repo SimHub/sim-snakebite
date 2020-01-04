@@ -99,6 +99,7 @@ export default class Snake {
 
     this.socket.on('enemyId', id => {
       this.snakeEnemys.clear();
+      console.log(this.snakeEnemys);
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
         if (_id.id !== this.clientId) {
@@ -153,14 +154,24 @@ export default class Snake {
     this.socket.on('apple', a => {
       this.apple = a;
     });
-    this.socket.on('start', data => {
-      // console.log(data);
+
+    // this.socket.on('start', data => {
       const startBtn: HTMLElement = document.querySelector('#startBtn');
       startBtn.style.display = 'none';
       this.start();
-    });
+    // });
+
     this.socket.on('user disconnected', enemyID => {
-      // console.log('someone has gone ', enemyID);
+      console.log('someone has gone ', enemyID);
+      this.snakeEnemys.forEach(enemy => {
+          console.log(enemy[0].enemyId , enemyID)
+        if (enemy[0].enemyId === enemyID) {
+          console.log(enemy[0].enemyId === enemyID)
+          console.log(enemy)
+          this.snakeEnemys.delete(enemy);
+        }
+      });
+      console.log(this.snakeEnemys);
     });
   }
   random(min, max) {
@@ -182,11 +193,13 @@ export default class Snake {
   setApple() {
     this.apple.x =
       Math.round(
-        this.random(this.appleSize, this.canvas.width - this.appleSize) / this.appleSize,
+        this.random(this.appleSize, this.canvas.width - this.appleSize) /
+          this.appleSize,
       ) * this.appleSize;
     this.apple.y =
       Math.round(
-        this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize,
+        this.random(this.appleSize, this.canvas.height - this.appleSize) /
+          this.appleSize,
       ) * this.appleSize;
     this.socket.emit('apple', this.apple);
   }
@@ -223,18 +236,18 @@ export default class Snake {
   tick() {
     for (let i = this.snake.length - 1; i >= 0; i--) {
       if (
-        i === 0 &&
-        this.hitTestPoint(
-          this.snake[i].x,
-          this.snake[i].y,
-          this.size,
-          this.size,
-          this.apple.x,
-          this.apple.y,
-        ) ||
-        i == 0 &&
-         this.snake[i].x === this.apple.x &&
-         this.snake[i].y === this.apple.y
+        (i === 0 &&
+          this.hitTestPoint(
+            this.snake[i].x,
+            this.snake[i].y,
+            this.size,
+            this.size,
+            this.apple.x,
+            this.apple.y,
+          )) ||
+        (i == 0 &&
+          this.snake[i].x === this.apple.x &&
+          this.snake[i].y === this.apple.y)
       ) {
         this.snake.push({});
 
@@ -380,7 +393,7 @@ export default class Snake {
       console.log('COLLISION TRUE');
       return true;
     } else {
-      console.log('COLLISION FALSE');
+      // console.log('COLLISION FALSE');
       return false;
     }
   }

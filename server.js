@@ -26,16 +26,18 @@ function onConnection(socket) {
   // setEnemyId.set(count++, { enemyId: socket.client.id });
   setEnemyId.push(clientID);
   // setEnemyId.filter(item => item !== clientID);
-  console.log("AllIDS:", setEnemyId);
+  // console.log("AllIDS:", setEnemyId);
 
   socket.on("init", msg => {
     socket.emit("init", msg);
     socket.emit("clientId", clientID);
     socket.on("enemyId", msg => {
       snakeArr.push(msg);
+      console.log("AllIDS:", snakeArr);
       // io.emit("enemyId", setEnemyId);
       //socket.broadcast.emit("enemyId", msg);
       io.emit("enemyId", snakeArr);
+      // socket.broadcast.emit("enemyId", snakeArr);
     });
   });
   socket.on("start", msg => {
@@ -72,9 +74,13 @@ function onConnection(socket) {
   ///
   socket.on("disconnect", function() {
     count = 0;
-    setEnemyId.filter(item => item !== clientID);
-    io.emit("user disconnected", setEnemyId);
-    // setEnemyId.clear();
+    socket.broadcast.emit("user disconnected", socket.client.id);
+    console.log("disconnect ", socket.client.id);
+    // console.log(setEnemyId.filter(i => i != socket.client.id));
+    // setEnemyId.filter(i => i != socket.client.id);
+
+    console.log(snakeArr.filter(i => i.id != socket.client.id));
+    snakeArr = snakeArr.filter(i => i.id != socket.client.id);
   });
 }
 

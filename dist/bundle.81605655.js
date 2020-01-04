@@ -338,6 +338,7 @@ function () {
     this.socket.on('enemyId', function (id) {
       _this.snakeEnemys.clear();
 
+      console.log(_this.snakeEnemys);
       _this.newEnemyIDs = id;
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
@@ -385,15 +386,27 @@ function () {
     });
     this.socket.on('apple', function (a) {
       _this.apple = a;
-    });
-    this.socket.on('start', function (data) {
-      // console.log(data);
-      var startBtn = document.querySelector('#startBtn');
-      startBtn.style.display = 'none';
+    }); // this.socket.on('start', data => {
 
-      _this.start();
-    });
-    this.socket.on('user disconnected', function (enemyID) {// console.log('someone has gone ', enemyID);
+    var startBtn = document.querySelector('#startBtn');
+    startBtn.style.display = 'none';
+    this.start(); // });
+
+    this.socket.on('user disconnected', function (enemyID) {
+      console.log('someone has gone ', enemyID);
+
+      _this.snakeEnemys.forEach(function (enemy) {
+        console.log(enemy[0].enemyId, enemyID);
+
+        if (enemy[0].enemyId === enemyID) {
+          console.log(enemy[0].enemyId === enemyID);
+          console.log(enemy);
+
+          _this.snakeEnemys.delete(enemy);
+        }
+      });
+
+      console.log(_this.snakeEnemys);
     });
   }
 
@@ -605,7 +618,7 @@ function () {
         console.log('COLLISION TRUE');
         return true;
       } else {
-        console.log('COLLISION FALSE');
+        // console.log('COLLISION FALSE');
         return false;
       }
     }
