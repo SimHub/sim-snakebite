@@ -72,7 +72,7 @@ export default class Snake {
       this.posX,
       this.posY,
       null,
-      '#ccc',
+      null,
       this.direction,
     ).snake();
     this.snakeEnemy = [];
@@ -131,22 +131,16 @@ export default class Snake {
     // });
 
     this.socket.on('snakeTick', enemy => {
-      // console.log('ENEMY SNAKE TICK', enemy);
       let newEnemy = enemy.snake;
       newEnemy[0].id = enemy.id;
       newEnemy[0].enemyId = enemy.id;
       delete newEnemy[0].id;
-      // console.log('NEW ENEMY', newEnemy);
 
       this.snakeEnemys.forEach((i, k) => {
-        // console.log(newEnemy[0].enemyId , i[0].enemyId)
         if (newEnemy[0].enemyId === i[0].enemyId) {
-          // console.log('ENEMY ARR INSIDE B: ', i);
-          for(let j = 0 ; j < newEnemy.length ; j++){ 
-          i[j]=newEnemy[j];
-          // console.log('ENEMY ARR INSIDE A: ', i);
-          // i[0].x = enemy.x;
-          // i[0].y = enemy.y;
+          newEnemy[0].color = i[0].color;
+          for (let j = 0; j < newEnemy.length; j++) {
+            i[j] = newEnemy[j];
           }
         }
       });
@@ -202,7 +196,7 @@ export default class Snake {
 
     //  ENEMY /////
     this.snakeEnemys.forEach((enemy, k) => {
-    // console.log(enemy)
+      // console.log(enemy)
       for (let i = 0; i < enemy.length; i += 1) {
         const s = enemy[i];
         this.context.fillStyle = s.color;
@@ -223,57 +217,6 @@ export default class Snake {
     window.requestAnimationFrame(() => this.draw());
   } // end draw
 
-  // enemyTick() {
-  // this.snakeEnemys.forEach((enemy, k) => {
-  // for (let i = enemy.length - 1; i >= 0; i--) {
-  // if (
-  // i === 0 &&
-  // enemy[i].x === this.apple.x &&
-  // enemy[i].y === this.apple.y
-  // ) {
-  // enemy.push({});
-
-  // this.speed *= 0.99;
-  // this.setApple();
-  // const c = document.createElement('i');
-  // c.classList.add('nes-icon', 'coin');
-  // this.coin.appendChild(c);
-  // }
-  // const s = enemy[i];
-  // if (i == 0) {
-  // switch (s.direction) {
-  // case 'right':
-  // if (s.x > this.canvas.width) s.x = 0;
-  // else s.x += this.size;
-  // break;
-  // case 'down':
-  // if (s.y > this.canvas.height) s.y = 0;
-  // else s.y += this.size;
-  // break;
-  // case 'left':
-  // if (s.x < 0) s.x = this.xEnd;
-  // else s.x -= this.size;
-  // break;
-  // case 'up':
-  // if (s.y < 0) s.y = this.yEnd;
-  // else s.y -= this.size;
-  // }
-
-  // for (let j = 1; j < enemy.length; j += 1) {
-  // if (enemy[0].x === enemy[j].x && enemy[0].y === enemy[j].y) {
-  // alert('GAME OVER');
-  // window.location.reload();
-  // }
-  // }
-  // } else {
-  // enemy[i].x = enemy[i - 1].x;
-  // enemy[i].y = enemy[i - 1].y;
-  // }
-  // }
-  // });
-  // window.setTimeout(() => this.enemyTick(), this.speed);
-  // this.directionLock = false;
-  // }
   tick() {
     for (let i = this.snake.length - 1; i >= 0; i--) {
       if (

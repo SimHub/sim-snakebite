@@ -315,7 +315,7 @@ function () {
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.snake = new snake_1.default(this.posX, this.posY, null, '#ccc', this.direction).snake();
+    this.snake = new snake_1.default(this.posX, this.posY, null, null, this.direction).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
     this.enemyColor;
@@ -365,20 +365,17 @@ function () {
     // });
 
     this.socket.on('snakeTick', function (enemy) {
-      // console.log('ENEMY SNAKE TICK', enemy);
       var newEnemy = enemy.snake;
       newEnemy[0].id = enemy.id;
       newEnemy[0].enemyId = enemy.id;
-      delete newEnemy[0].id; // console.log('NEW ENEMY', newEnemy);
+      delete newEnemy[0].id;
 
       _this.snakeEnemys.forEach(function (i, k) {
-        // console.log(newEnemy[0].enemyId , i[0].enemyId)
         if (newEnemy[0].enemyId === i[0].enemyId) {
-          // console.log('ENEMY ARR INSIDE B: ', i);
+          newEnemy[0].color = i[0].color;
+
           for (var j = 0; j < newEnemy.length; j++) {
-            i[j] = newEnemy[j]; // console.log('ENEMY ARR INSIDE A: ', i);
-            // i[0].x = enemy.x;
-            // i[0].y = enemy.y;
+            i[j] = newEnemy[j];
           }
         }
       }); // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
@@ -467,55 +464,6 @@ function () {
         return _this4.draw();
       });
     } // end draw
-    // enemyTick() {
-    // this.snakeEnemys.forEach((enemy, k) => {
-    // for (let i = enemy.length - 1; i >= 0; i--) {
-    // if (
-    // i === 0 &&
-    // enemy[i].x === this.apple.x &&
-    // enemy[i].y === this.apple.y
-    // ) {
-    // enemy.push({});
-    // this.speed *= 0.99;
-    // this.setApple();
-    // const c = document.createElement('i');
-    // c.classList.add('nes-icon', 'coin');
-    // this.coin.appendChild(c);
-    // }
-    // const s = enemy[i];
-    // if (i == 0) {
-    // switch (s.direction) {
-    // case 'right':
-    // if (s.x > this.canvas.width) s.x = 0;
-    // else s.x += this.size;
-    // break;
-    // case 'down':
-    // if (s.y > this.canvas.height) s.y = 0;
-    // else s.y += this.size;
-    // break;
-    // case 'left':
-    // if (s.x < 0) s.x = this.xEnd;
-    // else s.x -= this.size;
-    // break;
-    // case 'up':
-    // if (s.y < 0) s.y = this.yEnd;
-    // else s.y -= this.size;
-    // }
-    // for (let j = 1; j < enemy.length; j += 1) {
-    // if (enemy[0].x === enemy[j].x && enemy[0].y === enemy[j].y) {
-    // alert('GAME OVER');
-    // window.location.reload();
-    // }
-    // }
-    // } else {
-    // enemy[i].x = enemy[i - 1].x;
-    // enemy[i].y = enemy[i - 1].y;
-    // }
-    // }
-    // });
-    // window.setTimeout(() => this.enemyTick(), this.speed);
-    // this.directionLock = false;
-    // }
 
   }, {
     key: "tick",
