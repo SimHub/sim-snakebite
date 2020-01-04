@@ -315,7 +315,7 @@ function () {
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.snake = new snake_1.default(this.posX, this.posY, null, null, this.direction).snake();
+    this.snake = new snake_1.default(this.posX, this.posY, null, '#ccc', this.direction).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
     this.enemyColor;
@@ -329,26 +329,23 @@ function () {
     this.newEnemyIDs = [];
     this.socket.on('clientId', function (id) {
       _this.clientId = id;
-      _this.snake[0].id = id; // console.log('PLAYERS-SNAKE ', this.snake[0]);
+      _this.snake[0].id = id;
 
       _this.socket.emit('enemyId', _this.snake[0]);
     });
     this.socket.on('enemyId', function (id) {
-      _this.snakeEnemys.clear(); // console.log(id); //#############
+      _this.snakeEnemys.clear();
 
-
-      _this.newEnemyIDs = id; // console.log(this.newEnemyIDs);
+      _this.newEnemyIDs = id;
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
-        // console.log(_id);
         if (_id.id !== _this.clientId) {
           _this.enemyColor = _this.getRandomColor();
           var snl = new snake_1.default(_id.x, _id.y, _id.id, _this.enemyColor, _id.direction).enemySnake();
 
           _this.snakeEnemys.add(snl);
         }
-      }); // console.log('SNAKE-ENEMYS: ', this.snakeEnemys);
-
+      });
     });
     this.socket.on('enemyDirection', function (data) {
       _this.snakeEnemys.forEach(function (i, k) {
@@ -356,22 +353,36 @@ function () {
           i[0].direction = data.direction;
         }
       });
-    });
-    this.socket.on('tail', function (enemy) {
-      _this.snakeEnemys.forEach(function (i) {
-        if (enemy[0].id === i[0].enemyId) {
-          i.push({});
-        }
-      });
-    });
+    }); // this.socket.on('tail', enemy => {
+    // console.log('ENEMY GOT APPLE ');
+    // this.snakeEnemys.forEach((i, k) => {
+    // if (enemy[0].id === i[0].enemyId) {
+    // // i.push(i);
+    // i=enemy;
+    // }
+    // });
+    // console.log(this.snakeEnemys);
+    // });
+
     this.socket.on('snakeTick', function (enemy) {
       // console.log('ENEMY SNAKE TICK', enemy);
-      _this.snakeEnemys.forEach(function (i) {
-        if (enemy.id === i[0].enemyId) {
-          i[0].x = enemy.x;
-          i[0].y = enemy.y;
+      var newEnemy = enemy.snake;
+      newEnemy[0].id = enemy.id;
+      newEnemy[0].enemyId = enemy.id;
+      delete newEnemy[0].id; // console.log('NEW ENEMY', newEnemy);
+
+      _this.snakeEnemys.forEach(function (i, k) {
+        // console.log(newEnemy[0].enemyId , i[0].enemyId)
+        if (newEnemy[0].enemyId === i[0].enemyId) {
+          // console.log('ENEMY ARR INSIDE B: ', i);
+          for (var j = 0; j < newEnemy.length; j++) {
+            i[j] = newEnemy[j]; // console.log('ENEMY ARR INSIDE A: ', i);
+            // i[0].x = enemy.x;
+            // i[0].y = enemy.y;
+          }
         }
-      });
+      }); // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
+
     });
     this.socket.on('start', function (data) {
       // console.log(data);
@@ -434,17 +445,21 @@ function () {
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); //  ENEMY /////
 
       this.snakeEnemys.forEach(function (enemy, k) {
+        // console.log(enemy)
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
           _this4.context.fillStyle = s.color;
 
           _this4.context.fillRect(s.x, s.y, _this4.size, _this4.size);
-        }
+        } // console.log("DRAW ENEMY")
+        // console.log(enemy)
+
       }); /// PLAYER /////
+      // console.log(this.snake)
 
       for (var i = 0; i < this.snake.length; i += 1) {
         var s = this.snake[i];
-        this.context.fillStyle = '#ccc';
+        this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
       }
 
@@ -452,74 +467,65 @@ function () {
         return _this4.draw();
       });
     } // end draw
+    // enemyTick() {
+    // this.snakeEnemys.forEach((enemy, k) => {
+    // for (let i = enemy.length - 1; i >= 0; i--) {
+    // if (
+    // i === 0 &&
+    // enemy[i].x === this.apple.x &&
+    // enemy[i].y === this.apple.y
+    // ) {
+    // enemy.push({});
+    // this.speed *= 0.99;
+    // this.setApple();
+    // const c = document.createElement('i');
+    // c.classList.add('nes-icon', 'coin');
+    // this.coin.appendChild(c);
+    // }
+    // const s = enemy[i];
+    // if (i == 0) {
+    // switch (s.direction) {
+    // case 'right':
+    // if (s.x > this.canvas.width) s.x = 0;
+    // else s.x += this.size;
+    // break;
+    // case 'down':
+    // if (s.y > this.canvas.height) s.y = 0;
+    // else s.y += this.size;
+    // break;
+    // case 'left':
+    // if (s.x < 0) s.x = this.xEnd;
+    // else s.x -= this.size;
+    // break;
+    // case 'up':
+    // if (s.y < 0) s.y = this.yEnd;
+    // else s.y -= this.size;
+    // }
+    // for (let j = 1; j < enemy.length; j += 1) {
+    // if (enemy[0].x === enemy[j].x && enemy[0].y === enemy[j].y) {
+    // alert('GAME OVER');
+    // window.location.reload();
+    // }
+    // }
+    // } else {
+    // enemy[i].x = enemy[i - 1].x;
+    // enemy[i].y = enemy[i - 1].y;
+    // }
+    // }
+    // });
+    // window.setTimeout(() => this.enemyTick(), this.speed);
+    // this.directionLock = false;
+    // }
 
-  }, {
-    key: "enemyTick",
-    value: function enemyTick() {
-      var _this5 = this;
-
-      // console.log(this.snakeEnemys);
-      this.snakeEnemys.forEach(function (enemy, k) {
-        for (var i = enemy.length - 1; i >= 0; i--) {
-          // if (
-          // i === 0 &&
-          // enemy[i].x === this.apple.x &&
-          // enemy[i].y === this.apple.y
-          // ) {
-          // enemy.push({});
-          // this.speed *= 0.99;
-          // this.setApple();
-          // const c = document.createElement('i');
-          // c.classList.add('nes-icon', 'coin');
-          // this.coin.appendChild(c);
-          // }
-          var s = enemy[i];
-
-          if (i == 0) {
-            // switch (this.enemyDirection) {
-            switch (s.direction) {
-              case 'right':
-                if (s.x > _this5.canvas.width) s.x = 0;else s.x += _this5.size;
-                break;
-
-              case 'down':
-                if (s.y > _this5.canvas.height) s.y = 0;else s.y += _this5.size;
-                break;
-
-              case 'left':
-                if (s.x < 0) s.x = _this5.xEnd;else s.x -= _this5.size;
-                break;
-
-              case 'up':
-                if (s.y < 0) s.y = _this5.yEnd;else s.y -= _this5.size;
-            }
-
-            for (var j = 1; j < enemy.length; j += 1) {
-              if (enemy[0].x === enemy[j].x && enemy[0].y === enemy[j].y) {
-                alert('GAME OVER');
-                window.location.reload();
-              }
-            }
-          } else {
-            enemy[i].x = enemy[i - 1].x;
-            enemy[i].y = enemy[i - 1].y;
-          }
-        }
-      });
-      window.setTimeout(function () {
-        return _this5.enemyTick();
-      }, this.speed);
-      this.directionLock = false;
-    }
   }, {
     key: "tick",
     value: function tick() {
-      var _this6 = this;
+      var _this5 = this;
 
       for (var i = this.snake.length - 1; i >= 0; i--) {
         if (i === 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
-          this.snake.push({});
-          this.socket.emit('tail', this.snake);
+          this.snake.push({}); //** Todo : enemy tail logic
+
           this.speed *= 0.99;
           this.setApple();
           var c = document.createElement('i');
@@ -555,13 +561,18 @@ function () {
           }
         } else {
           this.snake[i].x = this.snake[i - 1].x;
-          this.snake[i].y = this.snake[i - 1].y;
+          this.snake[i].y = this.snake[i - 1].y; // this.socket.emit('tail', this.snake);
+          ///** Todo : enemy tail logic
         }
-      }
+      } // this.socket.emit('snakeTick', this.snake[0]);
 
-      this.socket.emit('snakeTick', this.snake[0]);
+
+      this.socket.emit('snakeTick', {
+        id: this.snake[0].id,
+        snake: this.snake
+      });
       window.setTimeout(function () {
-        return _this6.tick();
+        return _this5.tick();
       }, this.speed);
       this.directionLock = false;
     }
@@ -10427,7 +10438,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53672" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49352" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
