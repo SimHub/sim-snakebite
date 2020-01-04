@@ -12,6 +12,7 @@ export default class Snake {
   private socket: any;
   private clientId: string;
   private enemyId: [] | string;
+  private enemyChange: boolean;
   private clientIdArr: [];
   private countEnemys: number;
   private enemyPosX: number;
@@ -26,6 +27,7 @@ export default class Snake {
   public snakeEnemys: any;
   public enemyColor: string;
   public size: number;
+  public appleSize: number;
   public apple: {};
   public speed: number;
   public container: HTMLElement;
@@ -53,12 +55,13 @@ export default class Snake {
 
     this.context = this.canvas.getContext('2d');
     this.size = Math.round(this.canvas.width / 50);
+    this.appleSize = Math.round(this.canvas.width / 35);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
     this.direction = this.getRandomDirection();
-    //this.posX = Math.floor(Math.random() * this.canvas.width);
-    //this.posY = Math.floor(Math.random() * this.canvas.height);
+    // this.posX = Math.floor(Math.random() * this.canvas.width);
+    // this.posY = Math.floor(Math.random() * this.canvas.height);
     this.posX =
       Math.round(
         this.random(this.size, this.canvas.width - this.size) / this.size,
@@ -86,6 +89,7 @@ export default class Snake {
     this.enemyPosX = null;
     this.enemyPosY = null;
     this.newEnemyIDs = [];
+    this.enemyChange = false;
 
     this.socket.on('clientId', id => {
       this.clientId = id;
@@ -146,6 +150,9 @@ export default class Snake {
       });
       // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
     });
+    this.socket.on('apple', a => {
+      this.apple = a;
+    });
     this.socket.on('start', data => {
       // console.log(data);
       const startBtn: HTMLElement = document.querySelector('#startBtn');
@@ -175,17 +182,13 @@ export default class Snake {
   setApple() {
     this.apple.x =
       Math.round(
-        this.random(this.size, this.canvas.width - this.size) / this.size,
-      ) * this.size;
+        this.random(this.appleSize, this.canvas.width - this.appleSize) / this.appleSize,
+      ) * this.appleSize;
     this.apple.y =
       Math.round(
-        this.random(this.size, this.canvas.height - this.size) / this.size,
-      ) * this.size;
+        this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize,
+      ) * this.appleSize;
     this.socket.emit('apple', this.apple);
-    this.socket.on('apple', a => {
-      // console.log('APPLE: ', a);
-      this.apple = a;
-    });
   }
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -221,8 +224,17 @@ export default class Snake {
     for (let i = this.snake.length - 1; i >= 0; i--) {
       if (
         i === 0 &&
-        this.snake[i].x === this.apple.x &&
-        this.snake[i].y === this.apple.y
+        this.hitTestPoint(
+          this.snake[i].x,
+          this.snake[i].y,
+          this.size,
+          this.size,
+          this.apple.x,
+          this.apple.y,
+        ) ||
+        i == 0 &&
+         this.snake[i].x === this.apple.x &&
+         this.snake[i].y === this.apple.y
       ) {
         this.snake.push({});
 
@@ -286,34 +298,34 @@ export default class Snake {
 
       if (this.direction === 'left' && newDirection !== 'right') {
         this.direction = newDirection;
-        this.socket.emit('enemyDirection', {
-          id: this.snake[0].id,
-          direction: this.direction,
-        });
+        // this.socket.emit('enemyDirection', {
+        // id: this.snake[0].id,
+        // direction: this.direction,
+        // });
       }
       // this.socket.emit('direction', this.direction);
       if (this.direction === 'up' && newDirection !== 'down') {
         this.direction = newDirection;
-        this.socket.emit('enemyDirection', {
-          id: this.snake[0].id,
-          direction: this.direction,
-        });
+        // this.socket.emit('enemyDirection', {
+        // id: this.snake[0].id,
+        // direction: this.direction,
+        // });
       }
       // this.socket.emit('direction', this.direction);
       if (this.direction === 'down' && newDirection !== 'up') {
         this.direction = newDirection;
-        this.socket.emit('enemyDirection', {
-          id: this.snake[0].id,
-          direction: this.direction,
-        });
+        // this.socket.emit('enemyDirection', {
+        // id: this.snake[0].id,
+        // direction: this.direction,
+        // });
       }
       // this.socket.emit('direction', this.direction);
       if (this.direction === 'right' && newDirection !== 'left') {
         this.direction = newDirection;
-        this.socket.emit('enemyDirection', {
-          id: this.snake[0].id,
-          direction: this.direction,
-        });
+        // this.socket.emit('enemyDirection', {
+        // id: this.snake[0].id,
+        // direction: this.direction,
+        // });
       }
       // this.socket.emit('direction', this.direction);
     }
@@ -359,5 +371,17 @@ export default class Snake {
       color = letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+  hitTestPoint(x1, y1, w1, h1, x2, y2) {
+    //x1, y1 = x and y coordinates of object 1
+    //w1, h1 = width and height of object 1
+    //x2, y2 = x and y coordinates of object 2 (usually midpt)
+    if (x1 <= x2 && x1 + w1 >= x2 && (y1 <= y2 && y1 + h1 >= y2)) {
+      console.log('COLLISION TRUE');
+      return true;
+    } else {
+      console.log('COLLISION FALSE');
+      return false;
+    }
   }
 }

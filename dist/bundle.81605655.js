@@ -307,11 +307,12 @@ function () {
     this.canvas.height = this.container.clientHeight;
     this.context = this.canvas.getContext('2d');
     this.size = Math.round(this.canvas.width / 50);
+    this.appleSize = Math.round(this.canvas.width / 35);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
-    this.direction = this.getRandomDirection(); //this.posX = Math.floor(Math.random() * this.canvas.width);
-    //this.posY = Math.floor(Math.random() * this.canvas.height);
+    this.direction = this.getRandomDirection(); // this.posX = Math.floor(Math.random() * this.canvas.width);
+    // this.posY = Math.floor(Math.random() * this.canvas.height);
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
@@ -327,6 +328,7 @@ function () {
     this.enemyPosX = null;
     this.enemyPosY = null;
     this.newEnemyIDs = [];
+    this.enemyChange = false;
     this.socket.on('clientId', function (id) {
       _this.clientId = id;
       _this.snake[0].id = id;
@@ -381,6 +383,9 @@ function () {
       }); // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
 
     });
+    this.socket.on('apple', function (a) {
+      _this.apple = a;
+    });
     this.socket.on('start', function (data) {
       // console.log(data);
       var startBtn = document.querySelector('#startBtn');
@@ -421,20 +426,14 @@ function () {
   }, {
     key: "setApple",
     value: function setApple() {
-      var _this3 = this;
-
-      this.apple.x = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
-      this.apple.y = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
+      this.apple.x = Math.round(this.random(this.appleSize, this.canvas.width - this.appleSize) / this.appleSize) * this.appleSize;
+      this.apple.y = Math.round(this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize) * this.appleSize;
       this.socket.emit('apple', this.apple);
-      this.socket.on('apple', function (a) {
-        // console.log('APPLE: ', a);
-        _this3.apple = a;
-      });
     }
   }, {
     key: "draw",
     value: function draw() {
-      var _this4 = this;
+      var _this3 = this;
 
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
 
@@ -445,9 +444,9 @@ function () {
         // console.log(enemy)
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
-          _this4.context.fillStyle = s.color;
+          _this3.context.fillStyle = s.color;
 
-          _this4.context.fillRect(s.x, s.y, _this4.size, _this4.size);
+          _this3.context.fillRect(s.x, s.y, _this3.size, _this3.size);
         } // console.log("DRAW ENEMY")
         // console.log(enemy)
 
@@ -461,17 +460,17 @@ function () {
       }
 
       window.requestAnimationFrame(function () {
-        return _this4.draw();
+        return _this3.draw();
       });
     } // end draw
 
   }, {
     key: "tick",
     value: function tick() {
-      var _this5 = this;
+      var _this4 = this;
 
       for (var i = this.snake.length - 1; i >= 0; i--) {
-        if (i === 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
+        if (i === 0 && this.hitTestPoint(this.snake[i].x, this.snake[i].y, this.size, this.size, this.apple.x, this.apple.y) || i == 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
           this.snake.push({}); //** Todo : enemy tail logic
 
           this.speed *= 0.99;
@@ -520,7 +519,7 @@ function () {
         snake: this.snake
       });
       window.setTimeout(function () {
-        return _this5.tick();
+        return _this4.tick();
       }, this.speed);
       this.directionLock = false;
     }
@@ -532,38 +531,34 @@ function () {
         var newDirection = e.key.substr(5).toLowerCase();
 
         if (this.direction === 'left' && newDirection !== 'right') {
-          this.direction = newDirection;
-          this.socket.emit('enemyDirection', {
-            id: this.snake[0].id,
-            direction: this.direction
-          });
+          this.direction = newDirection; // this.socket.emit('enemyDirection', {
+          // id: this.snake[0].id,
+          // direction: this.direction,
+          // });
         } // this.socket.emit('direction', this.direction);
 
 
         if (this.direction === 'up' && newDirection !== 'down') {
-          this.direction = newDirection;
-          this.socket.emit('enemyDirection', {
-            id: this.snake[0].id,
-            direction: this.direction
-          });
+          this.direction = newDirection; // this.socket.emit('enemyDirection', {
+          // id: this.snake[0].id,
+          // direction: this.direction,
+          // });
         } // this.socket.emit('direction', this.direction);
 
 
         if (this.direction === 'down' && newDirection !== 'up') {
-          this.direction = newDirection;
-          this.socket.emit('enemyDirection', {
-            id: this.snake[0].id,
-            direction: this.direction
-          });
+          this.direction = newDirection; // this.socket.emit('enemyDirection', {
+          // id: this.snake[0].id,
+          // direction: this.direction,
+          // });
         } // this.socket.emit('direction', this.direction);
 
 
         if (this.direction === 'right' && newDirection !== 'left') {
-          this.direction = newDirection;
-          this.socket.emit('enemyDirection', {
-            id: this.snake[0].id,
-            direction: this.direction
-          });
+          this.direction = newDirection; // this.socket.emit('enemyDirection', {
+          // id: this.snake[0].id,
+          // direction: this.direction,
+          // });
         } // this.socket.emit('direction', this.direction);
 
       }
@@ -599,6 +594,20 @@ function () {
       }
 
       return color;
+    }
+  }, {
+    key: "hitTestPoint",
+    value: function hitTestPoint(x1, y1, w1, h1, x2, y2) {
+      //x1, y1 = x and y coordinates of object 1
+      //w1, h1 = width and height of object 1
+      //x2, y2 = x and y coordinates of object 2 (usually midpt)
+      if (x1 <= x2 && x1 + w1 >= x2 && y1 <= y2 && y1 + h1 >= y2) {
+        console.log('COLLISION TRUE');
+        return true;
+      } else {
+        console.log('COLLISION FALSE');
+        return false;
+      }
     }
   }]);
 
@@ -10343,7 +10352,8 @@ var canvas = document.querySelector("#canvas");
 var startBtn = document.querySelector("#startBtn");
 var disconnectBtn = document.querySelector("#disconnect");
 
-var _connectionManager = new _ConnectionManager.default(); //_connectionManager.connect("http://192.168.2.104:3000");
+var _connectionManager = new _ConnectionManager.default(); // _connectionManager.connect("http://192.168.2.104:3000");
+// _connectionManager.connect("http://192.168.2.101:3000");
 
 
 _connectionManager.connect("http://localhost:3000"); // _connectionManager.connect("/game");
