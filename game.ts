@@ -48,7 +48,7 @@ export default class Snake {
     this.container.style.height =
       (this.container.clientHeight - this.infoBox.clientHeight).toString() +
       'px';
-    // console.log(this.container.clientHeight);
+    console.log([this.container]);
     this.canvas = cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;

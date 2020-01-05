@@ -299,8 +299,8 @@ function () {
     this.coin = document.querySelector('#coin');
     this.infoBox = document.querySelector('#infoBox');
     this.container = document.querySelector('#gameBox');
-    this.container.style.height = (this.container.clientHeight - this.infoBox.clientHeight).toString() + 'px'; // console.log(this.container.clientHeight);
-
+    this.container.style.height = (this.container.clientHeight - this.infoBox.clientHeight).toString() + 'px';
+    console.log([this.container]);
     this.canvas = cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
@@ -10409,7 +10409,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50886" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59698" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
