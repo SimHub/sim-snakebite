@@ -75,7 +75,7 @@ export default class Snake {
       this.posX,
       this.posY,
       null,
-      null,
+      this.getRandomColor(),
       this.direction,
     ).snake();
     this.snakeEnemy = [];
@@ -103,12 +103,12 @@ export default class Snake {
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
         if (_id.id !== this.clientId) {
-          this.enemyColor = this.getRandomColor();
+          // this.enemyColor = this.getRandomColor();
           let snl = new SnakePlayer(
             _id.x,
             _id.y,
             _id.id,
-            this.enemyColor,
+            _id.color,
             _id.direction,
           ).enemySnake();
           this.snakeEnemys.add(snl);

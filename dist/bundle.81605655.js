@@ -315,7 +315,7 @@ function () {
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.snake = new snake_1.default(this.posX, this.posY, null, null, this.direction).snake();
+    this.snake = new snake_1.default(this.posX, this.posY, null, this.getRandomColor(), this.direction).snake();
     this.snakeEnemy = [];
     this.snakeEnemys = new Set();
     this.enemyColor;
@@ -342,8 +342,8 @@ function () {
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
         if (_id.id !== _this.clientId) {
-          _this.enemyColor = _this.getRandomColor();
-          var snl = new snake_1.default(_id.x, _id.y, _id.id, _this.enemyColor, _id.direction).enemySnake();
+          // this.enemyColor = this.getRandomColor();
+          var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.color, _id.direction).enemySnake();
 
           _this.snakeEnemys.add(snl);
         }
