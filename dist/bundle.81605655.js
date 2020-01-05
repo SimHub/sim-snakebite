@@ -304,6 +304,7 @@ function () {
     _classCallCheck(this, Snake);
 
     this.score = 0;
+    this.isPaused = false;
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
@@ -477,7 +478,7 @@ function () {
         this.context.fillRect(s.x, s.y, this.size, this.size);
       }
 
-      window.requestAnimationFrame(function () {
+      if (!this.isPaused) window.requestAnimationFrame(function () {
         return _this3.draw();
       });
     } // end draw
@@ -550,38 +551,28 @@ function () {
       if (!this.directionLock) {
         this.directionLock = true;
         var newDirection = e.key.substr(5).toLowerCase();
+        var h = ['left', 'right', 'up', 'down'];
+        console.log(this.direction); // if (e.key === ' ') this.isPaused = !this.isPaused;
 
-        if (this.direction === 'left' && newDirection !== 'right') {
-          this.direction = newDirection; // this.socket.emit('enemyDirection', {
-          // id: this.snake[0].id,
-          // direction: this.direction,
-          // });
-        } // this.socket.emit('direction', this.direction);
+        if (h.includes(newDirection)) {
+          if (this.direction === 'left' && newDirection !== 'right') {
+            this.direction = newDirection;
+          }
 
+          if (this.direction === 'up' && newDirection !== 'down') {
+            this.direction = newDirection;
+          }
 
-        if (this.direction === 'up' && newDirection !== 'down') {
-          this.direction = newDirection; // this.socket.emit('enemyDirection', {
-          // id: this.snake[0].id,
-          // direction: this.direction,
-          // });
-        } // this.socket.emit('direction', this.direction);
+          if (this.direction === 'down' && newDirection !== 'up') {
+            this.direction = newDirection;
+          }
 
+          if (this.direction === 'right' && newDirection !== 'left') {
+            this.direction = newDirection;
+          }
+        }
 
-        if (this.direction === 'down' && newDirection !== 'up') {
-          this.direction = newDirection; // this.socket.emit('enemyDirection', {
-          // id: this.snake[0].id,
-          // direction: this.direction,
-          // });
-        } // this.socket.emit('direction', this.direction);
-
-
-        if (this.direction === 'right' && newDirection !== 'left') {
-          this.direction = newDirection; // this.socket.emit('enemyDirection', {
-          // id: this.snake[0].id,
-          // direction: this.direction,
-          // });
-        } // this.socket.emit('direction', this.direction);
-
+        console.log(this.direction);
       }
     }
   }, {
@@ -10442,7 +10433,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52950" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49638" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

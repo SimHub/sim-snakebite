@@ -1,5 +1,4 @@
 import SnakePlayer from './snake';
-type Class = new (...args: any[]) => Class;
 
 export default class Snake {
   private canvas: HTMLCanvasElement;
@@ -37,8 +36,11 @@ export default class Snake {
   private infoBox: HTMLElement;
   private score: number;
 
+  public isPaused: boolean;
+
   constructor(cnv: HTMLCanvasElement, io) {
     this.score = 0;
+    this.isPaused = false;
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
@@ -223,8 +225,7 @@ export default class Snake {
       this.context.fillStyle = s.color;
       this.context.fillRect(s.x, s.y, this.size, this.size);
     }
-
-    window.requestAnimationFrame(() => this.draw());
+    if (!this.isPaused) window.requestAnimationFrame(() => this.draw());
   } // end draw
 
   tick() {
@@ -305,44 +306,31 @@ export default class Snake {
       this.directionLock = true;
       const newDirection = e.key.substr(5).toLowerCase();
 
-      if (this.direction === 'left' && newDirection !== 'right') {
-        this.direction = newDirection;
-        // this.socket.emit('enemyDirection', {
-        // id: this.snake[0].id,
-        // direction: this.direction,
-        // });
+      let h = ['left', 'right', 'up', 'down'];
+
+      console.log(this.direction);
+      // if (e.key === ' ') this.isPaused = !this.isPaused;
+      if (h.includes(newDirection)) {
+        if (this.direction === 'left' && newDirection !== 'right') {
+          this.direction = newDirection;
+        }
+        if (this.direction === 'up' && newDirection !== 'down') {
+          this.direction = newDirection;
+        }
+        if (this.direction === 'down' && newDirection !== 'up') {
+          this.direction = newDirection;
+        }
+        if (this.direction === 'right' && newDirection !== 'left') {
+          this.direction = newDirection;
+        }
       }
-      // this.socket.emit('direction', this.direction);
-      if (this.direction === 'up' && newDirection !== 'down') {
-        this.direction = newDirection;
-        // this.socket.emit('enemyDirection', {
-        // id: this.snake[0].id,
-        // direction: this.direction,
-        // });
-      }
-      // this.socket.emit('direction', this.direction);
-      if (this.direction === 'down' && newDirection !== 'up') {
-        this.direction = newDirection;
-        // this.socket.emit('enemyDirection', {
-        // id: this.snake[0].id,
-        // direction: this.direction,
-        // });
-      }
-      // this.socket.emit('direction', this.direction);
-      if (this.direction === 'right' && newDirection !== 'left') {
-        this.direction = newDirection;
-        // this.socket.emit('enemyDirection', {
-        // id: this.snake[0].id,
-        // direction: this.direction,
-        // });
-      }
-      // this.socket.emit('direction', this.direction);
+      console.log(this.direction);
     }
   }
   appleBiteScore(sc) {
-    console.log(this.trophy.getAttribute('data-badge'))
+    console.log(this.trophy.getAttribute('data-badge'));
     this.trophy.setAttribute('data-badge', sc);
-    console.log(this.trophy.getAttribute('data-badge'))
+    console.log(this.trophy.getAttribute('data-badge'));
   }
   resize() {
     // console.log('RESIZE');
