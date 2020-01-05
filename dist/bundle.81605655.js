@@ -291,7 +291,6 @@ function () {
 
     _classCallCheck(this, Snake);
 
-    // this.socket = io('http://localhost:3000');
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
@@ -423,8 +422,9 @@ function () {
       this.setApple(); // SET APPLE
 
       window.setTimeout(function () {
-        return _this2.tick();
-      }, this.speed); // window.setTimeout(() => this.enemyTick(), this.speed);
+        _this2.tick(), _this2.speed;
+      }, 1000 / this.FPS); // LOOP 
+      // window.setTimeout(() => this.enemyTick(), this.speed);
 
       window.requestAnimationFrame(function () {
         return _this2.draw();
@@ -10409,7 +10409,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49352" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50886" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

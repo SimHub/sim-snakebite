@@ -21,22 +21,22 @@ export default class Snake {
   private posX: number;
   private posY: number;
   private snl: any;
-  public snake: any;
-  public player: any;
-  public snakeEnemy: any;
-  public snakeEnemys: any;
-  public enemyColor: string;
-  public size: number;
-  public appleSize: number;
-  public apple: {};
-  public speed: number;
-  public container: HTMLElement;
-  public trophy: HTMLElement;
-  public coin: HTMLElement;
-  public infoBox: HTMLElement;
+  private FPS:number;
+  private snake: any;
+  private player: any;
+  private snakeEnemy: any;
+  private snakeEnemys: any;
+  private enemyColor: string;
+  private size: number;
+  private appleSize: number;
+  private apple: {};
+  private speed: number;
+  private container: HTMLElement;
+  private trophy: HTMLElement;
+  private coin: HTMLElement;
+  private infoBox: HTMLElement;
 
   constructor(cnv: HTMLCanvasElement, io) {
-    // this.socket = io('http://localhost:3000');
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
@@ -181,7 +181,7 @@ export default class Snake {
   start() {
     this.setApple(); // SET APPLE
 
-    window.setTimeout(() => this.tick(), this.speed);
+    window.setTimeout(() => {this.tick(), this.speed}, 1000 / this.FPS);// LOOP 
     // window.setTimeout(() => this.enemyTick(), this.speed);
 
     window.requestAnimationFrame(() => this.draw());
