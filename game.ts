@@ -55,7 +55,7 @@ export default class Snake {
 
     this.context = this.canvas.getContext('2d');
     this.size = Math.round(this.canvas.width / 50);
-    this.appleSize = Math.round(this.canvas.width / 35);
+    this.appleSize = Math.round(this.canvas.width / 50 );
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
@@ -240,8 +240,8 @@ export default class Snake {
           this.hitTestPoint(
             this.snake[i].x,
             this.snake[i].y,
-            this.size,
-            this.size,
+            this.appleSize,
+            this.appleSize,
             this.apple.x,
             this.apple.y,
           )) ||
