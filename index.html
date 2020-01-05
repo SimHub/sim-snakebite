@@ -11,22 +11,44 @@
   </head>
   <body>
     <div id="wrapper">
-      <section id="infoBox" class="icon-list">
-        <!-- trophy -->
-        <span id="trophy">
-          <i class="nes-icon trophy "></i>
-        </span>
-        <br />
-        <!-- coin -->
-        <span id="coin">
-          <i class="nes-icon coin "></i>
-        </span>
-        <span><button id="disconnect">disconnect</button></span>
-      </section>
+      <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <p class="navbar-item" href="https://bulma.io">
+          <span id="trophy" class="has-badge-rounded has-badge-bottom" data-badge="0">
+            <i class="nes-icon trophy"></i>
+            </span>
+          </p>
 
-      <button id="startBtn" type="button" class="nes-btn is-primary">START</button>
+          <p
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </p>
+        </div>
+      </nav>
+      <!-- <section id="infoBox" class="icon-list"> -->
+      <!-- [> trophy <] -->
+      <!-- <span id="trophy"> -->
+      <!-- <i class="nes-icon trophy "></i> -->
+      <!-- </span> -->
+      <!-- <br /> -->
+      <!-- [> coin <] -->
+      <!-- <span id="coin"> -->
+      <!-- <i class="nes-icon coin "></i> -->
+      <!-- </span> -->
+      <!-- <span><button id="disconnect">disconnect</button></span> -->
+      <!-- </section> -->
 
-      <div id="gameBox" >
+      <!-- <button id="startBtn" type="button" class="nes-btn is-primary"> -->
+      <!-- START -->
+      <!-- </button> -->
+
+      <div id="gameBox">
         <canvas id="canvas"></canvas>
       </div>
     </div>

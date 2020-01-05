@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bulma": "^0.8.0",
+    "bulma-badge": "^3.0.1",
     "express": "^4.17.1",
     "nes.css": "^2.3.0",
     "socket.io": "^2.3.0",

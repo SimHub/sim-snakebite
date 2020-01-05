@@ -184,7 +184,19 @@ function reloadCSS() {
 }
 
 module.exports = reloadCSS;
-},{"./bundle-url":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/nes.css/css/nes.css":[function(require,module,exports) {
+},{"./bundle-url":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"node_modules/bulma/css/bulma.css":[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/bulma-badge/dist/css/bulma-badge.min.css":[function(require,module,exports) {
+
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
+},{"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"node_modules/nes.css/css/nes.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -291,15 +303,18 @@ function () {
 
     _classCallCheck(this, Snake);
 
+    this.score = 0;
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
     this.clientIdArr = [];
-    this.trophy = document.querySelector('#thropy');
+    this.trophy = document.querySelector('#trophy');
     this.coin = document.querySelector('#coin');
     this.infoBox = document.querySelector('#infoBox');
-    this.container = document.querySelector('#gameBox');
-    this.container.style.height = (this.container.clientHeight - this.infoBox.clientHeight).toString() + 'px';
+    this.container = document.querySelector('#gameBox'); // this.container.style.height =
+    // (this.container.clientHeight - this.infoBox.clientHeight).toString() +
+    // 'px';
+
     console.log([this.container]);
     this.canvas = cnv;
     this.canvas.width = this.container.clientWidth;
@@ -355,17 +370,7 @@ function () {
           i[0].direction = data.direction;
         }
       });
-    }); // this.socket.on('tail', enemy => {
-    // console.log('ENEMY GOT APPLE ');
-    // this.snakeEnemys.forEach((i, k) => {
-    // if (enemy[0].id === i[0].enemyId) {
-    // // i.push(i);
-    // i=enemy;
-    // }
-    // });
-    // console.log(this.snakeEnemys);
-    // });
-
+    });
     this.socket.on('snakeTick', function (enemy) {
       var newEnemy = enemy.snake;
       newEnemy[0].id = enemy.id;
@@ -385,12 +390,7 @@ function () {
     });
     this.socket.on('apple', function (a) {
       _this.apple = a;
-    }); // this.socket.on('start', data => {
-
-    var startBtn = document.querySelector('#startBtn');
-    startBtn.style.display = 'none';
-    this.start(); // });
-
+    });
     this.socket.on('user disconnected', function (enemyID) {
       console.log('someone has gone ', enemyID);
 
@@ -406,7 +406,12 @@ function () {
       });
 
       console.log(_this.snakeEnemys);
-    });
+    }); //#### START GAME ####/
+    // this.socket.on('start', data => {
+    // const startBtn: HTMLElement = document.querySelector('#startBtn');
+    // startBtn.style.display = 'none';
+
+    this.start(); // });
   }
 
   _createClass(Snake, [{
@@ -423,7 +428,7 @@ function () {
 
       window.setTimeout(function () {
         _this2.tick(), _this2.speed;
-      }, 1000 / this.FPS); // LOOP 
+      }, 1000 / this.FPS); // LOOP
       // window.setTimeout(() => this.enemyTick(), this.speed);
 
       window.requestAnimationFrame(function () {
@@ -487,10 +492,13 @@ function () {
           this.snake.push({}); //** Todo : enemy tail logic
 
           this.speed *= 0.99;
-          this.setApple();
-          var c = document.createElement('i');
-          c.classList.add('nes-icon', 'coin');
-          this.coin.appendChild(c); // console.log('PLAYER GOT APPLE', this.snake[i]);
+          this.setApple(); // const c = document.createElement('i');
+          // c.classList.add('nes-icon', 'coin');
+          // this.coin.appendChild(c);
+          // console.log('PLAYER GOT APPLE', this.snake[i]);
+
+          this.score++;
+          this.appleBiteScore(this.score);
         }
 
         var s = this.snake[i];
@@ -577,6 +585,13 @@ function () {
       }
     }
   }, {
+    key: "appleBiteScore",
+    value: function appleBiteScore(sc) {
+      console.log(this.trophy.getAttribute('data-badge'));
+      this.trophy.setAttribute('data-badge', sc);
+      console.log(this.trophy.getAttribute('data-badge'));
+    }
+  }, {
     key: "resize",
     value: function resize() {
       // console.log('RESIZE');
@@ -596,14 +611,29 @@ function () {
   }, {
     key: "getRandomColor",
     value: function getRandomColor() {
-      // var letters = '0123456789ABCDEF';
-      var letters = ['Orange', 'White ', 'Beige', 'Blue', 'BurlyWood', 'Chocolate', 'Coral', 'Cornsilk', 'DarkCyan ', 'Fuchsia', 'Gold', 'GreenYellow', 'HotPink', 'LightSteelBlue', 'MediumPurple', 'OliveDrab']; // var color = '#';
+      var letters = '0123456789ABCDEF'; // var letters = [
+      // 'Orange',
+      // 'White ',
+      // 'Beige',
+      // 'Blue',
+      // 'BurlyWood',
+      // 'Chocolate',
+      // 'Coral',
+      // 'Cornsilk',
+      // 'DarkCyan ',
+      // 'Fuchsia',
+      // 'Gold',
+      // 'GreenYellow',
+      // 'HotPink',
+      // 'LightSteelBlue',
+      // 'MediumPurple',
+      // 'OliveDrab',
+      // ];
 
-      var color = '';
+      var color = '#'; // var color = '';
 
       for (var i = 0; i < 6; i++) {
-        // color += letters[Math.floor(Math.random() * 16)];
-        color = letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)]; // color = letters[Math.floor(Math.random() * 16)];
       }
 
       return color;
@@ -10349,6 +10379,10 @@ exports.default = ConnectionManager;
 },{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"bundle.js":[function(require,module,exports) {
 "use strict";
 
+require("bulma/css/bulma.css");
+
+require("bulma-badge/dist/css/bulma-badge.min.css");
+
 require("./node_modules/nes.css/css/nes.css");
 
 require("typeface-press-start-2p");
@@ -10374,14 +10408,13 @@ _connectionManager.connect("http://localhost:3000"); // _connectionManager.conne
 
 var _io = _connectionManager.io();
 
-var snake = new _game.default(canvas, _io);
-startBtn.addEventListener("click", function () {
-  _io.emit("start", "GAME HAS STARTED");
-});
-disconnectBtn.addEventListener("click", function () {
-  _io.emit("leave", "PLAYER HAS LEFT");
-});
-},{"./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var snake = new _game.default(canvas, _io); // startBtn.addEventListener("click", function() {
+// _io.emit("start", "GAME HAS STARTED");
+// });
+// disconnectBtn.addEventListener("click", function() {
+// _io.emit("leave", "PLAYER HAS LEFT");
+// });
+},{"bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10409,7 +10442,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59698" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52950" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

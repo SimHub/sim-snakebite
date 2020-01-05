@@ -1,3 +1,5 @@
+import "bulma/css/bulma.css";
+import "bulma-badge/dist/css/bulma-badge.min.css";
 import "./node_modules/nes.css/css/nes.css";
 import "typeface-press-start-2p";
 import "./scss/main.scss";
@@ -14,9 +16,9 @@ _connectionManager.connect("http://localhost:3000");
 // _connectionManager.connect("/game");
 const _io = _connectionManager.io();
 let snake = new Snake(canvas, _io);
-startBtn.addEventListener("click", function() {
-  _io.emit("start", "GAME HAS STARTED");
-});
-disconnectBtn.addEventListener("click", function() {
-  _io.emit("leave", "PLAYER HAS LEFT");
-});
+// startBtn.addEventListener("click", function() {
+// _io.emit("start", "GAME HAS STARTED");
+// });
+// disconnectBtn.addEventListener("click", function() {
+// _io.emit("leave", "PLAYER HAS LEFT");
+// });

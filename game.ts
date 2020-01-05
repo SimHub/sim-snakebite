@@ -21,7 +21,7 @@ export default class Snake {
   private posX: number;
   private posY: number;
   private snl: any;
-  private FPS:number;
+  private FPS: number;
   private snake: any;
   private player: any;
   private snakeEnemy: any;
@@ -35,19 +35,21 @@ export default class Snake {
   private trophy: HTMLElement;
   private coin: HTMLElement;
   private infoBox: HTMLElement;
+  private score: number;
 
   constructor(cnv: HTMLCanvasElement, io) {
+    this.score = 0;
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
     this.clientIdArr = [];
-    this.trophy = document.querySelector('#thropy');
+    this.trophy = document.querySelector('#trophy');
     this.coin = document.querySelector('#coin');
     this.infoBox = document.querySelector('#infoBox');
     this.container = document.querySelector('#gameBox');
-    this.container.style.height =
-      (this.container.clientHeight - this.infoBox.clientHeight).toString() +
-      'px';
+    // this.container.style.height =
+    // (this.container.clientHeight - this.infoBox.clientHeight).toString() +
+    // 'px';
     console.log([this.container]);
     this.canvas = cnv;
     this.canvas.width = this.container.clientWidth;
@@ -55,7 +57,7 @@ export default class Snake {
 
     this.context = this.canvas.getContext('2d');
     this.size = Math.round(this.canvas.width / 50);
-    this.appleSize = Math.round(this.canvas.width / 50 );
+    this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
     this.directionLock = false;
@@ -124,17 +126,6 @@ export default class Snake {
       });
     });
 
-    // this.socket.on('tail', enemy => {
-    // console.log('ENEMY GOT APPLE ');
-    // this.snakeEnemys.forEach((i, k) => {
-    // if (enemy[0].id === i[0].enemyId) {
-    // // i.push(i);
-    // i=enemy;
-    // }
-    // });
-    // console.log(this.snakeEnemys);
-    // });
-
     this.socket.on('snakeTick', enemy => {
       let newEnemy = enemy.snake;
       newEnemy[0].id = enemy.id;
@@ -155,24 +146,25 @@ export default class Snake {
       this.apple = a;
     });
 
-    // this.socket.on('start', data => {
-      const startBtn: HTMLElement = document.querySelector('#startBtn');
-      startBtn.style.display = 'none';
-      this.start();
-    // });
-
     this.socket.on('user disconnected', enemyID => {
       console.log('someone has gone ', enemyID);
       this.snakeEnemys.forEach(enemy => {
-          console.log(enemy[0].enemyId , enemyID)
+        console.log(enemy[0].enemyId, enemyID);
         if (enemy[0].enemyId === enemyID) {
-          console.log(enemy[0].enemyId === enemyID)
-          console.log(enemy)
+          console.log(enemy[0].enemyId === enemyID);
+          console.log(enemy);
           this.snakeEnemys.delete(enemy);
         }
       });
       console.log(this.snakeEnemys);
     });
+
+    //#### START GAME ####/
+    // this.socket.on('start', data => {
+    // const startBtn: HTMLElement = document.querySelector('#startBtn');
+    // startBtn.style.display = 'none';
+    this.start();
+    // });
   }
   random(min, max) {
     return Math.random() * (max - min) + min;
@@ -181,7 +173,9 @@ export default class Snake {
   start() {
     this.setApple(); // SET APPLE
 
-    window.setTimeout(() => {this.tick(), this.speed}, 1000 / this.FPS);// LOOP 
+    window.setTimeout(() => {
+      this.tick(), this.speed;
+    }, 1000 / this.FPS); // LOOP
     // window.setTimeout(() => this.enemyTick(), this.speed);
 
     window.requestAnimationFrame(() => this.draw());
@@ -255,10 +249,12 @@ export default class Snake {
 
         this.speed *= 0.99;
         this.setApple();
-        const c = document.createElement('i');
-        c.classList.add('nes-icon', 'coin');
-        this.coin.appendChild(c);
+        // const c = document.createElement('i');
+        // c.classList.add('nes-icon', 'coin');
+        // this.coin.appendChild(c);
         // console.log('PLAYER GOT APPLE', this.snake[i]);
+        this.score++;
+        this.appleBiteScore(this.score);
       }
       const s = this.snake[i];
       if (i == 0) {
@@ -343,6 +339,11 @@ export default class Snake {
       // this.socket.emit('direction', this.direction);
     }
   }
+  appleBiteScore(sc) {
+    console.log(this.trophy.getAttribute('data-badge'))
+    this.trophy.setAttribute('data-badge', sc);
+    console.log(this.trophy.getAttribute('data-badge'))
+  }
   resize() {
     // console.log('RESIZE');
     this.canvas.width = this.container.clientWidth;
@@ -358,30 +359,30 @@ export default class Snake {
     return items[Math.floor(Math.random() * items.length)];
   }
   getRandomColor() {
-    // var letters = '0123456789ABCDEF';
-    var letters = [
-      'Orange',
-      'White ',
-      'Beige',
-      'Blue',
-      'BurlyWood',
-      'Chocolate',
-      'Coral',
-      'Cornsilk',
-      'DarkCyan ',
-      'Fuchsia',
-      'Gold',
-      'GreenYellow',
-      'HotPink',
-      'LightSteelBlue',
-      'MediumPurple',
-      'OliveDrab',
-    ];
-    // var color = '#';
-    var color = '';
+    var letters = '0123456789ABCDEF';
+    // var letters = [
+    // 'Orange',
+    // 'White ',
+    // 'Beige',
+    // 'Blue',
+    // 'BurlyWood',
+    // 'Chocolate',
+    // 'Coral',
+    // 'Cornsilk',
+    // 'DarkCyan ',
+    // 'Fuchsia',
+    // 'Gold',
+    // 'GreenYellow',
+    // 'HotPink',
+    // 'LightSteelBlue',
+    // 'MediumPurple',
+    // 'OliveDrab',
+    // ];
+    var color = '#';
+    // var color = '';
     for (var i = 0; i < 6; i++) {
-      // color += letters[Math.floor(Math.random() * 16)];
-      color = letters[Math.floor(Math.random() * 16)];
+      color += letters[Math.floor(Math.random() * 16)];
+      // color = letters[Math.floor(Math.random() * 16)];
     }
     return color;
   }
