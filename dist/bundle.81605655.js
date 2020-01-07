@@ -343,7 +343,14 @@ function () {
     this.enemyPosX = null;
     this.enemyPosY = null;
     this.newEnemyIDs = [];
-    this.enemyChange = false;
+    this.enemyChange = false; // color //
+
+    this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
+    this.gradient.addColorStop(0, 'black');
+    this.gradient.addColorStop(0.5, 'red');
+    this.gradient.addColorStop(1, 'white'); //
+    /// socket con ///
+
     this.socket.on('clientId', function (id) {
       _this.clientId = id;
       _this.snake[0].id = id;
@@ -455,9 +462,15 @@ function () {
       var _this3 = this;
 
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
+      // this.context.fillStyle = 'red';
 
-      this.context.fillStyle = 'red';
-      this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); //  ENEMY /////
+      this.context.fillStyle = this.gradient; // this.context.shadowColor = 'orange'; // string
+      // this.context.shadowOffsetX = 0; // integer
+      // this.context.shadowOffsetY = 0; // integer
+      // this.context.shadowBlur = 10;
+
+      this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); /////////
+      //  ENEMY /////
 
       this.snakeEnemys.forEach(function (enemy, k) {
         // console.log(enemy)
@@ -466,17 +479,32 @@ function () {
           _this3.context.fillStyle = s.color;
 
           _this3.context.fillRect(s.x, s.y, _this3.size, _this3.size);
+
+          _this3.context.font = 'bold 14px verdana, sans-serif';
+          _this3.context.textAlign = 'start';
+          _this3.context.textBaseline = 'bottom';
+
+          if (s.enemyId) {
+            _this3.context.fillText("".concat(s.enemyId.substring(0, 3)), s.x, s.y);
+          }
         } // console.log("DRAW ENEMY")
         // console.log(enemy)
 
-      }); /// PLAYER /////
-      // console.log(this.snake)
+      }); ///////
+      /// PLAYER /////
 
       for (var i = 0; i < this.snake.length; i += 1) {
-        var s = this.snake[i];
+        var s = this.snake[i]; // gradient //
+        // //
+
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
       }
+
+      this.context.font = 'bold 14px verdana, sans-serif';
+      this.context.textAlign = 'start';
+      this.context.textBaseline = 'bottom';
+      if (this.snake[0].id) this.context.fillText("".concat(this.snake[0].id.substring(0, 3)), this.snake[0].x, this.snake[0].y); ///////////////
 
       if (!this.isPaused) window.requestAnimationFrame(function () {
         return _this3.draw();
@@ -552,7 +580,16 @@ function () {
         this.directionLock = true;
         var newDirection = e.key.substr(5).toLowerCase();
         var h = ['left', 'right', 'up', 'down'];
-        console.log(this.direction); // if (e.key === ' ') this.isPaused = !this.isPaused;
+
+        if (e.key === ' ') {
+          this.isPaused = !this.isPaused;
+
+          if (!this.isPaused) {
+            this.draw();
+          }
+
+          console.log(this.isPaused);
+        }
 
         if (h.includes(newDirection)) {
           if (this.direction === 'left' && newDirection !== 'right') {
@@ -571,8 +608,6 @@ function () {
             this.direction = newDirection;
           }
         }
-
-        console.log(this.direction);
       }
     }
   }, {
@@ -10433,7 +10468,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49638" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49771" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

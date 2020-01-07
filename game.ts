@@ -95,6 +95,14 @@ export default class Snake {
     this.newEnemyIDs = [];
     this.enemyChange = false;
 
+    // color //
+    this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
+    this.gradient.addColorStop(0, 'black');
+    this.gradient.addColorStop(0.5, 'red');
+    this.gradient.addColorStop(1, 'white');
+
+    //
+    /// socket con ///
     this.socket.on('clientId', id => {
       this.clientId = id;
       this.snake[0].id = id;
@@ -203,8 +211,16 @@ export default class Snake {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // APPLE ///
-    this.context.fillStyle = 'red';
+    // this.context.fillStyle = 'red';
+    this.context.fillStyle = this.gradient;
+
+    // this.context.shadowColor = 'orange'; // string
+    // this.context.shadowOffsetX = 0; // integer
+    // this.context.shadowOffsetY = 0; // integer
+    // this.context.shadowBlur = 10;
+
     this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
+    /////////
 
     //  ENEMY /////
     this.snakeEnemys.forEach((enemy, k) => {
@@ -213,18 +229,38 @@ export default class Snake {
         const s = enemy[i];
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
+
+        this.context.font = 'bold 14px verdana, sans-serif';
+        this.context.textAlign = 'start';
+        this.context.textBaseline = 'bottom';
+        if (s.enemyId) {
+          this.context.fillText(`${s.enemyId.substring(0, 3)}`, s.x, s.y);
+        }
       }
       // console.log("DRAW ENEMY")
       // console.log(enemy)
     });
+    ///////
 
     /// PLAYER /////
-    // console.log(this.snake)
     for (let i = 0; i < this.snake.length; i += 1) {
       const s = this.snake[i];
+      // gradient //
+      // //
       this.context.fillStyle = s.color;
       this.context.fillRect(s.x, s.y, this.size, this.size);
     }
+    this.context.font = 'bold 14px verdana, sans-serif';
+    this.context.textAlign = 'start';
+    this.context.textBaseline = 'bottom';
+    if (this.snake[0].id)
+      this.context.fillText(
+        `${this.snake[0].id.substring(0, 3)}`,
+        this.snake[0].x,
+        this.snake[0].y,
+      );
+    ///////////////
+
     if (!this.isPaused) window.requestAnimationFrame(() => this.draw());
   } // end draw
 
@@ -308,8 +344,13 @@ export default class Snake {
 
       let h = ['left', 'right', 'up', 'down'];
 
-      console.log(this.direction);
-      // if (e.key === ' ') this.isPaused = !this.isPaused;
+      if (e.key === ' ') {
+        this.isPaused = !this.isPaused;
+        if (!this.isPaused) {
+          this.draw();
+        }
+        console.log(this.isPaused);
+      }
       if (h.includes(newDirection)) {
         if (this.direction === 'left' && newDirection !== 'right') {
           this.direction = newDirection;
@@ -324,7 +365,6 @@ export default class Snake {
           this.direction = newDirection;
         }
       }
-      console.log(this.direction);
     }
   }
   appleBiteScore(sc) {
