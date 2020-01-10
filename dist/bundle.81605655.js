@@ -3456,10 +3456,8 @@ function () {
       window.setTimeout(function () {
         _this2.tick(), _this2.speed;
       }, 1000 / this.FPS); // LOOP
+      // window.requestAnimationFrame(() => this.draw());
 
-      window.requestAnimationFrame(function () {
-        return _this2.draw();
-      });
       window.addEventListener("keydown", function (e) {
         return _this2.keyDown(e);
       });
@@ -13510,7 +13508,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55753" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62955" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

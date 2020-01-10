@@ -188,7 +188,7 @@ export default class Snake {
       this.tick(), this.speed;
     }, 1000 / this.FPS); // LOOP
 
-    window.requestAnimationFrame(() => this.draw());
+    // window.requestAnimationFrame(() => this.draw());
 
     window.addEventListener("keydown", e => this.keyDown(e));
     window.addEventListener("resize", () => this.resize());

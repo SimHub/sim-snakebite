@@ -13803,9 +13803,9 @@ body {
   height: 100vh;
   width: 100%;
   display: grid;
-  grid-template-areas: "upleft upcenter upcenter2 upcenter3 upcenter4  upright" "midleft midcenter midcenter2 midcenter3 midcenter4 midright" "btleft btcenter btcenter2 btcenter3 btcenter4 btright" "footleft foottcenter footcenter2 footcenter3 footcenter4 footright";
-  grid-template-rows: 1fr 1fr 250px 250px 250px 1fr;
-  grid-template-columns: 1fr 400px 1fr 1fr;
+  grid-template-areas: "navleft navcenter navcenter2 navright" "upleft upcenter upcenter2 upright" "midleft midcenter midcenter2 midright" "btleft btcenter btcenter2 btright" "ftleft ftcenter ftcenter2 ftright";
+  grid-template-rows: 1fr 1fr 250px 250px 1fr;
+  grid-template-columns: 1fr 330px 336px 1fr;
 }
 
 /*******/
@@ -13814,18 +13814,26 @@ body {
 }
 
 #trophy {
+  grid-area: navright;
   text-align: center;
-  grid-area: upcenter3;
   font-family: "Orbitron", sans-serif;
   font-size: 2em;
   font-weight: 600;
-  bottom: -44px;
+  margin-top: 33px;
   position: relative;
   color: #fad9e0;
 }
 
+#playerBox {
+  grid-area: midright;
+  text-align: center;
+}
+#playerBox #playerAvatar {
+  transform: rotate(90deg);
+}
+
 .snake-title {
-  grid-area: upleft;
+  grid-area: navleft;
   text-align: center;
   font-family: "Orbitron", sans-serif;
   font-weight: 900;
@@ -13833,8 +13841,9 @@ body {
 }
 
 .date {
+  grid-area: midright;
   align-self: center;
-  grid-area: btcenter3;
+  margin-bottom: -119px;
   text-align: center;
   font-family: "Orbitron", sans-serif;
   font-weight: 200;
@@ -13843,15 +13852,22 @@ body {
   transform: rotate(90deg);
 }
 
+#cross {
+  grid-area: ftright;
+  text-align: center;
+}
+#cross img {
+  margin-top: -65px;
+  width: 20px;
+}
+
 #console {
   grid-area: 2/2/span 3/span 2;
-  min-width: 400px;
-  height: 540px;
-  left: 718px;
-  top: 67px;
-  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   background: #ffda00;
-  border: 10px solid #000000;
+  border: 6px solid #000000;
   box-sizing: border-box;
   box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
   border-radius: 29px;
@@ -13865,6 +13881,45 @@ body {
   box-sizing: border-box;
   box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
   border-radius: 29px;
+}
+#console #gameStats {
+  grid-area: btcenter2;
+  align-self: flex-start;
+  justify-self: baseline;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 35px;
+}
+#console #gameStats #enemyStats {
+  border: 6px solid black;
+  width: 299px;
+  height: 61px;
+  display: -webkit-box;
+  display: flex;
+  overflow-x: scroll;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+#console #gameStats #combo {
+  width: 126px;
+  height: 46px;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.3em;
+  font-weight: 900;
+  color: white;
+  background: #f93c6f;
+  border: 6px solid #000000;
+  box-sizing: border-box;
+  border-radius: 25px;
+}
+#console #gameStats .combo-number {
+  font-family: "Orbitron", sans-serif;
+  font-size: 3em;
+  font-weight: 900;
 }
 
 /********/
