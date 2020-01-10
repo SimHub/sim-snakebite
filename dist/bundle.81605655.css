@@ -1,3 +1,82 @@
+/* orbitron-400normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+    local('Orbitron Regular '),
+    local('Orbitron-Regular'),
+    url('/orbitron-latin-400.4e3b75ca.woff2') format('woff2'), 
+    url('/orbitron-latin-400.d703e557.woff') format('woff'); /* Modern Browsers */
+}
+
+/* orbitron-500normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src:
+    local('Orbitron Medium '),
+    local('Orbitron-Medium'),
+    url('/orbitron-latin-500.9c014073.woff2') format('woff2'), 
+    url('/orbitron-latin-500.92053d70.woff') format('woff'); /* Modern Browsers */
+}
+
+/* orbitron-600normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src:
+    local('Orbitron SemiBold '),
+    local('Orbitron-SemiBold'),
+    url('/orbitron-latin-600.6494b23f.woff2') format('woff2'), 
+    url('/orbitron-latin-600.5066270e.woff') format('woff'); /* Modern Browsers */
+}
+
+/* orbitron-700normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src:
+    local('Orbitron Bold '),
+    local('Orbitron-Bold'),
+    url('/orbitron-latin-700.8e7f6707.woff2') format('woff2'), 
+    url('/orbitron-latin-700.2375d0a5.woff') format('woff'); /* Modern Browsers */
+}
+
+/* orbitron-800normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 800;
+  src:
+    local('Orbitron ExtraBold '),
+    local('Orbitron-ExtraBold'),
+    url('/orbitron-latin-800.cc7130a4.woff2') format('woff2'), 
+    url('/orbitron-latin-800.428fb449.woff') format('woff'); /* Modern Browsers */
+}
+
+/* orbitron-900normal - latin */
+@font-face {
+  font-family: 'Orbitron';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 900;
+  src:
+    local('Orbitron Black '),
+    local('Orbitron-Black'),
+    url('/orbitron-latin-900.70c306d0.woff2') format('woff2'), 
+    url('/orbitron-latin-900.55fdb5b3.woff') format('woff'); /* Modern Browsers */
+}
+
+
 /*! bulma.io v0.8.0 | MIT License | github.com/jgthms/bulma */
 @-webkit-keyframes spinAround {
   from {
@@ -13714,31 +13793,81 @@ input[type="checkbox"] {
 }
 
 
+body {
+  margin: 0;
+  padding: 0;
+  background: #e13361;
+}
+
 #wrapper {
   height: 100vh;
   width: 100%;
+  display: grid;
+  grid-template-areas: "upleft upcenter upcenter2 upcenter3 upcenter4  upright" "midleft midcenter midcenter2 midcenter3 midcenter4 midright" "btleft btcenter btcenter2 btcenter3 btcenter4 btright" "footleft foottcenter footcenter2 footcenter3 footcenter4 footright";
+  grid-template-rows: 1fr 1fr 250px 250px 250px 1fr;
+  grid-template-columns: 1fr 400px 1fr 1fr;
 }
 
-#infoBox {
-  width: 100%;
-  background: #2196f3;
-  z-index: 999;
+/*******/
+.stripe {
+  margin-left: -66px;
 }
 
-#gameBox {
+#trophy {
+  text-align: center;
+  grid-area: upcenter3;
+  font-family: "Orbitron", sans-serif;
+  font-size: 2em;
+  font-weight: 600;
+  bottom: -44px;
+  position: relative;
+  color: #fad9e0;
+}
+
+.snake-title {
+  grid-area: upleft;
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 900;
+  color: #fad9e0;
+}
+
+.date {
+  align-self: center;
+  grid-area: btcenter3;
+  text-align: center;
+  font-family: "Orbitron", sans-serif;
+  font-weight: 200;
+  font-size: 1.5em;
+  color: #fad9e0;
+  transform: rotate(90deg);
+}
+
+#console {
+  grid-area: 2/2/span 3/span 2;
+  min-width: 400px;
+  height: 540px;
+  left: 718px;
+  top: 67px;
+  padding: 5%;
+  background: #ffda00;
+  border: 10px solid #000000;
+  box-sizing: border-box;
+  box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+  border-radius: 29px;
+}
+#console #gameBox {
   display: block;
   margin: 0 auto;
   width: 600px;
   height: 450px;
   overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+  border-radius: 29px;
 }
 
-#startBtn {
-  position: absolute;
-  z-index: 999;
-  margin: 25% 40%;
-}
-
+/********/
 #canvas {
   background: black;
 }

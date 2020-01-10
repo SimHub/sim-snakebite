@@ -6,11 +6,10 @@ const socketIO = require("socket.io");
 const port = process.env.PORT || 3000;
 // const ipaddress = "192.168.2.101";
 const ipaddress = "localhost";
-//app.use(express.static(__dirname + "/dist"));
 const server = express()
   .use(express.static("dist"))
   .listen(port, ipaddress, () => {
-    console.log("Listening on " + ipaddress + ":" + port);
+    // console.log("Listening on " + ipaddress + ":" + port);
   });
 const io = socketIO(server);
 //let setEnemyId = new Map();
@@ -21,8 +20,8 @@ let count = 0;
 let snakeArr = [];
 
 function onConnection(socket) {
-  clientID = socket.client.id;
-  console.log("CLIENTID:", clientID);
+  clientID = socket.client.id.substring(0, 5);
+  // console.log("CLIENTID:", clientID);
   // setEnemyId.set(count++, { enemyId: socket.client.id });
   setEnemyId.push(clientID);
   // setEnemyId.filter(item => item !== clientID);
@@ -70,6 +69,11 @@ function onConnection(socket) {
   socket.on("leave", msg => {
     // ?
   });
+  socket.on("gameover", msg => {
+    snakeArr = snakeArr.filter(i => i.id === socket.client.id);
+    io.emit("gameover", clientID);
+    io.emit("enemyId", snakeArr);
+  });
 
   ///
   socket.on("disconnect", function() {
@@ -79,8 +83,10 @@ function onConnection(socket) {
     // console.log(setEnemyId.filter(i => i != socket.client.id));
     // setEnemyId.filter(i => i != socket.client.id);
 
-    console.log(snakeArr.filter(i => i.id != socket.client.id));
-    snakeArr = snakeArr.filter(i => i.id != socket.client.id);
+    // console.log(snakeArr.filter(i => i.id != socket.client.id));
+    snakeArr = snakeArr.filter(i => i.id === socket.client.id);
+    io.emit("enemyId", snakeArr);
+    console.log(snakeArr);
   });
 }
 

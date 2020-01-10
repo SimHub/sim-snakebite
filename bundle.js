@@ -1,7 +1,9 @@
+import "typeface-orbitron";
 import "bulma/css/bulma.css";
 import "bulma-badge/dist/css/bulma-badge.min.css";
 import "./node_modules/nes.css/css/nes.css";
 import "typeface-press-start-2p";
+import Swal from "sweetalert2";
 import "./scss/main.scss";
 import Snake from "./game";
 import ConnectionManager from "./ConnectionManager";
@@ -16,6 +18,24 @@ _connectionManager.connect("http://localhost:3000");
 // _connectionManager.connect("/game");
 const _io = _connectionManager.io();
 let snake = new Snake(canvas, _io);
+_io.on("gameover", _id => {
+  console.log("enemy fallen ", _id);
+  if (_id === snake.getclientID()) {
+    console.log("enemy fallen id", snake.getclientID());
+    Swal.fire({
+      title: "GAME OVER!",
+      confirmButtonText: "new game",
+      width: 600,
+      padding: "3em",
+      background: "#fff"
+    }).then(result => {
+      if (result.value) {
+        console.log(result.value);
+        let snake = new Snake(canvas, _io);
+      }
+    });
+  }
+});
 // startBtn.addEventListener("click", function() {
 // _io.emit("start", "GAME HAS STARTED");
 // });
