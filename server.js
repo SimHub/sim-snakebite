@@ -1,14 +1,13 @@
 const express = require("express");
 const app = express();
 const http = require("http").Server(app);
-// const io = require("socket.io")(http);
 const socketIO = require("socket.io");
-const port = process.env.PORT || 3000;
-// const ipaddress = "192.168.2.101";
-const ipaddress = "localhost";
+const _ip = require("./utils.ts");
+
+const port = process.env.PORT || _ip.port;
 const server = express()
   .use(express.static("dist"))
-  .listen(port, ipaddress, () => {
+  .listen(_ip.port, _ip.pupWlnIp, () => {
     // console.log("Listening on " + ipaddress + ":" + port);
   });
 const io = socketIO(server);

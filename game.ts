@@ -11,8 +11,6 @@ export default class Snake {
   private socket: any;
   private clientId: string;
   private enemyId: [] | string;
-  private enemyChange: boolean;
-  private clientIdArr: [];
   private countEnemys: number;
   private enemyPosX: number;
   private enemyPosY: number;
@@ -44,8 +42,6 @@ export default class Snake {
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
-    this.clientIdArr = [];
-    this.trophy = document.querySelector("#trophy");
     this.coin = document.querySelector("#coin");
     this.infoBox = document.querySelector("#infoBox");
     this.container = document.querySelector("#gameBox");

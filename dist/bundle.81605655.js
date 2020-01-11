@@ -3325,8 +3325,6 @@ function () {
     this.socket = io;
     this.clientId = null;
     this.enemyId = null;
-    this.clientIdArr = [];
-    this.trophy = document.querySelector("#trophy");
     this.coin = document.querySelector("#coin");
     this.infoBox = document.querySelector("#infoBox");
     this.container = document.querySelector("#gameBox"); // this.container.style.height =
@@ -13416,7 +13414,14 @@ function () {
 }();
 
 exports.default = ConnectionManager;
-},{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"bundle.js":[function(require,module,exports) {
+},{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"utils.ts":[function(require,module,exports) {
+module.exports = {
+  locIp: "localhost",
+  pupEanIp: "192.168.2.104",
+  pupWlnIp: "192.168.2.101",
+  port: "3000"
+};
+},{}],"bundle.js":[function(require,module,exports) {
 "use strict";
 
 require("typeface-orbitron");
@@ -13437,18 +13442,19 @@ var _game = _interopRequireDefault(require("./game"));
 
 var _ConnectionManager = _interopRequireDefault(require("./ConnectionManager"));
 
+var _utils = _interopRequireDefault(require("./utils"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var canvas = document.querySelector("#canvas");
 var startBtn = document.querySelector("#startBtn");
 var disconnectBtn = document.querySelector("#disconnect");
 
-var _connectionManager = new _ConnectionManager.default(); // _connectionManager.connect("http://192.168.2.104:3000");
-// _connectionManager.connect("http://192.168.2.101:3000");
+var _connectionManager = new _ConnectionManager.default();
 
+var arr = [];
 
-_connectionManager.connect("http://localhost:3000"); // _connectionManager.connect("/game");
-
+_connectionManager.connect("http://".concat(_utils.default.pupWlnIp, ":").concat(_utils.default.port));
 
 var _io = _connectionManager.io();
 
@@ -13457,7 +13463,7 @@ var snake = new _game.default(canvas, _io);
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
 
-  if (_id === snake.getclientID()) {
+  if (_id !== snake.getclientID()) {
     console.log("enemy fallen id", snake.getclientID());
 
     _sweetalert.default.fire({
@@ -13480,7 +13486,7 @@ _io.on("gameover", function (_id) {
 // disconnectBtn.addEventListener("click", function() {
 // _io.emit("leave", "PLAYER HAS LEFT");
 // });
-},{"typeface-orbitron":"node_modules/typeface-orbitron/index.css","bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"typeface-orbitron":"node_modules/typeface-orbitron/index.css","bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts","./utils":"utils.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -13508,7 +13514,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62955" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51555" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
