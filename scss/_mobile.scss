@@ -1,8 +1,9 @@
-section#dialog{
+section#dialog {
   display: none;
 }
 .snake-title {
-  opacity: 0.5;
+  display: none;
+  // opacity: 0.5;
   position: absolute;
   font-size: 1.4em;
 }
@@ -24,8 +25,6 @@ section#dialog{
 #gameBox {
   display: block;
   margin: 0 auto;
-  width: 350px;
-  height: 520px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -40,4 +39,8 @@ section#dialog{
   line-height: 35px;
   border-radius: 0;
   height: 48px;
+
+  #trophy {
+    font-size: 2.3em;
+  }
 }

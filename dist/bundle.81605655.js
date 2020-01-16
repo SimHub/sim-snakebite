@@ -3593,8 +3593,7 @@ function () {
   }, {
     key: "joystickControl",
     value: function joystickControl(newDirection) {
-      console.log("logMobileDir: ", newDirection);
-
+      // console.log("logMobileDir: ", newDirection);
       if (!this.directionLock) {
         this.directionLock = true;
         var h = ["left", "right", "up", "down"];
@@ -13589,7 +13588,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51178" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49967" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

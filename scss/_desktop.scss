@@ -6,12 +6,12 @@
     "midleft midcenter midcenter2 midright"
     "btleft btcenter btcenter2 btright"
     "ftleft ftcenter ftcenter2 ftright";
-  grid-template-rows: 1fr 160px 250px 215px 1fr;
-  grid-template-columns: 1fr 190px 190px 1fr;
+  grid-template-rows: 1fr 160px 248px 173px 1fr;
+  grid-template-columns: 1fr 170px 170px 1fr;
 }
 /*******/
-section#dialog{
-// display:block;
+section#dialog {
+  // display:block;
 }
 .snake-title {
   grid-area: upleft;
@@ -30,7 +30,7 @@ section#dialog{
   font-size: 1.5em;
 }
 #cross {
-  display:block;
+  display: block;
   grid-area: ftright;
   align-self: center;
 }
@@ -45,17 +45,15 @@ section#dialog{
   grid-area: 2/2 / span 3 / span 2;
   border: 6px solid #000000;
   box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-  border-radius: 29px;
+  border-radius: 15px;
 
   #gameBox {
     display: block;
     margin: 0 auto;
-    width: 350px;
-    height: 520px;
     overflow: hidden;
     box-sizing: border-box;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-    border-radius: 29px;
+    border-radius: 15px;
   }
   #gameStats {
     grid-area: btcenter2;
@@ -110,13 +108,7 @@ section#dialog{
       }
     }
     #trophy {
-      border-radius: 5px;
-      align-self: center;
-      text-align: center;
       font-size: 2.5em;
-      // text-shadow: 3px 3px 6px black;
-      font-weight: 800;
-      align-self: flex-end;
     }
   }
 }
@@ -128,5 +120,3 @@ section#dialog{
 .nes-container {
   padding: 0;
 }
-
-

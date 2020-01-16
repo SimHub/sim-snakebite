@@ -13901,8 +13901,8 @@ body {
 #console #gameBox {
   display: block;
   margin: 0 auto;
-  width: 350px;
-  height: 520px;
+  width: 310px;
+  height: 460px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -13946,7 +13946,6 @@ body {
   border-radius: 5px;
   align-self: center;
   text-align: center;
-  font-size: 2.5em;
   font-weight: 800;
   align-self: flex-end;
 }
@@ -13965,7 +13964,7 @@ section#dialog {
 }
 
 .snake-title {
-  opacity: 0.5;
+  display: none;
   position: absolute;
   font-size: 1.4em;
 }
@@ -13990,8 +13989,6 @@ section#dialog {
 #gameBox {
   display: block;
   margin: 0 auto;
-  width: 350px;
-  height: 520px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -14007,13 +14004,16 @@ section#dialog {
   border-radius: 0;
   height: 48px;
 }
+#gameStats #trophy {
+  font-size: 2.3em;
+}
 
 @media only screen and (min-width: 40em) {
   #wrapper {
     display: grid;
     grid-template-areas: "navleft navcenter navcenter2 navright" "upleft upcenter upcenter2 upright" "midleft midcenter midcenter2 midright" "btleft btcenter btcenter2 btright" "ftleft ftcenter ftcenter2 ftright";
-    grid-template-rows: 1fr 160px 250px 215px 1fr;
-    grid-template-columns: 1fr 190px 190px 1fr;
+    grid-template-rows: 1fr 160px 248px 173px 1fr;
+    grid-template-columns: 1fr 170px 170px 1fr;
   }
 
   /*******/
@@ -14054,17 +14054,15 @@ section#dialog {
     grid-area: 2/2/span 3/span 2;
     border: 6px solid #000000;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-    border-radius: 29px;
+    border-radius: 15px;
   }
   #console #gameBox {
     display: block;
     margin: 0 auto;
-    width: 350px;
-    height: 520px;
     overflow: hidden;
     box-sizing: border-box;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-    border-radius: 29px;
+    border-radius: 15px;
   }
   #console #gameStats {
     grid-area: btcenter2;
@@ -14116,12 +14114,7 @@ section#dialog {
     font-weight: 900;
   }
   #console #gameStats #trophy {
-    border-radius: 5px;
-    align-self: center;
-    text-align: center;
     font-size: 2.5em;
-    font-weight: 800;
-    align-self: flex-end;
   }
 
   /********/
