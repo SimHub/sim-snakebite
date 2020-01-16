@@ -3,12 +3,13 @@ const app = express();
 const http = require("http").Server(app);
 const socketIO = require("socket.io");
 const _ip = require("./utils.ts");
+const ipaddress = _ip.pupWlnIp;
 
 const port = process.env.PORT || _ip.port;
 const server = express()
   .use(express.static("dist"))
-  .listen(_ip.port, _ip.pupWlnIp, () => {
-    // console.log("Listening on " + ipaddress + ":" + port);
+  .listen(_ip.port, ipaddress, () => {
+    console.log("Listening on " + ipaddress + ":" + port);
   });
 const io = socketIO(server);
 //let setEnemyId = new Map();

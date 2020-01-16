@@ -33,10 +33,12 @@ export default class Snake {
   private coin: HTMLElement;
   private infoBox: HTMLElement;
   private score: number;
+  private mobileDir: string;
 
   public isPaused: boolean;
 
   constructor(cnv: HTMLCanvasElement, io) {
+    this.FPS = 60;
     this.score = 0;
     this.isPaused = false;
     this.socket = io;
@@ -45,10 +47,6 @@ export default class Snake {
     this.coin = document.querySelector("#coin");
     this.infoBox = document.querySelector("#infoBox");
     this.container = document.querySelector("#gameBox");
-    // this.container.style.height =
-    // (this.container.clientHeight - this.infoBox.clientHeight).toString() +
-    // 'px';
-    // console.log([this.container]);
     this.canvas = cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
@@ -70,6 +68,8 @@ export default class Snake {
       Math.round(
         this.random(this.size, this.canvas.height - this.size) / this.size
       ) * this.size;
+
+    this.trophy = document.querySelector("#trophy");
 
     this.snake = new SnakePlayer(
       this.posX,
@@ -170,24 +170,22 @@ export default class Snake {
     // this.socket.on('start', data => {
     // const startBtn: HTMLElement = document.querySelector('#startBtn');
     // startBtn.style.display = 'none';
-    this.start();
+    // this.start();
     // });
   }
   random(min, max) {
     return Math.random() * (max - min) + min;
   }
-
-  start() {
+  start(isMobile = false) {
     this.setApple(); // SET APPLE
-
+    if (!isMobile) {
+      window.addEventListener("keydown", e => this.keyDown(e));
+    }
     window.setTimeout(() => {
       this.tick(), this.speed;
     }, 1000 / this.FPS); // LOOP
-
-    // window.requestAnimationFrame(() => this.draw());
-
-    window.addEventListener("keydown", e => this.keyDown(e));
-    window.addEventListener("resize", () => this.resize());
+    window.requestAnimationFrame(() => this.draw());
+    // window.addEventListener("resize", () => this.resize());
   }
 
   setApple() {
@@ -314,6 +312,29 @@ export default class Snake {
     window.setTimeout(() => this.tick(), this.speed);
     this.directionLock = false;
   }
+  joystickControl(newDirection) {
+    // console.log("logMobileDir: ", newDirection);
+    if (!this.directionLock) {
+      this.directionLock = true;
+
+      let h = ["left", "right", "up", "down"];
+
+      if (h.includes(newDirection)) {
+        if (this.direction === "left" && newDirection !== "right") {
+          this.direction = newDirection;
+        }
+        if (this.direction === "up" && newDirection !== "down") {
+          this.direction = newDirection;
+        }
+        if (this.direction === "down" && newDirection !== "up") {
+          this.direction = newDirection;
+        }
+        if (this.direction === "right" && newDirection !== "left") {
+          this.direction = newDirection;
+        }
+      }
+    }
+  }
   keyDown(e) {
     if (!this.directionLock) {
       this.directionLock = true;
@@ -348,9 +369,9 @@ export default class Snake {
     return this.clientId;
   }
   appleBiteScore(sc) {
-    console.log(this.trophy.getAttribute("data-badge"));
+    // console.log(this.trophy.getAttribute("data-badge"));
     this.trophy.innerText = sc;
-    console.log(this.trophy.getAttribute("data-badge"));
+    // console.log(this.trophy.getAttribute("data-badge"));
   }
   resize() {
     // console.log('RESIZE');

@@ -1,0 +1,43 @@
+section#dialog{
+  display: none;
+}
+.snake-title {
+  opacity: 0.5;
+  position: absolute;
+  font-size: 1.4em;
+}
+.date {
+  display: none;
+}
+#cross {
+  display: none;
+}
+#console {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background: #ffda00;
+  box-sizing: border-box;
+}
+
+#gameBox {
+  display: block;
+  margin: 0 auto;
+  width: 350px;
+  height: 520px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+#gameStats {
+  display: flex;
+  justify-content: space-evenly;
+  font-family: "Orbitron", sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 0;
+  height: 48px;
+}

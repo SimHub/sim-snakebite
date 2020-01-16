@@ -15,7 +15,6 @@
         <img class="stripe" src="img/stripe.svg" alt="stripe" /><br />
         Snake<br />Game
       </div>
-      <div id="trophy">0</div>
       <!-- <div id="playerBox"> -->
       <!-- <img id="playerAvatar" src="img/player.svg" alt="player" /> -->
       <!-- </div> -->
@@ -24,11 +23,18 @@
           <canvas id="canvas"></canvas>
         </div>
         <div id="gameStats">
-          <div id="enemyStats"></div>
-          <div id="combo">Combo</div>
-          <div id="multiply"><img src="img/multiply.svg" alt=""></div>
-          <span class="combo-number">12</span>
+          <!-- <div id="enemyStats"></div> -->
+          <div id="comboBox">
+            <div class="combo">combo</div>
+            <div id="multiply"><img src="img/multiply.svg" alt="" /></div>
+            <span class="combo-number">12</span>
+          </div>
+
+          <div class="headerDivider"></div>
+          <i class="nes-icon trophy"></i>
+          <div id="trophy">0</div>
         </div>
+<div id="zone_joystick"></div>
       </div>
 
       <div class="date">
@@ -37,8 +43,16 @@
         <span>2</span>
         <span>0</span>
       </div>
-      <div id="cross"><img src="img/cross.svg" alt="" /></div>
-    </div>
+      <div
+        id="cross"
+        class="has-tooltip-primary "
+      >
+        <img src="img/cross.svg" alt="" />
+      </div>
+      <div id="author">
+        @SimHub 2020 <br />
+        <em>inspired by @rwds on dribble</em>
+      </div>
     <script src="bundle.js"></script>
   </body>
 </html>

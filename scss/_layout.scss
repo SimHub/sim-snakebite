@@ -1,94 +1,108 @@
-$f-family: 'Orbitron', sans-serif;
+$f-family: "Orbitron", sans-serif;
+$f2-family: "Press Start 2P", cursive;
 body {
   margin: 0;
   padding: 0;
   background: #e13361;
 }
 #wrapper {
+  overflow: hidden;
   height: 100vh;
   width: 100%;
-  display: grid;
-  grid-template-areas:
-    'navleft navcenter navcenter2 navright'
-    'upleft upcenter upcenter2 upright'
-    'midleft midcenter midcenter2 midright'
-    'btleft btcenter btcenter2 btright'
-    'ftleft ftcenter ftcenter2 ftright';
-  grid-template-rows: 1fr 1fr 250px 250px 1fr;
-  grid-template-columns: 1fr 330px 336px 1fr;
 }
 /*******/
+.headerDivider {
+  border-left: 1px solid #38546d;
+  border-right: 1px solid #16222c;
+  height: 37px;
+}
 .stripe {
   margin-left: -66px;
 }
-#trophy {
-  grid-area: navright;
+.snake-title {
   text-align: center;
   font-family: $f-family;
-  font-size: 2em;
-  font-weight: 600;
-  margin-top: 33px;
-  position: relative;
   color: #fad9e0;
 }
 #playerBox {
-  grid-area: midright;
   text-align: center;
   #playerAvatar {
     transform: rotate(90deg);
   }
 }
-.snake-title {
-  grid-area: navleft;
-  text-align: center;
-  font-family: $f-family;
-  font-weight: 900;
-  color: #fad9e0;
-}
 .date {
-  grid-area: midright;
-  align-self: center;
-  margin-bottom: -119px;
-  text-align: center;
   font-family: $f-family;
-  font-weight: 200;
-  font-size: 1.5em;
   color: #fad9e0;
   transform: rotate(90deg);
 }
 #cross {
-  grid-area: ftright;
+  position: relative;
   text-align: center;
+  // cursor: pointer;
   & img {
     margin-top: -65px;
+    width: 25px;
+  }
+  &:hover:after {
+    position: absolute;
+    top: -55px;
+    color: white;
+    font-family: $f2-family;
+    font-weight: 800;
+    content: "HELP!";
+  }
+}
+#author,
+#inspiredBy {
+  display: none;
+  text-align: center;
+  font-family: $f-family;
+  color: white;
+}
+.dialog-ok-btn {
+  width: 100%;
+  bottom: -58px;
+  position: absolute;
+  left: 0;
+}
+/* combo */
+.combo {
+  width: 108px;
+  height: 40px;
+  line-height: 30px;
+  font-size: 1.3em;
+  font-weight: 900;
+  background: #f93c6f;
+  border: 6px solid #000000;
+  box-sizing: border-box;
+  border-radius: 25px;
+  font-family: $f-family;
+  color: white;
+
+  & img {
     width: 20px;
   }
 }
+.info-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #console {
-  grid-area: 2/2 / span 3 / span 2;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  // min-width: 400px;
-  // height: 540px;
-  // left: 718px;
-  // top: 67px;
-  // padding-top: 4%;
   background: #ffda00;
-  border: 6px solid #000000;
   box-sizing: border-box;
-  box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-  border-radius: 29px;
 
   #gameBox {
     display: block;
     margin: 0 auto;
-    width: 600px;
-    height: 450px;
+    width: 350px;
+    height: 520px;
     overflow: hidden;
     box-sizing: border-box;
-    box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
-    border-radius: 29px;
   }
   #gameStats {
     grid-area: btcenter2;
@@ -97,38 +111,47 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    font-family: $f-family;
     width: 100%;
     box-sizing: border-box;
     text-align: center;
     line-height: 35px;
+    // color: white;
 
     #enemyStats {
       border: 6px solid black;
       width: 299px;
       height: 61px;
-       display: -webkit-box;
+      display: -webkit-box;
       display: flex;
       overflow-x: scroll;
       overflow: hidden;
       -webkit-overflow-scrolling: touch;
+    }
+    #comboBox {
+      display: flex;
+      align-items: center;
 
+      #multiply img {
+        width: 20px;
+      }
+      & .combo-number {
+        align-self: flex-end;
+        font-family: $f-family;
+        font-size: 1.4em;
+        font-weight: 900;
+        // text-shadow: 3px 3px 6px black;
+      }
     }
-    & #combo {
-      width: 126px;
-      height: 46px;
-      font-family: $f-family;
-      font-size: 1.3em;
-      font-weight: 900;
-      color: white;
-      background: #f93c6f;
-      border: 6px solid #000000;
-      box-sizing: border-box;
-      border-radius: 25px;
-    }
-    & .combo-number {
-      font-family: $f-family;
-      font-size: 3em;
-      font-weight: 900;
+
+    #trophy {
+      border-radius: 5px;
+      align-self: center;
+      text-align: center;
+      font-size: 2.5em;
+      // text-shadow: 3px 3px 6px black;
+      font-weight: 800;
+      align-self: flex-end;
     }
   }
 }

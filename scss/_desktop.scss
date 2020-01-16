@@ -1,0 +1,132 @@
+#wrapper {
+  display: grid;
+  grid-template-areas:
+    "navleft navcenter navcenter2 navright"
+    "upleft upcenter upcenter2 upright"
+    "midleft midcenter midcenter2 midright"
+    "btleft btcenter btcenter2 btright"
+    "ftleft ftcenter ftcenter2 ftright";
+  grid-template-rows: 1fr 160px 250px 215px 1fr;
+  grid-template-columns: 1fr 190px 190px 1fr;
+}
+/*******/
+section#dialog{
+// display:block;
+}
+.snake-title {
+  grid-area: upleft;
+  font-weight: 900;
+  font-size: 3em;
+}
+#playerBox {
+  grid-area: midright;
+}
+.date {
+  display: none;
+  grid-area: midright;
+  align-self: center;
+  margin: 15px;
+  font-weight: 200;
+  font-size: 1.5em;
+}
+#cross {
+  display:block;
+  grid-area: ftright;
+  align-self: center;
+}
+#author,
+#inspiredBy {
+  grid-area: ftleft;
+  margin: 23px;
+  font-size: 1em;
+  font-weight: 100;
+}
+#console {
+  grid-area: 2/2 / span 3 / span 2;
+  border: 6px solid #000000;
+  box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+  border-radius: 29px;
+
+  #gameBox {
+    display: block;
+    margin: 0 auto;
+    width: 350px;
+    height: 520px;
+    overflow: hidden;
+    box-sizing: border-box;
+    box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+    border-radius: 29px;
+  }
+  #gameStats {
+    grid-area: btcenter2;
+    align-self: flex-start;
+    justify-self: baseline;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 35px;
+    // color: white;
+
+    #enemyStats {
+      border: 6px solid black;
+      width: 299px;
+      height: 61px;
+      display: -webkit-box;
+      display: flex;
+      overflow-x: scroll;
+      overflow: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+    #comboBox {
+      display: flex;
+      align-items: center;
+      #combo {
+        width: 108px;
+        height: 40px;
+        line-height: 30px;
+        font-size: 1.3em;
+        font-weight: 900;
+        background: #f93c6f;
+        border: 6px solid #000000;
+        box-sizing: border-box;
+        border-radius: 25px;
+        color: white;
+
+        & img {
+          width: 20px;
+        }
+      }
+      #multiply img {
+        width: 20px;
+      }
+      & .combo-number {
+        align-self: flex-end;
+        font-size: 1.4em;
+        font-weight: 900;
+        // text-shadow: 3px 3px 6px black;
+      }
+    }
+    #trophy {
+      border-radius: 5px;
+      align-self: center;
+      text-align: center;
+      font-size: 2.5em;
+      // text-shadow: 3px 3px 6px black;
+      font-weight: 800;
+      align-self: flex-end;
+    }
+  }
+}
+
+/********/
+#canvas {
+  background: black;
+}
+.nes-container {
+  padding: 0;
+}
+
+
