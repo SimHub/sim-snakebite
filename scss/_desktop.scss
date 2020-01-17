@@ -13,11 +13,24 @@
 section#dialog {
   // display:block;
 }
-.snake-title {
+.snake-title,
+.snake-title2 {
   display: block;
-  grid-area: upleft;
-  font-weight: 900;
-  font-size: 3em;
+  width: 500px;
+  height: 400px;
+  z-index: 0;
+}
+.snake-title {
+  background: url("../img/Snake-game-logo.svg") no-repeat;
+  background-size: contain;
+}
+.snake-title2 {
+  position: absolute;
+  background: url("../img/Snake-game-logo2.svg") no-repeat;
+  background-size: contain;
+  right: 0;
+  bottom: 0;
+  transform: rotate(180deg);
 }
 #playerBox {
   grid-area: midright;
@@ -47,6 +60,7 @@ section#dialog {
   border: 6px solid #000000;
   box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
   border-radius: 15px;
+  z-index: 99;
 
   #gameBox {
     display: block;

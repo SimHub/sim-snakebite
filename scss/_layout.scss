@@ -37,7 +37,8 @@ body {
 }
 #cross {
   position: relative;
-  text-align: center;
+  // text-align: center;
+  z-index: 99;
   // cursor: pointer;
   & img {
     margin-top: -65px;
@@ -46,17 +47,17 @@ body {
   &:hover::after {
     position: absolute;
     top: -126px;
-    left: 114px;
+    // left: 114px;
     color: white;
     font-family: $f2-family;
     font-weight: 800;
     content: "Control \A ------ \A ◀︎ ▲ ▼ ▶︎ \A";
     white-space: pre-wrap;
-    border: 3px solid;
-    border-radius: 5px;
+    // border: 3px solid;
+    // border-radius: 5px;
     padding-bottom: 1%;
     box-sizing: border-box;
-    background: #63e3b8;
+    // background: #63e3b8;
     width: 147px;
   }
 }

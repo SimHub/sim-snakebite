@@ -13838,7 +13838,7 @@ body {
 
 #cross {
   position: relative;
-  text-align: center;
+  z-index: 99;
 }
 #cross img {
   margin-top: -65px;
@@ -13847,17 +13847,13 @@ body {
 #cross:hover::after {
   position: absolute;
   top: -126px;
-  left: 114px;
   color: white;
   font-family: "Press Start 2P", cursive;
   font-weight: 800;
   content: "Control \a------ \a◀︎ ▲ ▼ ▶︎ \a";
   white-space: pre-wrap;
-  border: 3px solid;
-  border-radius: 5px;
   padding-bottom: 1%;
   box-sizing: border-box;
-  background: #63e3b8;
   width: 147px;
 }
 
@@ -14017,7 +14013,7 @@ section#dialog {
   font-size: 2.3em;
 }
 
-@media only screen and (min-width: 40em) {
+@media only screen and (min-width: 30em) {
   #wrapper {
     display: grid;
     grid-template-areas: "navleft navcenter navcenter2 navright" "upleft upcenter upcenter2 upright" "midleft midcenter midcenter2 midright" "btleft btcenter btcenter2 btright" "ftleft ftcenter ftcenter2 ftright";
@@ -14026,11 +14022,26 @@ section#dialog {
   }
 
   /*******/
-  .snake-title {
+  .snake-title,
+.snake-title2 {
     display: block;
-    grid-area: upleft;
-    font-weight: 900;
-    font-size: 3em;
+    width: 500px;
+    height: 400px;
+    z-index: 0;
+  }
+
+  .snake-title {
+    background: url("/Snake-game-logo.b4cb25c0.svg") no-repeat;
+    background-size: contain;
+  }
+
+  .snake-title2 {
+    position: absolute;
+    background: url("/Snake-game-logo2.5cf60e6a.svg") no-repeat;
+    background-size: contain;
+    right: 0;
+    bottom: 0;
+    transform: rotate(180deg);
   }
 
   #playerBox {
@@ -14065,6 +14076,7 @@ section#dialog {
     border: 6px solid #000000;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
     border-radius: 15px;
+    z-index: 99;
   }
   #console #gameBox {
     display: block;
