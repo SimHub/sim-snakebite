@@ -13528,9 +13528,8 @@ if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
     snake.joystickControl(move);
   });
 } // START SNAKE GAME //
+// snake.start(isMobile);
 
-
-snake.start(isMobile);
 
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
@@ -13552,14 +13551,14 @@ _io.on("gameover", function (_id) {
       }
     });
   }
-});
-
-cross.addEventListener("click", function () {
-  _sweetalert.default.fire({
-    confirmButtonText: "OK!",
-    html: " <p>\u25B2 \u25C0\uFE0E \u25B6\uFE0E \u25BC</p> <br/>\n    <div class=\"info-Box\"><span class=\"combo\">combo</span><p style=\"font-size:1.5em;font-weight:800\"> +=12 bites you'll get a suprice ;)</p></div>\n    "
-  });
-});
+}); // cross.addEventListener("click", () => {
+// Swal.fire({
+// confirmButtonText: "OK!",
+// html: ` <p>▲ ◀︎ ▶︎ ▼</p> <br/>
+// <div class="info-Box"><span class="combo">combo</span><p style="font-size:1.5em;font-weight:800"> +=12 bites you'll get a suprice ;)</p></div>
+// `
+// });
+// });
 },{"./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","bulma-tooltip/dist/css/bulma-tooltip.min.css":"node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css","typeface-orbitron":"node_modules/typeface-orbitron/index.css","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","nipplejs":"node_modules/nipplejs/dist/nipplejs.js","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts","./utils":"utils.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13588,7 +13587,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49967" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51583" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

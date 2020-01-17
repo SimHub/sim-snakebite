@@ -13793,6 +13793,7 @@ label.panel-block:hover {
     url('/orbitron-latin-900.55fdb5b3.woff') format('woff'); /* Modern Browsers */
 }
 
+@charset "UTF-8";
 body {
   margin: 0;
   padding: 0;
@@ -13843,13 +13844,21 @@ body {
   margin-top: -65px;
   width: 25px;
 }
-#cross:hover:after {
+#cross:hover::after {
   position: absolute;
-  top: -55px;
+  top: -126px;
+  left: 114px;
   color: white;
   font-family: "Press Start 2P", cursive;
   font-weight: 800;
-  content: "HELP!";
+  content: "Control \a------ \a◀︎ ▲ ▼ ▶︎ \a";
+  white-space: pre-wrap;
+  border: 3px solid;
+  border-radius: 5px;
+  padding-bottom: 1%;
+  box-sizing: border-box;
+  background: #63e3b8;
+  width: 147px;
 }
 
 #author,
@@ -14018,6 +14027,7 @@ section#dialog {
 
   /*******/
   .snake-title {
+    display: block;
     grid-area: upleft;
     font-weight: 900;
     font-size: 3em;

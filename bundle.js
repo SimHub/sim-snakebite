@@ -56,7 +56,7 @@ if (
 }
 
 // START SNAKE GAME //
-snake.start(isMobile);
+// snake.start(isMobile);
 
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);
@@ -77,11 +77,11 @@ _io.on("gameover", _id => {
   }
 });
 
-cross.addEventListener("click", () => {
-  Swal.fire({
-    confirmButtonText: "OK!",
-    html: ` <p>▲ ◀︎ ▶︎ ▼</p> <br/>
-    <div class="info-Box"><span class="combo">combo</span><p style="font-size:1.5em;font-weight:800"> +=12 bites you'll get a suprice ;)</p></div>
-    `
-  });
-});
+// cross.addEventListener("click", () => {
+// Swal.fire({
+// confirmButtonText: "OK!",
+// html: ` <p>▲ ◀︎ ▶︎ ▼</p> <br/>
+// <div class="info-Box"><span class="combo">combo</span><p style="font-size:1.5em;font-weight:800"> +=12 bites you'll get a suprice ;)</p></div>
+// `
+// });
+// });

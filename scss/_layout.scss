@@ -43,13 +43,21 @@ body {
     margin-top: -65px;
     width: 25px;
   }
-  &:hover:after {
+  &:hover::after {
     position: absolute;
-    top: -55px;
+    top: -126px;
+    left: 114px;
     color: white;
     font-family: $f2-family;
     font-weight: 800;
-    content: "HELP!";
+    content: "Control \A ------ \A ◀︎ ▲ ▼ ▶︎ \A";
+    white-space: pre-wrap;
+    border: 3px solid;
+    border-radius: 5px;
+    padding-bottom: 1%;
+    box-sizing: border-box;
+    background: #63e3b8;
+    width: 147px;
   }
 }
 #author,
