@@ -1,61 +1,68 @@
 import SnakePlayer from "./snake";
-
+interface snakeProps {
+  cnt: HTMLElement;
+  cnv: HTMLCanvasElement;
+  trophy?: HTMLElement;
+  io: object;
+}
 export default class Snake {
+  private socket: object;
   private canvas: HTMLCanvasElement;
   private readonly context: CanvasRenderingContext2D;
+  private trophy: HTMLElement;
   private direction: string;
-  private enemyDirection: string;
+  // private enemyDirection: string;
   private directionLock: boolean;
   private xEnd: number;
   private yEnd: number;
-  private socket: any;
   private clientId: string;
-  private enemyId: [] | string;
-  private countEnemys: number;
-  private enemyPosX: number;
-  private enemyPosY: number;
+  // private enemyId: [] | string;
   private newEnemyIDs: [];
   private posX: number;
   private posY: number;
-  private snl: any;
+  // private snl: any;
   private FPS: number;
   private snake: any;
-  private player: any;
-  private snakeEnemy: any;
-  private snakeEnemys: any;
-  private enemyColor: string;
+  private snakeEnemies: any;
   private size: number;
   private appleSize: number;
   private apple: {};
   private speed: number;
   private container: HTMLElement;
-  private trophy: HTMLElement;
-  private coin: HTMLElement;
-  private infoBox: HTMLElement;
-  private score: number;
-  private mobileDir: string;
+  private gradient: object;
 
+  // public //
+  public score: number;
   public isPaused: boolean;
 
-  constructor(cnv: HTMLCanvasElement, io) {
-    this.FPS = 60;
-    this.score = 0;
-    this.isPaused = false;
-    this.socket = io;
-    this.clientId = null;
-    this.enemyId = null;
-    this.coin = document.querySelector("#coin");
-    this.infoBox = document.querySelector("#infoBox");
-    this.container = document.querySelector("#gameBox");
-    this.canvas = cnv;
+  // constructor(
+  // container: HTMLElement,
+  // cnv: HTMLCanvasElement,
+  // trophy: HTMLElement,
+  // io: object
+  // ) {
+  constructor(sn: snakeProps) {
+    console.log(sn);
+    this.socket = sn.io;
+    this.trophy = sn.trophy;
+    this.container = sn.cnt;
+    this.canvas = sn.cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
-
     this.context = this.canvas.getContext("2d");
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
+
+    console.log(typeof this.socket);
+    console.log(this.socket);
+
+    this.FPS = 60;
+    this.score = 0;
+    this.isPaused = false;
+    this.clientId = null;
+    // this.enemyId = null;
     this.directionLock = false;
     this.direction = this.getRandomDirection();
     // this.posX = Math.floor(Math.random() * this.canvas.width);
@@ -68,9 +75,6 @@ export default class Snake {
       Math.round(
         this.random(this.size, this.canvas.height - this.size) / this.size
       ) * this.size;
-
-    this.trophy = document.querySelector("#trophy");
-
     this.snake = new SnakePlayer(
       this.posX,
       this.posY,
@@ -78,16 +82,10 @@ export default class Snake {
       this.getRandomColor(),
       this.direction
     ).snake();
-    this.snakeEnemy = [];
-    this.snakeEnemys = new Set();
-    this.enemyColor;
-    this.player = null;
+    this.snakeEnemies = new Set();
     this.apple = {};
-    this.enemyDirection = "left";
+    // this.enemyDirection = "left";
     this.speed = 200;
-    this.countEnemys = 0;
-    this.enemyPosX = null;
-    this.enemyPosY = null;
     this.newEnemyIDs = [];
     this.enemyChange = false;
 
@@ -96,7 +94,7 @@ export default class Snake {
     this.gradient.addColorStop(0, "black");
     this.gradient.addColorStop(0.5, "red");
     this.gradient.addColorStop(1, "white");
-
+    console.log(typeof this.gradient);
     //
     /// socket con ///
     this.socket.on("clientId", id => {
@@ -106,13 +104,12 @@ export default class Snake {
     });
 
     this.socket.on("enemyId", id => {
-      this.snakeEnemys.clear();
-      console.log("new enemy - ", this.snakeEnemys);
+      this.snakeEnemies.clear();
+      console.log("new enemy - ", this.snakeEnemies);
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
         console.log(_id);
         if (_id.id !== this.clientId) {
-          // this.enemyColor = this.getRandomColor();
           let snl = new SnakePlayer(
             _id.x,
             _id.y,
@@ -120,13 +117,13 @@ export default class Snake {
             _id.color,
             _id.direction
           ).enemySnake();
-          this.snakeEnemys.add(snl);
+          this.snakeEnemies.add(snl);
         }
       });
     });
 
     this.socket.on("enemyDirection", data => {
-      this.snakeEnemys.forEach((i, k) => {
+      this.snakeEnemies.forEach((i, k) => {
         if (i[0].enemyId === data.id) {
           i[0].direction = data.direction;
         }
@@ -139,7 +136,7 @@ export default class Snake {
       newEnemy[0].enemyId = enemy.id;
       delete newEnemy[0].id;
 
-      this.snakeEnemys.forEach((i, k) => {
+      this.snakeEnemies.forEach((i, k) => {
         if (newEnemy[0].enemyId === i[0].enemyId) {
           newEnemy[0].color = i[0].color;
           for (let j = 0; j < newEnemy.length; j++) {
@@ -147,7 +144,7 @@ export default class Snake {
           }
         }
       });
-      // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
+      // console.log('ENEMY ARR OUTSIDE', this.snakeEnemies);
     });
     this.socket.on("apple", a => {
       this.apple = a;
@@ -155,15 +152,15 @@ export default class Snake {
 
     this.socket.on("user disconnected", enemyID => {
       console.log("someone has gone ", enemyID);
-      this.snakeEnemys.forEach(enemy => {
+      this.snakeEnemies.forEach(enemy => {
         console.log(enemy[0].enemyId, enemyID);
         if (enemy[0].enemyId === enemyID) {
           console.log(enemy[0].enemyId === enemyID);
           console.log(enemy);
-          this.snakeEnemys.delete(enemy);
+          this.snakeEnemies.delete(enemy);
         }
       });
-      console.log(this.snakeEnemys);
+      console.log(this.snakeEnemies);
     });
 
     //#### START GAME ####/
@@ -176,11 +173,9 @@ export default class Snake {
   random(min, max) {
     return Math.random() * (max - min) + min;
   }
-  start(isMobile = false) {
+  start() {
     this.setApple(); // SET APPLE
-    // if (!isMobile) {
     window.addEventListener("keydown", e => this.keyDown(e));
-    // }
     window.setTimeout(() => {
       this.tick(), this.speed;
     }, 1000 / this.FPS); // LOOP
@@ -217,7 +212,7 @@ export default class Snake {
     /////////
 
     //  ENEMY /////
-    this.snakeEnemys.forEach((enemy, k) => {
+    this.snakeEnemies.forEach((enemy, k) => {
       // console.log(enemy);
       for (let i = 0; i < enemy.length; i += 1) {
         const s = enemy[i];
@@ -261,8 +256,6 @@ export default class Snake {
         this.speed *= 0.99;
         this.setApple();
         // const c = document.createElement('i');
-        // c.classList.add('nes-icon', 'coin');
-        // this.coin.appendChild(c);
         // console.log('PLAYER GOT APPLE', this.snake[i]);
         this.score++;
         this.appleBiteScore(this.score);

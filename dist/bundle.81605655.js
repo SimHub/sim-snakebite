@@ -3303,6 +3303,8 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -3324,21 +3326,22 @@ var snake_1 = __importDefault(require("./snake"));
 var Snake =
 /*#__PURE__*/
 function () {
-  function Snake(cnv, io) {
+  // constructor(
+  // container: HTMLElement,
+  // cnv: HTMLCanvasElement,
+  // trophy: HTMLElement,
+  // io: object
+  // ) {
+  function Snake(sn) {
     var _this = this;
 
     _classCallCheck(this, Snake);
 
-    this.FPS = 60;
-    this.score = 0;
-    this.isPaused = false;
-    this.socket = io;
-    this.clientId = null;
-    this.enemyId = null;
-    this.coin = document.querySelector("#coin");
-    this.infoBox = document.querySelector("#infoBox");
-    this.container = document.querySelector("#gameBox");
-    this.canvas = cnv;
+    console.log(sn);
+    this.socket = sn.io;
+    this.trophy = sn.trophy;
+    this.container = sn.cnt;
+    this.canvas = sn.cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
     this.context = this.canvas.getContext("2d");
@@ -3346,31 +3349,32 @@ function () {
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
+    console.log(_typeof(this.socket));
+    console.log(this.socket);
+    this.FPS = 60;
+    this.score = 0;
+    this.isPaused = false;
+    this.clientId = null; // this.enemyId = null;
+
     this.directionLock = false;
     this.direction = this.getRandomDirection(); // this.posX = Math.floor(Math.random() * this.canvas.width);
     // this.posY = Math.floor(Math.random() * this.canvas.height);
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.trophy = document.querySelector("#trophy");
     this.snake = new snake_1.default(this.posX, this.posY, null, this.getRandomColor(), this.direction).snake();
-    this.snakeEnemy = [];
-    this.snakeEnemys = new Set();
-    this.enemyColor;
-    this.player = null;
-    this.apple = {};
-    this.enemyDirection = "left";
+    this.snakeEnemies = new Set();
+    this.apple = {}; // this.enemyDirection = "left";
+
     this.speed = 200;
-    this.countEnemys = 0;
-    this.enemyPosX = null;
-    this.enemyPosY = null;
     this.newEnemyIDs = [];
     this.enemyChange = false; // color //
 
     this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
     this.gradient.addColorStop(0, "black");
     this.gradient.addColorStop(0.5, "red");
-    this.gradient.addColorStop(1, "white"); //
+    this.gradient.addColorStop(1, "white");
+    console.log(_typeof(this.gradient)); //
     /// socket con ///
 
     this.socket.on("clientId", function (id) {
@@ -3380,24 +3384,23 @@ function () {
       _this.socket.emit("enemyId", _this.snake[0]);
     });
     this.socket.on("enemyId", function (id) {
-      _this.snakeEnemys.clear();
+      _this.snakeEnemies.clear();
 
-      console.log("new enemy - ", _this.snakeEnemys);
+      console.log("new enemy - ", _this.snakeEnemies);
       _this.newEnemyIDs = id;
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
         console.log(_id);
 
         if (_id.id !== _this.clientId) {
-          // this.enemyColor = this.getRandomColor();
           var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.color, _id.direction).enemySnake();
 
-          _this.snakeEnemys.add(snl);
+          _this.snakeEnemies.add(snl);
         }
       });
     });
     this.socket.on("enemyDirection", function (data) {
-      _this.snakeEnemys.forEach(function (i, k) {
+      _this.snakeEnemies.forEach(function (i, k) {
         if (i[0].enemyId === data.id) {
           i[0].direction = data.direction;
         }
@@ -3409,7 +3412,7 @@ function () {
       newEnemy[0].enemyId = enemy.id;
       delete newEnemy[0].id;
 
-      _this.snakeEnemys.forEach(function (i, k) {
+      _this.snakeEnemies.forEach(function (i, k) {
         if (newEnemy[0].enemyId === i[0].enemyId) {
           newEnemy[0].color = i[0].color;
 
@@ -3417,7 +3420,7 @@ function () {
             i[j] = newEnemy[j];
           }
         }
-      }); // console.log('ENEMY ARR OUTSIDE', this.snakeEnemys);
+      }); // console.log('ENEMY ARR OUTSIDE', this.snakeEnemies);
 
     });
     this.socket.on("apple", function (a) {
@@ -3426,18 +3429,18 @@ function () {
     this.socket.on("user disconnected", function (enemyID) {
       console.log("someone has gone ", enemyID);
 
-      _this.snakeEnemys.forEach(function (enemy) {
+      _this.snakeEnemies.forEach(function (enemy) {
         console.log(enemy[0].enemyId, enemyID);
 
         if (enemy[0].enemyId === enemyID) {
           console.log(enemy[0].enemyId === enemyID);
           console.log(enemy);
 
-          _this.snakeEnemys.delete(enemy);
+          _this.snakeEnemies.delete(enemy);
         }
       });
 
-      console.log(_this.snakeEnemys);
+      console.log(_this.snakeEnemies);
     }); //#### START GAME ####/
     // this.socket.on('start', data => {
     // const startBtn: HTMLElement = document.querySelector('#startBtn');
@@ -3456,14 +3459,11 @@ function () {
     value: function start() {
       var _this2 = this;
 
-      var isMobile = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       this.setApple(); // SET APPLE
-      // if (!isMobile) {
 
       window.addEventListener("keydown", function (e) {
         return _this2.keyDown(e);
-      }); // }
-
+      });
       window.setTimeout(function () {
         _this2.tick(), _this2.speed;
       }, 1000 / this.FPS); // LOOP
@@ -3495,7 +3495,7 @@ function () {
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); /////////
       //  ENEMY /////
 
-      this.snakeEnemys.forEach(function (enemy, k) {
+      this.snakeEnemies.forEach(function (enemy, k) {
         // console.log(enemy);
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
@@ -3538,8 +3538,6 @@ function () {
 
           this.speed *= 0.99;
           this.setApple(); // const c = document.createElement('i');
-          // c.classList.add('nes-icon', 'coin');
-          // this.coin.appendChild(c);
           // console.log('PLAYER GOT APPLE', this.snake[i]);
 
           this.score++;
@@ -13451,6 +13449,8 @@ function () {
 exports.default = ConnectionManager;
 },{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"utils.ts":[function(require,module,exports) {
 module.exports = {
+  http: "http://",
+  https: "https://",
   locIp: "localhost",
   pupEanIp: "192.168.2.104",
   pupWlnIp: "192.168.2.101",
@@ -13485,6 +13485,8 @@ var _utils = _interopRequireDefault(require("./utils"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var container = document.querySelector("#gameBox");
+var trophy = document.querySelector("#trophy");
 var cross = document.querySelector("#cross");
 var dialog = document.querySelector("#dialog-dark-rounded");
 var canvas = document.querySelector("#canvas");
@@ -13494,22 +13496,19 @@ var disconnectBtn = document.querySelector("#disconnect");
 var _connectionManager = new _ConnectionManager.default();
 
 var arr = [];
+var joystick; //### Init socket&snake ###//
 
-_connectionManager.connect("http://".concat(_utils.default.pupWlnIp, ":").concat(_utils.default.port));
+_connectionManager.connect("".concat(_utils.default.http).concat(_utils.default.pupWlnIp, ":").concat(_utils.default.port));
 
-var _io = _connectionManager.io();
+var _io = _connectionManager.io(); // let snake = new Snake(container, canvas, _io);
 
-var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-var iPad = (/iPad|iPhone|iPod/.test(navigator.platform) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) && !window.MSStream;
-var snake = new _game.default(canvas, _io);
-var joystick;
-var isMobile = false;
-console.log(iPad, mobile); // if (
-// mobile ||
-// iPad
-// ) {
-// console.log("Is Mobile");
-// isMobile = true;
+
+var snake = new _game.default({
+  cnt: container,
+  cnv: canvas,
+  trophy: trophy,
+  io: _io
+}); // JOYSTICK //
 
 var options = {
   static: {
@@ -13530,13 +13529,10 @@ joystick.on("start end", function (evt) {}).on("dir:up dir:left dir:down " + " d
   var move = evt.type.split(":")[1]; // console.log(move);
 
   snake.joystickControl(move);
-}); // show joystickIcon
-// document.querySelector("#joystickIcon").style.display = "block";
-// document.querySelector("#keyboardIcon").style.display = "none";
-// }
-// START SNAKE GAME //
+}); //### START SNAKE GAME ###//
 
-snake.start(isMobile);
+snake.start(); //=======================//
+//### Game over ###//
 
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
@@ -13558,14 +13554,7 @@ _io.on("gameover", function (_id) {
       }
     });
   }
-}); // cross.addEventListener("click", () => {
-// Swal.fire({
-// confirmButtonText: "OK!",
-// html: ` <p>▲ ◀︎ ▶︎ ▼</p> <br/>
-// <div class="info-Box"><span class="combo">combo</span><p style="font-size:1.5em;font-weight:800"> +=12 bites you'll get a suprice ;)</p></div>
-// `
-// });
-// });
+});
 },{"./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","bulma-tooltip/dist/css/bulma-tooltip.min.css":"node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css","typeface-orbitron":"node_modules/typeface-orbitron/index.css","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","nipplejs":"node_modules/nipplejs/dist/nipplejs.js","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts","./utils":"utils.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13594,7 +13583,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50790" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49965" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

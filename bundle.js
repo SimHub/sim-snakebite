@@ -11,6 +11,8 @@ import Snake from "./game";
 import ConnectionManager from "./ConnectionManager";
 import IP from "./utils";
 
+const container = document.querySelector("#gameBox");
+const trophy = document.querySelector("#trophy");
 const cross = document.querySelector("#cross");
 const dialog = document.querySelector("#dialog-dark-rounded");
 const canvas = document.querySelector("#canvas");
@@ -18,27 +20,15 @@ const startBtn = document.querySelector("#startBtn");
 const disconnectBtn = document.querySelector("#disconnect");
 const _connectionManager = new ConnectionManager();
 let arr = [];
-
-_connectionManager.connect(`http://${IP.pupWlnIp}:${IP.port}`);
-const _io = _connectionManager.io();
-const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-  navigator.userAgent
-);
-const iPad =
-  (/iPad|iPhone|iPod/.test(navigator.platform) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) &&
-  !window.MSStream;
-let snake = new Snake(canvas, _io);
 let joystick;
-let isMobile = false;
 
-console.log(iPad, mobile);
-// if (
-// mobile ||
-// iPad
-// ) {
-// console.log("Is Mobile");
-// isMobile = true;
+//### Init socket&snake ###//
+_connectionManager.connect(`${IP.http}${IP.pupWlnIp}:${IP.port}`);
+const _io = _connectionManager.io();
+// let snake = new Snake(container, canvas, _io);
+let snake = new Snake({ cnt: container, cnv: canvas, trophy: trophy, io: _io });
+
+// JOYSTICK //
 const options = {
   static: {
     zone: document.getElementById("zone_joystick"),
@@ -60,14 +50,12 @@ joystick
     // console.log(move);
     snake.joystickControl(move);
   });
-// show joystickIcon
-// document.querySelector("#joystickIcon").style.display = "block";
-// document.querySelector("#keyboardIcon").style.display = "none";
-// }
 
-// START SNAKE GAME //
-snake.start(isMobile);
+//### START SNAKE GAME ###//
+snake.start();
+//=======================//
 
+//### Game over ###//
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);
   if (_id !== snake.getclientID()) {
@@ -87,11 +75,3 @@ _io.on("gameover", _id => {
   }
 });
 
-// cross.addEventListener("click", () => {
-// Swal.fire({
-// confirmButtonText: "OK!",
-// html: ` <p>▲ ◀︎ ▶︎ ▼</p> <br/>
-// <div class="info-Box"><span class="combo">combo</span><p style="font-size:1.5em;font-weight:800"> +=12 bites you'll get a suprice ;)</p></div>
-// `
-// });
-// });
