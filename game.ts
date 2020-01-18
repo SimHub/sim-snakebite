@@ -105,7 +105,6 @@ export default class Snake {
 
     this.socket.on("enemyId", id => {
       this.snakeEnemies.clear();
-      console.log("new enemy - ", this.snakeEnemies);
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
         console.log(_id);
@@ -120,6 +119,7 @@ export default class Snake {
           this.snakeEnemies.add(snl);
         }
       });
+      console.log("new enemy - ", this.snakeEnemies);
     });
 
     this.socket.on("enemyDirection", data => {
@@ -158,6 +158,7 @@ export default class Snake {
           console.log(enemy[0].enemyId === enemyID);
           console.log(enemy);
           this.snakeEnemies.delete(enemy);
+          console.log(this.snakeEnemies);
         }
       });
       console.log(this.snakeEnemies);

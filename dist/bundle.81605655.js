@@ -3386,7 +3386,6 @@ function () {
     this.socket.on("enemyId", function (id) {
       _this.snakeEnemies.clear();
 
-      console.log("new enemy - ", _this.snakeEnemies);
       _this.newEnemyIDs = id;
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
@@ -3398,6 +3397,8 @@ function () {
           _this.snakeEnemies.add(snl);
         }
       });
+
+      console.log("new enemy - ", _this.snakeEnemies);
     });
     this.socket.on("enemyDirection", function (data) {
       _this.snakeEnemies.forEach(function (i, k) {
@@ -3437,6 +3438,8 @@ function () {
           console.log(enemy);
 
           _this.snakeEnemies.delete(enemy);
+
+          console.log(_this.snakeEnemies);
         }
       });
 
@@ -13583,7 +13586,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49965" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50439" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

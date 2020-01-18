@@ -21,6 +21,8 @@ let snakeArr = [];
 
 function onConnection(socket) {
   clientID = socket.client.id.substring(0, 5);
+  console.log("Connect ", socket.client.id);
+  console.log("Connect ", clientID);
   // console.log("CLIENTID:", clientID);
   // setEnemyId.set(count++, { enemyId: socket.client.id });
   setEnemyId.push(clientID);
@@ -77,16 +79,18 @@ function onConnection(socket) {
 
   ///
   socket.on("disconnect", function() {
+    let disconnectClientID = socket.client.id.substring(0, 5);
     count = 0;
-    socket.broadcast.emit("user disconnected", socket.client.id);
+    socket.broadcast.emit("user disconnected", disconnectClientID);
     console.log("disconnect ", socket.client.id);
+    console.log("disconnect ", disconnectClientID);
     // console.log(setEnemyId.filter(i => i != socket.client.id));
     // setEnemyId.filter(i => i != socket.client.id);
 
     // console.log(snakeArr.filter(i => i.id != socket.client.id));
-    snakeArr = snakeArr.filter(i => i.id === socket.client.id);
-    io.emit("enemyId", snakeArr);
-    console.log(snakeArr);
+    snakeArr = snakeArr.filter(i => i.id !== disconnectClientID);
+    // io.emit("enemyId", snakeArr);
+    console.log("SNAKEARR: ", snakeArr);
   });
 }
 
