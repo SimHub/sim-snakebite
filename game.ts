@@ -178,9 +178,9 @@ export default class Snake {
   }
   start(isMobile = false) {
     this.setApple(); // SET APPLE
-    if (!isMobile) {
-      window.addEventListener("keydown", e => this.keyDown(e));
-    }
+    // if (!isMobile) {
+    window.addEventListener("keydown", e => this.keyDown(e));
+    // }
     window.setTimeout(() => {
       this.tick(), this.speed;
     }, 1000 / this.FPS); // LOOP

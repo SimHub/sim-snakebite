@@ -24,14 +24,14 @@ section#dialog {
   background: url("../img/Snake-game-logo.svg") no-repeat;
   background-size: contain;
 }
-.snake-title2 {
-  position: absolute;
-  background: url("../img/Snake-game-logo2.svg") no-repeat;
-  background-size: contain;
-  right: 0;
-  bottom: 0;
-  transform: rotate(180deg);
-}
+// .snake-title2 {
+// position: absolute;
+// background: url("../img/Snake-game-logo2.svg") no-repeat;
+// background-size: contain;
+// right: 0;
+// bottom: 0;
+// transform: rotate(180deg);
+// }
 #playerBox {
   grid-area: midright;
 }

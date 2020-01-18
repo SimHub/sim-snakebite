@@ -35,11 +35,28 @@ body {
   color: #fad9e0;
   transform: rotate(90deg);
 }
+#iconbox {
+  grid-area: ftright;
+  width: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: -45px;
+  margin-left: 21px;
+  #joystickIcon {
+    // display: none;
+    width: 35px;
+    margin-left: 12px;
+  }
+  #keyboardIcon {
+    // display: none;
+    margin-top: 10px;
+    width: 45px;
+  }
+}
 #cross {
   position: relative;
-  // text-align: center;
   z-index: 99;
-  // cursor: pointer;
   & img {
     margin-top: -65px;
     width: 25px;

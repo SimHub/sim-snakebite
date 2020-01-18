@@ -21,42 +21,52 @@ let arr = [];
 
 _connectionManager.connect(`http://${IP.pupWlnIp}:${IP.port}`);
 const _io = _connectionManager.io();
+const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+  navigator.userAgent
+);
+const iPad =
+  (/iPad|iPhone|iPod/.test(navigator.platform) ||
+    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1)) &&
+  !window.MSStream;
 let snake = new Snake(canvas, _io);
 let joystick;
 let isMobile = false;
 
-if (
-  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  )
-) {
-  console.log("Is Mobile");
-  isMobile = true;
-  const options = {
-    static: {
-      zone: document.getElementById("zone_joystick"),
-      mode: "static",
-      position: {
-        left: "50%",
-        top: "50%",
-        lockX: true, // only move on the X axis
-        lockY: true
-      },
-      color: "red"
-    }
-  };
-  joystick = nipplejs.create(options);
-  joystick
-    .on("start end", function(evt) {})
-    .on("dir:up dir:left dir:down " + " dir:right", function(evt, data) {
-      let move = evt.type.split(":")[1];
-      // console.log(move);
-      snake.joystickControl(move);
-    });
-}
+console.log(iPad, mobile);
+// if (
+// mobile ||
+// iPad
+// ) {
+// console.log("Is Mobile");
+// isMobile = true;
+const options = {
+  static: {
+    zone: document.getElementById("zone_joystick"),
+    mode: "static",
+    position: {
+      left: "50%",
+      top: "50%",
+      lockX: true, // only move on the X axis
+      lockY: true
+    },
+    color: "red"
+  }
+};
+joystick = nipplejs.create(options);
+joystick
+  .on("start end", function(evt) {})
+  .on("dir:up dir:left dir:down " + " dir:right", function(evt, data) {
+    let move = evt.type.split(":")[1];
+    // console.log(move);
+    snake.joystickControl(move);
+  });
+// show joystickIcon
+// document.querySelector("#joystickIcon").style.display = "block";
+// document.querySelector("#keyboardIcon").style.display = "none";
+// }
 
 // START SNAKE GAME //
-// snake.start(isMobile);
+snake.start(isMobile);
 
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);

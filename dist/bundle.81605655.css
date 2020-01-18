@@ -13836,6 +13836,24 @@ body {
   transform: rotate(90deg);
 }
 
+#iconbox {
+  grid-area: ftright;
+  width: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: -45px;
+  margin-left: 21px;
+}
+#iconbox #joystickIcon {
+  width: 35px;
+  margin-left: 12px;
+}
+#iconbox #keyboardIcon {
+  margin-top: 10px;
+  width: 45px;
+}
+
 #cross {
   position: relative;
   z-index: 99;
@@ -13964,6 +13982,10 @@ body {
   padding: 0;
 }
 
+body {
+  overflow: hidden;
+}
+
 section#dialog {
   display: none;
 }
@@ -14033,15 +14055,6 @@ section#dialog {
   .snake-title {
     background: url("/Snake-game-logo.b4cb25c0.svg") no-repeat;
     background-size: contain;
-  }
-
-  .snake-title2 {
-    position: absolute;
-    background: url("/Snake-game-logo2.5cf60e6a.svg") no-repeat;
-    background-size: contain;
-    right: 0;
-    bottom: 0;
-    transform: rotate(180deg);
   }
 
   #playerBox {

@@ -3238,7 +3238,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/Snake-game-logo.svg":[["Snake-game-logo.b4cb25c0.svg","img/Snake-game-logo.svg"],"img/Snake-game-logo.svg"],"./../img/Snake-game-logo2.svg":[["Snake-game-logo2.5cf60e6a.svg","img/Snake-game-logo2.svg"],"img/Snake-game-logo2.svg"],"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"snake.ts":[function(require,module,exports) {
+},{"./../img/Snake-game-logo.svg":[["Snake-game-logo.b4cb25c0.svg","img/Snake-game-logo.svg"],"img/Snake-game-logo.svg"],"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"snake.ts":[function(require,module,exports) {
 "use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -3458,12 +3458,11 @@ function () {
 
       var isMobile = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
       this.setApple(); // SET APPLE
+      // if (!isMobile) {
 
-      if (!isMobile) {
-        window.addEventListener("keydown", function (e) {
-          return _this2.keyDown(e);
-        });
-      }
+      window.addEventListener("keydown", function (e) {
+        return _this2.keyDown(e);
+      }); // }
 
       window.setTimeout(function () {
         _this2.tick(), _this2.speed;
@@ -13500,36 +13499,44 @@ _connectionManager.connect("http://".concat(_utils.default.pupWlnIp, ":").concat
 
 var _io = _connectionManager.io();
 
+var mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+var iPad = (/iPad|iPhone|iPod/.test(navigator.platform) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) && !window.MSStream;
 var snake = new _game.default(canvas, _io);
 var joystick;
 var isMobile = false;
+console.log(iPad, mobile); // if (
+// mobile ||
+// iPad
+// ) {
+// console.log("Is Mobile");
+// isMobile = true;
 
-if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  console.log("Is Mobile");
-  isMobile = true;
-  var options = {
-    static: {
-      zone: document.getElementById("zone_joystick"),
-      mode: "static",
-      position: {
-        left: "50%",
-        top: "50%",
-        lockX: true,
-        // only move on the X axis
-        lockY: true
-      },
-      color: "red"
-    }
-  };
-  joystick = _nipplejs.default.create(options);
-  joystick.on("start end", function (evt) {}).on("dir:up dir:left dir:down " + " dir:right", function (evt, data) {
-    var move = evt.type.split(":")[1]; // console.log(move);
+var options = {
+  static: {
+    zone: document.getElementById("zone_joystick"),
+    mode: "static",
+    position: {
+      left: "50%",
+      top: "50%",
+      lockX: true,
+      // only move on the X axis
+      lockY: true
+    },
+    color: "red"
+  }
+};
+joystick = _nipplejs.default.create(options);
+joystick.on("start end", function (evt) {}).on("dir:up dir:left dir:down " + " dir:right", function (evt, data) {
+  var move = evt.type.split(":")[1]; // console.log(move);
 
-    snake.joystickControl(move);
-  });
-} // START SNAKE GAME //
-// snake.start(isMobile);
+  snake.joystickControl(move);
+}); // show joystickIcon
+// document.querySelector("#joystickIcon").style.display = "block";
+// document.querySelector("#keyboardIcon").style.display = "none";
+// }
+// START SNAKE GAME //
 
+snake.start(isMobile);
 
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
@@ -13587,7 +13594,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54467" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50790" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
