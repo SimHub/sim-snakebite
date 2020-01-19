@@ -3488,14 +3488,15 @@ function () {
       var _this3 = this;
 
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
-      // this.context.fillStyle = 'red';
 
-      this.context.fillStyle = this.gradient; // this.context.shadowColor = 'orange'; // string
+      this.context.fillStyle = "red"; // this.context.fillStyle = this.gradient;
+      // this.context.shadowColor = 'orange'; // string
       // this.context.shadowOffsetX = 0; // integer
       // this.context.shadowOffsetY = 0; // integer
       // this.context.shadowBlur = 10;
 
-      this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size); /////////
+      this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
+      this.context.clearRect(this.apple.x + 1, this.apple.y + 1, this.size - 2, this.size - 2); /////////
       //  ENEMY /////
 
       this.snakeEnemies.forEach(function (enemy, k) {
@@ -13586,7 +13587,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50439" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54830" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

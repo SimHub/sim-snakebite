@@ -201,8 +201,8 @@ export default class Snake {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // APPLE ///
-    // this.context.fillStyle = 'red';
-    this.context.fillStyle = this.gradient;
+    this.context.fillStyle = "red";
+    // this.context.fillStyle = this.gradient;
 
     // this.context.shadowColor = 'orange'; // string
     // this.context.shadowOffsetX = 0; // integer
@@ -210,6 +210,12 @@ export default class Snake {
     // this.context.shadowBlur = 10;
 
     this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
+    this.context.clearRect(
+      this.apple.x + 1,
+      this.apple.y + 1,
+      this.size - 2,
+      this.size - 2
+    );
     /////////
 
     //  ENEMY /////
