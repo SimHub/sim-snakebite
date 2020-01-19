@@ -3496,7 +3496,7 @@ function () {
       // this.context.shadowBlur = 10;
 
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
-      this.context.clearRect(this.apple.x + 1, this.apple.y + 1, this.size - 2, this.size - 2); /////////
+      this.context.clearRect(this.apple.x + 1.5, this.apple.y + 1.5, this.size - 2.7, this.size - 2.7); /////////
       //  ENEMY /////
 
       this.snakeEnemies.forEach(function (enemy, k) {
