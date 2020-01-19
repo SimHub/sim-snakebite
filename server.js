@@ -18,6 +18,7 @@ let clientID;
 let clientIDs;
 let count = 0;
 let snakeArr = [];
+let enemyColors = [];
 
 function onConnection(socket) {
   clientID = socket.client.id.substring(0, 5);
@@ -45,7 +46,10 @@ function onConnection(socket) {
     // console.log(msg);
     io.emit("start", msg);
   });
-
+  socket.on("snakeColor", color => {
+    enemyColors.push(color);
+    io.emit("snakeColor", enemyColors);
+  });
   socket.on("direction", direction => {
     io.emit("direction", { id: clientID, direction });
   });

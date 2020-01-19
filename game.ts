@@ -17,12 +17,14 @@ export default class Snake {
   private yEnd: number;
   private clientId: string;
   // private enemyId: [] | string;
-  private newEnemyIDs: [];
   private posX: number;
   private posY: number;
   // private snl: any;
   private FPS: number;
   private snake: any;
+  private snakeColor: string;
+  private newEnemyIDs: [];
+  private enemyColors: [];
   private snakeEnemies: any;
   private size: number;
   private appleSize: number;
@@ -75,13 +77,20 @@ export default class Snake {
       Math.round(
         this.random(this.size, this.canvas.height - this.size) / this.size
       ) * this.size;
+    this.enemyColors = [];
+    this.snakeColor = this.getRandomColor();
     this.snake = new SnakePlayer(
       this.posX,
       this.posY,
       null,
-      this.getRandomColor(),
+      this.snakeColor,
       this.direction
     ).snake();
+    this.socket.emit("snakeColor", this.snake[0].color);
+    this.socket.on("snakeColor", colors => {
+      this.enemyColors = colors;
+    });
+    console.log(this.snake[0].color);
     this.snakeEnemies = new Set();
     this.apple = {};
     // this.enemyDirection = "left";
@@ -90,11 +99,11 @@ export default class Snake {
     this.enemyChange = false;
 
     // color //
-    this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
-    this.gradient.addColorStop(0, "black");
-    this.gradient.addColorStop(0.5, "red");
-    this.gradient.addColorStop(1, "white");
-    console.log(typeof this.gradient);
+    // this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
+    // this.gradient.addColorStop(0, "black");
+    // this.gradient.addColorStop(0.5, "red");
+    // this.gradient.addColorStop(1, "white");
+    // console.log(typeof this.gradient);
     //
     /// socket con ///
     this.socket.on("clientId", id => {
@@ -104,6 +113,8 @@ export default class Snake {
     });
 
     this.socket.on("enemyId", id => {
+      console.log(this.snakeColor);
+      console.log(this.enemyColors);
       this.snakeEnemies.clear();
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
@@ -388,7 +399,8 @@ export default class Snake {
     return items[Math.floor(Math.random() * items.length)];
   }
   getRandomColor() {
-    var letters = "0123456789ABCDEF";
+    const letters = "0123456789ABCDEF";
+    let _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574"];
     // var letters = [
     // 'Orange',
     // 'White ',
@@ -413,7 +425,19 @@ export default class Snake {
       color += letters[Math.floor(Math.random() * 16)];
       // color = letters[Math.floor(Math.random() * 16)];
     }
-    return color;
+    console.log(color + " _");
+    console.log(this.enemyColors.length);
+    if (
+      _hash.includes(color) || this.enemyColors !== 0
+        ? this.enemyColors.includes(color)
+        : null
+    ) {
+      console.log("VERBIDDEN COLOR");
+      this.getRandomColor();
+    } else {
+      console.log("GOOD COLOR");
+      return color;
+    }
   }
   hitTestPoint(x1, y1, w1, h1, x2, y2) {
     //x1, y1 = x and y coordinates of object 1

@@ -3362,19 +3362,26 @@ function () {
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.snake = new snake_1.default(this.posX, this.posY, null, this.getRandomColor(), this.direction).snake();
+    this.enemyColors = [];
+    this.snakeColor = this.getRandomColor();
+    this.snake = new snake_1.default(this.posX, this.posY, null, this.snakeColor, this.direction).snake();
+    this.socket.emit("snakeColor", this.snake[0].color);
+    this.socket.on("snakeColor", function (colors) {
+      _this.enemyColors = colors;
+    });
+    console.log(this.snake[0].color);
     this.snakeEnemies = new Set();
     this.apple = {}; // this.enemyDirection = "left";
 
     this.speed = 200;
     this.newEnemyIDs = [];
     this.enemyChange = false; // color //
-
-    this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
-    this.gradient.addColorStop(0, "black");
-    this.gradient.addColorStop(0.5, "red");
-    this.gradient.addColorStop(1, "white");
-    console.log(_typeof(this.gradient)); //
+    // this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
+    // this.gradient.addColorStop(0, "black");
+    // this.gradient.addColorStop(0.5, "red");
+    // this.gradient.addColorStop(1, "white");
+    // console.log(typeof this.gradient);
+    //
     /// socket con ///
 
     this.socket.on("clientId", function (id) {
@@ -3384,6 +3391,9 @@ function () {
       _this.socket.emit("enemyId", _this.snake[0]);
     });
     this.socket.on("enemyId", function (id) {
+      console.log(_this.snakeColor);
+      console.log(_this.enemyColors);
+
       _this.snakeEnemies.clear();
 
       _this.newEnemyIDs = id;
@@ -3686,7 +3696,8 @@ function () {
   }, {
     key: "getRandomColor",
     value: function getRandomColor() {
-      var letters = "0123456789ABCDEF"; // var letters = [
+      var letters = "0123456789ABCDEF";
+      var _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574"]; // var letters = [
       // 'Orange',
       // 'White ',
       // 'Beige',
@@ -3711,7 +3722,16 @@ function () {
         color += letters[Math.floor(Math.random() * 16)]; // color = letters[Math.floor(Math.random() * 16)];
       }
 
-      return color;
+      console.log(color + " _");
+      console.log(this.enemyColors.length);
+
+      if (_hash.includes(color) || this.enemyColors !== 0 ? this.enemyColors.includes(color) : null) {
+        console.log("VERBIDDEN COLOR");
+        this.getRandomColor();
+      } else {
+        console.log("GOOD COLOR");
+        return color;
+      }
     }
   }, {
     key: "hitTestPoint",
