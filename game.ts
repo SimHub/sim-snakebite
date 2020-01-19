@@ -37,12 +37,6 @@ export default class Snake {
   public score: number;
   public isPaused: boolean;
 
-  // constructor(
-  // container: HTMLElement,
-  // cnv: HTMLCanvasElement,
-  // trophy: HTMLElement,
-  // io: object
-  // ) {
   constructor(sn: snakeProps) {
     console.log(sn);
     this.socket = sn.io;
@@ -254,15 +248,6 @@ export default class Snake {
   tick() {
     for (let i = this.snake.length - 1; i >= 0; i--) {
       if (
-        // (i === 0 &&
-        // this.hitTestPoint(
-        // this.snake[i].x,
-        // this.snake[i].y,
-        // this.appleSize,
-        // this.appleSize,
-        // this.apple.x,
-        // this.apple.y
-        // )) ||
         i == 0 &&
         this.snake[i].x === this.apple.x &&
         this.snake[i].y === this.apple.y
@@ -401,29 +386,9 @@ export default class Snake {
   getRandomColor() {
     const letters = "0123456789ABCDEF";
     let _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574"];
-    // var letters = [
-    // 'Orange',
-    // 'White ',
-    // 'Beige',
-    // 'Blue',
-    // 'BurlyWood',
-    // 'Chocolate',
-    // 'Coral',
-    // 'Cornsilk',
-    // 'DarkCyan ',
-    // 'Fuchsia',
-    // 'Gold',
-    // 'GreenYellow',
-    // 'HotPink',
-    // 'LightSteelBlue',
-    // 'MediumPurple',
-    // 'OliveDrab',
-    // ];
     var color = "#";
-    // var color = '';
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
-      // color = letters[Math.floor(Math.random() * 16)];
     }
     console.log(color + " _");
     console.log(this.enemyColors.length);
@@ -437,18 +402,6 @@ export default class Snake {
     } else {
       console.log("GOOD COLOR");
       return color;
-    }
-  }
-  hitTestPoint(x1, y1, w1, h1, x2, y2) {
-    //x1, y1 = x and y coordinates of object 1
-    //w1, h1 = width and height of object 1
-    //x2, y2 = x and y coordinates of object 2 (usually midpt)
-    if (x1 <= x2 && x1 + w1 >= x2 && y1 <= y2 && y1 + h1 >= y2) {
-      console.log("COLLISION TRUE");
-      return true;
-    } else {
-      // console.log('COLLISION FALSE');
-      return false;
     }
   }
 }
