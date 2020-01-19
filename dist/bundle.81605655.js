@@ -3326,12 +3326,6 @@ var snake_1 = __importDefault(require("./snake"));
 var Snake =
 /*#__PURE__*/
 function () {
-  // constructor(
-  // container: HTMLElement,
-  // cnv: HTMLCanvasElement,
-  // trophy: HTMLElement,
-  // io: object
-  // ) {
   function Snake(sn) {
     var _this = this;
 
@@ -3538,16 +3532,7 @@ function () {
       var _this4 = this;
 
       for (var i = this.snake.length - 1; i >= 0; i--) {
-        if ( // (i === 0 &&
-        // this.hitTestPoint(
-        // this.snake[i].x,
-        // this.snake[i].y,
-        // this.appleSize,
-        // this.appleSize,
-        // this.apple.x,
-        // this.apple.y
-        // )) ||
-        i == 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
+        if (i == 0 && this.snake[i].x === this.apple.x && this.snake[i].y === this.apple.y) {
           this.snake.push({}); //** Todo : enemy tail logic
 
           this.speed *= 0.99;
@@ -3697,29 +3682,11 @@ function () {
     key: "getRandomColor",
     value: function getRandomColor() {
       var letters = "0123456789ABCDEF";
-      var _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574"]; // var letters = [
-      // 'Orange',
-      // 'White ',
-      // 'Beige',
-      // 'Blue',
-      // 'BurlyWood',
-      // 'Chocolate',
-      // 'Coral',
-      // 'Cornsilk',
-      // 'DarkCyan ',
-      // 'Fuchsia',
-      // 'Gold',
-      // 'GreenYellow',
-      // 'HotPink',
-      // 'LightSteelBlue',
-      // 'MediumPurple',
-      // 'OliveDrab',
-      // ];
-
-      var color = "#"; // var color = '';
+      var _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574", "#4F0BCD"];
+      var color = "#";
 
       for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)]; // color = letters[Math.floor(Math.random() * 16)];
+        color += letters[Math.floor(Math.random() * 16)];
       }
 
       console.log(color + " _");
@@ -3731,20 +3698,6 @@ function () {
       } else {
         console.log("GOOD COLOR");
         return color;
-      }
-    }
-  }, {
-    key: "hitTestPoint",
-    value: function hitTestPoint(x1, y1, w1, h1, x2, y2) {
-      //x1, y1 = x and y coordinates of object 1
-      //w1, h1 = width and height of object 1
-      //x2, y2 = x and y coordinates of object 2 (usually midpt)
-      if (x1 <= x2 && x1 + w1 >= x2 && y1 <= y2 && y1 + h1 >= y2) {
-        console.log("COLLISION TRUE");
-        return true;
-      } else {
-        // console.log('COLLISION FALSE');
-        return false;
       }
     }
   }]);
@@ -13561,22 +13514,23 @@ snake.start(); //=======================//
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
 
-  if (_id !== snake.getclientID()) {
-    console.log("enemy fallen id", snake.getclientID());
-
-    _sweetalert.default.fire({
-      title: "GAME OVER!",
-      confirmButtonText: "new game",
-      width: 600,
-      padding: "3em",
-      background: "#fff"
-    }).then(function (result) {
-      if (result.value) {
-        console.log(result.value);
-
-        var _snake = new _game.default(canvas, _io);
-      }
-    });
+  if (_id === snake.getclientID()) {
+    /**
+     *[X] - redirect to start site / auto disconnect / if room - can join again same room
+     */
+    // console.log("enemy fallen id", snake.getclientID());
+    // Swal.fire({
+    // title: "GAME OVER!",
+    // confirmButtonText: "new game",
+    // width: 600,
+    // padding: "3em",
+    // background: "#fff"
+    // }).then(result => {
+    // if (result.value) {
+    // console.log(result.value);
+    // let snake = new Snake(canvas, _io);
+    // }
+    // });
   }
 });
 },{"./node_modules/nes.css/css/nes.css":"node_modules/nes.css/css/nes.css","typeface-press-start-2p":"node_modules/typeface-press-start-2p/index.css","bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","bulma-badge/dist/css/bulma-badge.min.css":"node_modules/bulma-badge/dist/css/bulma-badge.min.css","bulma-tooltip/dist/css/bulma-tooltip.min.css":"node_modules/bulma-tooltip/dist/css/bulma-tooltip.min.css","typeface-orbitron":"node_modules/typeface-orbitron/index.css","sweetalert2":"node_modules/sweetalert2/dist/sweetalert2.all.js","nipplejs":"node_modules/nipplejs/dist/nipplejs.js","./scss/main.scss":"scss/main.scss","./game":"game.ts","./ConnectionManager":"ConnectionManager.ts","./utils":"utils.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -13607,7 +13561,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54830" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51994" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

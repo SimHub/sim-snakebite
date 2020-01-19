@@ -385,7 +385,7 @@ export default class Snake {
   }
   getRandomColor() {
     const letters = "0123456789ABCDEF";
-    let _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574"];
+    let _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574", "#4F0BCD"];
     var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];

@@ -58,20 +58,23 @@ snake.start();
 //### Game over ###//
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);
-  if (_id !== snake.getclientID()) {
-    console.log("enemy fallen id", snake.getclientID());
-    Swal.fire({
-      title: "GAME OVER!",
-      confirmButtonText: "new game",
-      width: 600,
-      padding: "3em",
-      background: "#fff"
-    }).then(result => {
-      if (result.value) {
-        console.log(result.value);
-        let snake = new Snake(canvas, _io);
-      }
-    });
+  if (_id === snake.getclientID()) {
+    /**
+     *[X] - redirect to start site / auto disconnect / if room - can join again same room
+     */
+    // console.log("enemy fallen id", snake.getclientID());
+    // Swal.fire({
+    // title: "GAME OVER!",
+    // confirmButtonText: "new game",
+    // width: 600,
+    // padding: "3em",
+    // background: "#fff"
+    // }).then(result => {
+    // if (result.value) {
+    // console.log(result.value);
+    // let snake = new Snake(canvas, _io);
+    // }
+    // });
   }
 });
 
