@@ -385,7 +385,14 @@ export default class Snake {
   }
   getRandomColor() {
     const letters = "0123456789ABCDEF";
-    let _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574", "#4F0BCD"];
+    let _hash = [
+      "#9727F5",
+      "#FF0000",
+      "#722416",
+      "#9E2574",
+      "#4F0BCD",
+      "#000000"
+    ];
     var color = "#";
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
@@ -397,7 +404,7 @@ export default class Snake {
         ? this.enemyColors.includes(color)
         : null
     ) {
-      console.log("VERBIDDEN COLOR");
+      console.log("FORBIDDEN COLOR");
       this.getRandomColor();
     } else {
       console.log("GOOD COLOR");
