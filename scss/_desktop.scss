@@ -43,6 +43,26 @@ section#dialog {
   font-weight: 200;
   font-size: 1.5em;
 }
+
+#iconbox {
+  grid-area: ftright;
+  width: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: -45px;
+  margin-left: 21px;
+  #joystickIcon {
+    // display: none;
+    width: 35px;
+    margin-left: 12px;
+  }
+  #keyboardIcon {
+    // display: none;
+    margin-top: 10px;
+    width: 45px;
+  }
+}
 #cross {
   display: block;
   grid-area: ftright;

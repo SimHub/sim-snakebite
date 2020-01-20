@@ -13516,7 +13516,12 @@ _io.on("gameover", function (_id) {
 
   if (_id === snake.getclientID()) {
     /**
-     *[X] - redirect to start site / auto disconnect / if room - can join again same room
+     *[x] - combo animation
+     *[x] - combo rewards
+     *[x] - socket rooms
+     *[x] - redirect to start site
+     *[x] - game over/auto disconnect/redirect to start site/
+     *      if room - can join again same room
      */
     // console.log("enemy fallen id", snake.getclientID());
     // Swal.fire({
@@ -13561,7 +13566,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51994" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50877" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

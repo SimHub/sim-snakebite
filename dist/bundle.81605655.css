@@ -13836,24 +13836,6 @@ body {
   transform: rotate(90deg);
 }
 
-#iconbox {
-  grid-area: ftright;
-  width: 200px;
-  display: flex;
-  justify-content: start;
-  align-items: start;
-  margin-top: -45px;
-  margin-left: 21px;
-}
-#iconbox #joystickIcon {
-  width: 35px;
-  margin-left: 12px;
-}
-#iconbox #keyboardIcon {
-  margin-top: 10px;
-  width: 45px;
-}
-
 #cross {
   position: relative;
   z-index: 99;
@@ -14000,6 +13982,10 @@ section#dialog {
   display: none;
 }
 
+#iconbox {
+  display: none;
+}
+
 #cross {
   display: none;
 }
@@ -14068,6 +14054,24 @@ section#dialog {
     margin: 15px;
     font-weight: 200;
     font-size: 1.5em;
+  }
+
+  #iconbox {
+    grid-area: ftright;
+    width: 200px;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-top: -45px;
+    margin-left: 21px;
+  }
+  #iconbox #joystickIcon {
+    width: 35px;
+    margin-left: 12px;
+  }
+  #iconbox #keyboardIcon {
+    margin-top: 10px;
+    width: 45px;
   }
 
   #cross {
