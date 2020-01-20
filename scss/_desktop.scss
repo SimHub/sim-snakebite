@@ -83,69 +83,37 @@ section#dialog {
   z-index: 99;
 
   #gameBox {
-    display: block;
-    margin: 0 auto;
-    overflow: hidden;
-    box-sizing: border-box;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
     border-radius: 15px;
   }
   #gameStats {
-    grid-area: btcenter2;
-    align-self: flex-start;
-    justify-self: baseline;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 35px;
+    // grid-area: btcenter2;
+    // align-self: flex-start;
+    // justify-self: baseline;
+    // display: flex;
+    // justify-content: space-evenly;
+    // align-items: center;
+    // width: 100%;
+    // box-sizing: border-box;
+    // text-align: center;
+    // line-height: 35px;
     // color: white;
 
-    #enemyStats {
-      border: 6px solid black;
-      width: 299px;
-      height: 61px;
-      display: -webkit-box;
-      display: flex;
-      overflow-x: scroll;
-      overflow: hidden;
-      -webkit-overflow-scrolling: touch;
-    }
-    #comboBox {
-      display: flex;
-      align-items: center;
-      #combo {
-        width: 108px;
-        height: 40px;
-        line-height: 30px;
-        font-size: 1.3em;
-        font-weight: 900;
-        background: #f93c6f;
-        border: 6px solid #000000;
-        box-sizing: border-box;
-        border-radius: 25px;
-        color: white;
-
-        & img {
-          width: 20px;
-        }
-      }
-      #multiply img {
-        width: 20px;
-      }
-      & .combo-number {
-        align-self: flex-end;
-        font-size: 1.4em;
-        font-weight: 900;
-        // text-shadow: 3px 3px 6px black;
-      }
-    }
-    #trophy {
-      font-size: 2.5em;
-    }
+    // #enemyStats {
+    // border: 6px solid black;
+    // width: 299px;
+    // height: 61px;
+    // display: -webkit-box;
+    // display: flex;
+    // overflow-x: scroll;
+    // overflow: hidden;
+    // -webkit-overflow-scrolling: touch;
+    // }
   }
+}
+
+#trophy {
+  font-size: 2.5em;
 }
 
 /********/

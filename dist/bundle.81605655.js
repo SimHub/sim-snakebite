@@ -3332,6 +3332,7 @@ function () {
     _classCallCheck(this, Snake);
 
     console.log(sn);
+    this.combo = document.querySelector("#combo");
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -3658,7 +3659,10 @@ function () {
   }, {
     key: "appleBiteScore",
     value: function appleBiteScore(sc) {
-      // console.log(this.trophy.getAttribute("data-badge"));
+      console.log(sc); // console.log(this.trophy.getAttribute("data-badge"));
+
+      this.combo.value = 100 * this.score / 12;
+      if (this.combo.value == 100) this.combo.value = 0;
       this.trophy.innerText = sc; // console.log(this.trophy.getAttribute("data-badge"));
     }
   }, {
@@ -3682,7 +3686,7 @@ function () {
     key: "getRandomColor",
     value: function getRandomColor() {
       var letters = "0123456789ABCDEF";
-      var _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574", "#4F0BCD"];
+      var _hash = ["#9727F5", "#FF0000", "#722416", "#9E2574", "#4F0BCD", "#000000"];
       var color = "#";
 
       for (var i = 0; i < 6; i++) {
@@ -3693,7 +3697,7 @@ function () {
       console.log(this.enemyColors.length);
 
       if (_hash.includes(color) || this.enemyColors !== 0 ? this.enemyColors.includes(color) : null) {
-        console.log("VERBIDDEN COLOR");
+        console.log("FORBIDDEN COLOR");
         this.getRandomColor();
       } else {
         console.log("GOOD COLOR");

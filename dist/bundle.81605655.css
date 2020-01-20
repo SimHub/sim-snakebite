@@ -13873,21 +13873,48 @@ body {
 }
 
 /* combo */
-.combo {
+#comboBox {
+  display: flex;
+  align-items: center;
+}
+#comboBox::before {
+  content: "combo";
+  margin-left: 17px;
+  position: absolute;
+  margin-top: -6px;
+  font-weight: 900;
+  color: white;
+  font-size: 1.2em;
+}
+#comboBox #combo {
+  align-self: baseline;
   width: 108px;
   height: 40px;
   line-height: 30px;
   font-size: 1.3em;
   font-weight: 900;
-  background: #f93c6f;
   border: 6px solid #000000;
   box-sizing: border-box;
   border-radius: 25px;
-  font-family: "Orbitron", sans-serif;
   color: white;
+  font-family: "Orbitron", sans-serif;
+  background: black;
 }
-.combo img {
+#comboBox #combo::-webkit-progress-value {
+  transition: all 0.5s ease;
+}
+#comboBox #combo img {
   width: 20px;
+}
+#comboBox #multiply img {
+  margin-top: -8px;
+  align-self: center;
+  width: 20px;
+}
+#comboBox .combo-number {
+  align-self: center;
+  font-size: 1.4em;
+  font-weight: 900;
 }
 
 .info-box {
@@ -13912,12 +13939,7 @@ body {
   box-sizing: border-box;
 }
 #console #gameStats {
-  grid-area: btcenter2;
-  align-self: flex-start;
-  justify-self: baseline;
-  display: flex;
   justify-content: space-evenly;
-  align-items: center;
   font-family: "Orbitron", sans-serif;
   width: 100%;
   box-sizing: border-box;
@@ -13928,31 +13950,16 @@ body {
   border: 6px solid black;
   width: 299px;
   height: 61px;
-  display: -webkit-box;
   display: flex;
+  align-items: flex-start;
   overflow-x: scroll;
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
 }
-#console #gameStats #comboBox {
-  display: flex;
-  align-items: center;
-}
-#console #gameStats #comboBox #multiply img {
-  width: 20px;
-}
-#console #gameStats #comboBox .combo-number {
-  align-self: flex-end;
-  font-family: "Orbitron", sans-serif;
-  font-size: 1.4em;
-  font-weight: 900;
-}
 #console #gameStats #trophy {
   border-radius: 5px;
-  align-self: center;
-  text-align: center;
+  align-self: baseline;
   font-weight: 800;
-  align-self: flex-end;
 }
 
 /********/
@@ -14096,63 +14103,10 @@ section#dialog {
     z-index: 99;
   }
   #console #gameBox {
-    display: block;
-    margin: 0 auto;
-    overflow: hidden;
-    box-sizing: border-box;
     box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
     border-radius: 15px;
   }
-  #console #gameStats {
-    grid-area: btcenter2;
-    align-self: flex-start;
-    justify-self: baseline;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: center;
-    line-height: 35px;
-  }
-  #console #gameStats #enemyStats {
-    border: 6px solid black;
-    width: 299px;
-    height: 61px;
-    display: -webkit-box;
-    display: flex;
-    overflow-x: scroll;
-    overflow: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-  #console #gameStats #comboBox {
-    display: flex;
-    align-items: center;
-  }
-  #console #gameStats #comboBox #combo {
-    width: 108px;
-    height: 40px;
-    line-height: 30px;
-    font-size: 1.3em;
-    font-weight: 900;
-    background: #f93c6f;
-    border: 6px solid #000000;
-    box-sizing: border-box;
-    border-radius: 25px;
-    color: white;
-  }
-  #console #gameStats #comboBox #combo img {
-    width: 20px;
-  }
-  #console #gameStats #comboBox #multiply img {
-    width: 20px;
-  }
-  #console #gameStats #comboBox .combo-number {
-    align-self: flex-end;
-    font-size: 1.4em;
-    font-weight: 900;
-  }
-  #console #gameStats #trophy {
+  #trophy {
     font-size: 2.5em;
   }
 

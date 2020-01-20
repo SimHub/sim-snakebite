@@ -32,6 +32,7 @@ export default class Snake {
   private speed: number;
   private container: HTMLElement;
   private gradient: object;
+  private combo: HTMLElement;
 
   // public //
   public score: number;
@@ -39,6 +40,7 @@ export default class Snake {
 
   constructor(sn: snakeProps) {
     console.log(sn);
+    this.combo = document.querySelector("#combo");
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -365,7 +367,10 @@ export default class Snake {
     return this.clientId;
   }
   appleBiteScore(sc) {
+    console.log(sc);
     // console.log(this.trophy.getAttribute("data-badge"));
+    this.combo.value = (100 * this.score) / 12;
+    if (this.combo.value == 100) this.combo.value = 0;
     this.trophy.innerText = sc;
     // console.log(this.trophy.getAttribute("data-badge"));
   }
