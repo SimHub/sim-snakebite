@@ -370,7 +370,6 @@ export default class Snake {
     return this.clientId;
   }
   appleBiteScore() {
-    // console.log(this.trophy.getAttribute("data-badge"));
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
     if (this.combo.value == 17) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
