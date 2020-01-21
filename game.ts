@@ -36,6 +36,7 @@ export default class Snake {
 
   // public //
   public score: number;
+  public comboScore: number;
   public isPaused: boolean;
 
   constructor(sn: snakeProps) {
@@ -58,6 +59,7 @@ export default class Snake {
 
     this.FPS = 60;
     this.score = 0;
+    this.comboScore = 0;
     this.isPaused = false;
     this.clientId = null;
     // this.enemyId = null;
@@ -263,7 +265,8 @@ export default class Snake {
         // const c = document.createElement('i');
         // console.log('PLAYER GOT APPLE', this.snake[i]);
         this.score++;
-        this.appleBiteScore(this.score);
+        this.comboScore++;
+        this.appleBiteScore();
       }
       const s = this.snake[i];
       if (i == 0) {
@@ -366,12 +369,18 @@ export default class Snake {
   getclientID() {
     return this.clientId;
   }
-  appleBiteScore(sc) {
-    console.log(sc);
+  appleBiteScore() {
     // console.log(this.trophy.getAttribute("data-badge"));
-    this.combo.value = (100 * this.score) / 12;
-    if (this.combo.value == 100) this.combo.value = 0;
-    this.trophy.innerText = sc;
+    this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
+    if (this.combo.value == 17) {
+      this.combo.style.animation = "combo 1s ease-in-out infinite";
+      this.comboScore = 0;
+      setTimeout(() => {
+        this.combo.style.animation = "";
+        this.combo.value = 0;
+      }, 3000);
+    }
+    this.trophy.innerText = this.score;
     // console.log(this.trophy.getAttribute("data-badge"));
   }
   resize() {

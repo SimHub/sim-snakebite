@@ -13872,7 +13872,6 @@ body {
   left: 0;
 }
 
-/* combo */
 #comboBox {
   display: flex;
   align-items: center;
@@ -13899,9 +13898,10 @@ body {
   color: white;
   font-family: "Orbitron", sans-serif;
   background: black;
+  transition: all 0.5s ease;
 }
 #comboBox #combo::-webkit-progress-value {
-  transition: all 0.5s ease;
+  transition: all 5s ease;
 }
 #comboBox #combo img {
   width: 20px;
@@ -13971,6 +13971,24 @@ body {
   padding: 0;
 }
 
+/*** KEYFRAME ANIMATION *****/
+@keyframes combo {
+  0% {
+    filter: blur(0);
+  }
+  50% {
+    filter: blur(0.5em);
+  }
+  100% {
+    filter: blur(1);
+  }
+  50% {
+    filter: blur(0.5em);
+  }
+  0% {
+    filter: blur(0);
+  }
+}
 body {
   overflow: hidden;
 }

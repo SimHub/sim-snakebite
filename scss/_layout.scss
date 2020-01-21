@@ -72,24 +72,6 @@ body {
   position: absolute;
   left: 0;
 }
-/* combo */
-// .combo {
-// width: 108px;
-// height: 40px;
-// margin: 0;
-// line-height: 30px;
-// font-size: 1.3em;
-// font-weight: 900;
-// border: 6px solid #000000;
-// box-sizing: border-box;
-// border-radius: 25px;
-// color: white;
-
-// & img {
-// width: 20px;
-// }
-// }
-
 #comboBox {
   display: flex;
   align-items: center;
@@ -115,9 +97,10 @@ body {
     color: white;
     font-family: $f-family;
     background: black;
+    transition: all 0.5s ease;
 
     &::-webkit-progress-value {
-      transition: all 0.5s ease;
+      transition: all 5s ease;
     }
     & img {
       width: 20px;
@@ -190,4 +173,24 @@ body {
 }
 .nes-container {
   padding: 0;
+}
+/*** KEYFRAME ANIMATION *****/
+@keyframes combo {
+  0% {
+    filter: blur(0);
+  }
+  50% {
+    filter: blur(0.5em);
+  }
+
+  100% {
+    filter: blur(1);
+  }
+
+  50% {
+    filter: blur(0.5em);
+  }
+  0% {
+    filter: blur(0);
+  }
 }

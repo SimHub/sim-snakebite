@@ -4,7 +4,7 @@ import "bulma/css/bulma.css";
 import "bulma-badge/dist/css/bulma-badge.min.css";
 import "bulma-tooltip/dist/css/bulma-tooltip.min.css";
 import "typeface-orbitron";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import nipplejs from "nipplejs";
 import "./scss/main.scss";
 import Snake from "./game";
