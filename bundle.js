@@ -59,14 +59,6 @@ snake.start();
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);
   if (_id === snake.getclientID()) {
-    /**
-     *[x] - combo animation
-     *[x] - combo rewards
-     *[x] - socket rooms
-     *[x] - redirect to start site
-     *[x] - game over/auto disconnect/redirect to start site/
-     *      if room - can join again same room
-     */
     // console.log("enemy fallen id", snake.getclientID());
     // Swal.fire({
     // title: "GAME OVER!",
