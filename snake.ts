@@ -4,12 +4,14 @@ export default class SnakePlayer {
   private id: number;
   private direction: string;
   private color: string;
+  private comboFX: string;
   private sn: [{}];
-  constructor(posX, posY, id, color, direction) {
+  constructor(posX, posY, id, color, comboFX, direction) {
     this.x = posX;
     this.y = posY;
     this.id = id;
     this.color = color;
+    this.comboFX = comboFX;
     this.direction = direction;
   }
   enemySnake() {
@@ -19,8 +21,9 @@ export default class SnakePlayer {
         y: this.y,
         enemyId: this.id,
         color: this.color,
-        direction: this.direction,
-      },
+        comboFX: this.comboFX,
+        direction: this.direction
+      }
     ];
   }
   snake() {
@@ -30,8 +33,9 @@ export default class SnakePlayer {
         y: this.y,
         id: this.id,
         color: this.color,
-        direction: this.direction,
-      },
+        comboFX: this.comboFX,
+        direction: this.direction
+      }
     ];
   }
 }

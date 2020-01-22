@@ -29,10 +29,13 @@ export default class Snake {
   private size: number;
   private appleSize: number;
   private apple: {};
+  private specialBite: {};
   private speed: number;
   private container: HTMLElement;
   private gradient: object;
   private combo: HTMLElement;
+  private comboTitle: HTMLElement;
+  private comboFX: string;
 
   // public //
   public score: number;
@@ -40,22 +43,26 @@ export default class Snake {
   public isPaused: boolean;
 
   constructor(sn: snakeProps) {
-    console.log(sn);
+    // console.log(sn);
     this.combo = document.querySelector("#combo");
+    this.comboTitle = document.querySelector("#comboTitle");
+    this.comboFX = null;
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
     this.canvas = sn.cnv;
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
+
     this.context = this.canvas.getContext("2d");
+    this.context.fillStyle = "white";
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
 
-    console.log(typeof this.socket);
-    console.log(this.socket);
+    // console.log(typeof this.socket);
+    // console.log(this.socket);
 
     this.FPS = 60;
     this.score = 0;
@@ -82,27 +89,22 @@ export default class Snake {
       this.posY,
       null,
       this.snakeColor,
+      this.comboFX,
       this.direction
     ).snake();
     this.socket.emit("snakeColor", this.snake[0].color);
     this.socket.on("snakeColor", colors => {
       this.enemyColors = colors;
     });
-    console.log(this.snake[0].color);
+    // console.log(this.snake[0].color);
     this.snakeEnemies = new Set();
     this.apple = {};
+    this.specialBite = {};
     // this.enemyDirection = "left";
     this.speed = 200;
     this.newEnemyIDs = [];
     this.enemyChange = false;
 
-    // color //
-    // this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
-    // this.gradient.addColorStop(0, "black");
-    // this.gradient.addColorStop(0.5, "red");
-    // this.gradient.addColorStop(1, "white");
-    // console.log(typeof this.gradient);
-    //
     /// socket con ///
     this.socket.on("clientId", id => {
       this.clientId = id;
@@ -111,24 +113,25 @@ export default class Snake {
     });
 
     this.socket.on("enemyId", id => {
-      console.log(this.snakeColor);
-      console.log(this.enemyColors);
+      // console.log(this.snakeColor);
+      // console.log(this.enemyColors);
       this.snakeEnemies.clear();
       this.newEnemyIDs = id;
       [...this.newEnemyIDs].forEach(_id => {
-        console.log(_id);
+        // console.log(_id);
         if (_id.id !== this.clientId) {
           let snl = new SnakePlayer(
             _id.x,
             _id.y,
             _id.id,
             _id.color,
+            _id.comboFX,
             _id.direction
           ).enemySnake();
           this.snakeEnemies.add(snl);
         }
       });
-      console.log("new enemy - ", this.snakeEnemies);
+      // console.log("new enemy - ", this.snakeEnemies);
     });
 
     this.socket.on("enemyDirection", data => {
@@ -156,7 +159,8 @@ export default class Snake {
       // console.log('ENEMY ARR OUTSIDE', this.snakeEnemies);
     });
     this.socket.on("apple", a => {
-      this.apple = a;
+      this.apple = a.apple;
+      this.specialBite = a.specialBite;
     });
 
     this.socket.on("user disconnected", enemyID => {
@@ -194,30 +198,20 @@ export default class Snake {
   }
 
   setApple() {
-    this.apple.x =
-      Math.round(
-        this.random(this.appleSize, this.canvas.width - this.appleSize) /
-          this.appleSize
-      ) * this.appleSize;
-    this.apple.y =
-      Math.round(
-        this.random(this.appleSize, this.canvas.height - this.appleSize) /
-          this.appleSize
-      ) * this.appleSize;
-    this.socket.emit("apple", this.apple);
+    this.apple.x = this.applePosition().x;
+    this.apple.y = this.applePosition().y;
+    this.specialBite.x = this.applePosition().x;
+    this.specialBite.y = this.applePosition().y;
+    this.socket.emit("apple", {
+      apple: this.apple,
+      specialBite: this.specialBite
+    });
   }
   draw() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     // APPLE ///
     this.context.fillStyle = "red";
-    // this.context.fillStyle = this.gradient;
-
-    // this.context.shadowColor = 'orange'; // string
-    // this.context.shadowOffsetX = 0; // integer
-    // this.context.shadowOffsetY = 0; // integer
-    // this.context.shadowBlur = 10;
-
     this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
     this.context.clearRect(
       this.apple.x + 1.4,
@@ -227,13 +221,30 @@ export default class Snake {
     );
     /////////
 
+    ///SPECIAL BITE//////
+    this.context.fillStyle = "white";
+    this.context.shadowBlur = 50;
+    this.context.fillRect(
+      this.specialBite.x,
+      this.specialBite.y,
+      this.size,
+      this.size
+    );
+    /////////
+
     //  ENEMY /////
     this.snakeEnemies.forEach((enemy, k) => {
-      // console.log(enemy);
       for (let i = 0; i < enemy.length; i += 1) {
         const s = enemy[i];
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
+        if (s.comboFX === "immortal") {
+          this.context.lineCap = "round"; //,'round','square'];
+          this.context.fillStyle = "rgba(255,255,255," + 0.4")";
+          for (let j = 0; j < s.length; j++) {
+            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          }
+        }
       }
     });
     ///////
@@ -243,6 +254,13 @@ export default class Snake {
       const s = this.snake[i];
       this.context.fillStyle = s.color;
       this.context.fillRect(s.x, s.y, this.size, this.size);
+      if (this.snake[0].comboFX === "immortal") {
+        this.context.lineCap = "round"; //,'round','square'];
+        this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+        for (let j = 0; j < 4; j++) {
+          this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+        }
+      }
     }
     ///////////////
 
@@ -348,7 +366,7 @@ export default class Snake {
         if (!this.isPaused) {
           this.draw();
         }
-        console.log(this.isPaused);
+        // console.log(this.isPaused);
       }
       if (h.includes(newDirection)) {
         if (this.direction === "left" && newDirection !== "right") {
@@ -371,13 +389,22 @@ export default class Snake {
   }
   appleBiteScore() {
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
-    if (this.combo.value == 17) {
+    // if (this.combo.value == 17) {
+    if (this.combo.value == 8) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
       this.comboScore = 0;
+      this.comboActivateEffect();
+      this.snake[0].comboFX = this.comboFX;
+      this.comboTitle.innerText = this.comboFX;
+      // console.log("COMBO FX: ", this.comboFX);
+
       setTimeout(() => {
         this.combo.style.animation = "";
         this.combo.value = 0;
-      }, 3000);
+        this.comboTitle.innerText = "combo";
+        this.comboFX = null;
+        this.snake[0].comboFX = this.comboFX;
+      }, 20000);
     }
     this.trophy.innerText = this.score;
     // console.log(this.trophy.getAttribute("data-badge"));
@@ -410,18 +437,38 @@ export default class Snake {
     for (var i = 0; i < 6; i++) {
       color += letters[Math.floor(Math.random() * 16)];
     }
-    console.log(color + " _");
-    console.log(this.enemyColors.length);
+    // console.log(color + " _");
+    // console.log(this.enemyColors.length);
     if (
       _hash.includes(color) || this.enemyColors !== 0
         ? this.enemyColors.includes(color)
         : null
     ) {
-      console.log("FORBIDDEN COLOR");
+      // console.log("FORBIDDEN COLOR");
       this.getRandomColor();
     } else {
-      console.log("GOOD COLOR");
+      // console.log("GOOD COLOR");
       return color;
     }
+  }
+  applePosition() {
+    return {
+      x:
+        Math.round(
+          this.random(this.appleSize, this.canvas.width - this.appleSize) /
+            this.appleSize
+        ) * this.appleSize,
+      y:
+        Math.round(
+          this.random(this.appleSize, this.canvas.height - this.appleSize) /
+            this.appleSize
+        ) * this.appleSize
+    };
+  }
+  comboActivateEffect() {
+    let comboEffect = ["immortal", "destroyer", "friend"];
+
+    var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
+    this.comboFX = randFx;
   }
 }

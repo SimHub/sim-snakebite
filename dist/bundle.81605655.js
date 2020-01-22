@@ -243,13 +243,14 @@ Object.defineProperty(exports, "__esModule", {
 var SnakePlayer =
 /*#__PURE__*/
 function () {
-  function SnakePlayer(posX, posY, id, color, direction) {
+  function SnakePlayer(posX, posY, id, color, comboFX, direction) {
     _classCallCheck(this, SnakePlayer);
 
     this.x = posX;
     this.y = posY;
     this.id = id;
     this.color = color;
+    this.comboFX = comboFX;
     this.direction = direction;
   }
 
@@ -261,6 +262,7 @@ function () {
         y: this.y,
         enemyId: this.id,
         color: this.color,
+        comboFX: this.comboFX,
         direction: this.direction
       }];
     }
@@ -272,6 +274,7 @@ function () {
         y: this.y,
         id: this.id,
         color: this.color,
+        comboFX: this.comboFX,
         direction: this.direction
       }];
     }
@@ -291,8 +294,6 @@ function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread n
 function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -320,8 +321,10 @@ function () {
 
     _classCallCheck(this, Snake);
 
-    console.log(sn);
+    // console.log(sn);
     this.combo = document.querySelector("#combo");
+    this.comboTitle = document.querySelector("#comboTitle");
+    this.comboFX = null;
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -329,12 +332,13 @@ function () {
     this.canvas.width = this.container.clientWidth;
     this.canvas.height = this.container.clientHeight;
     this.context = this.canvas.getContext("2d");
+    this.context.fillStyle = "white";
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
-    this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
-    console.log(_typeof(this.socket));
-    console.log(this.socket);
+    this.yEnd = Math.round(this.canvas.height / this.size) * this.size; // console.log(typeof this.socket);
+    // console.log(this.socket);
+
     this.FPS = 60;
     this.score = 0;
     this.comboScore = 0;
@@ -349,25 +353,19 @@ function () {
     this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
     this.enemyColors = [];
     this.snakeColor = this.getRandomColor();
-    this.snake = new snake_1.default(this.posX, this.posY, null, this.snakeColor, this.direction).snake();
+    this.snake = new snake_1.default(this.posX, this.posY, null, this.snakeColor, this.comboFX, this.direction).snake();
     this.socket.emit("snakeColor", this.snake[0].color);
     this.socket.on("snakeColor", function (colors) {
       _this.enemyColors = colors;
-    });
-    console.log(this.snake[0].color);
+    }); // console.log(this.snake[0].color);
+
     this.snakeEnemies = new Set();
-    this.apple = {}; // this.enemyDirection = "left";
+    this.apple = {};
+    this.specialBite = {}; // this.enemyDirection = "left";
 
     this.speed = 200;
     this.newEnemyIDs = [];
-    this.enemyChange = false; // color //
-    // this.gradient = this.context.createLinearGradient(0, 0, 0, 170);
-    // this.gradient.addColorStop(0, "black");
-    // this.gradient.addColorStop(0.5, "red");
-    // this.gradient.addColorStop(1, "white");
-    // console.log(typeof this.gradient);
-    //
-    /// socket con ///
+    this.enemyChange = false; /// socket con ///
 
     this.socket.on("clientId", function (id) {
       _this.clientId = id;
@@ -376,24 +374,21 @@ function () {
       _this.socket.emit("enemyId", _this.snake[0]);
     });
     this.socket.on("enemyId", function (id) {
-      console.log(_this.snakeColor);
-      console.log(_this.enemyColors);
-
+      // console.log(this.snakeColor);
+      // console.log(this.enemyColors);
       _this.snakeEnemies.clear();
 
       _this.newEnemyIDs = id;
 
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
-        console.log(_id);
-
+        // console.log(_id);
         if (_id.id !== _this.clientId) {
-          var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.color, _id.direction).enemySnake();
+          var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.color, _id.comboFX, _id.direction).enemySnake();
 
           _this.snakeEnemies.add(snl);
         }
-      });
+      }); // console.log("new enemy - ", this.snakeEnemies);
 
-      console.log("new enemy - ", _this.snakeEnemies);
     });
     this.socket.on("enemyDirection", function (data) {
       _this.snakeEnemies.forEach(function (i, k) {
@@ -420,7 +415,8 @@ function () {
 
     });
     this.socket.on("apple", function (a) {
-      _this.apple = a;
+      _this.apple = a.apple;
+      _this.specialBite = a.specialBite;
     });
     this.socket.on("user disconnected", function (enemyID) {
       console.log("someone has gone ", enemyID);
@@ -473,9 +469,14 @@ function () {
   }, {
     key: "setApple",
     value: function setApple() {
-      this.apple.x = Math.round(this.random(this.appleSize, this.canvas.width - this.appleSize) / this.appleSize) * this.appleSize;
-      this.apple.y = Math.round(this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize) * this.appleSize;
-      this.socket.emit("apple", this.apple);
+      this.apple.x = this.applePosition().x;
+      this.apple.y = this.applePosition().y;
+      this.specialBite.x = this.applePosition().x;
+      this.specialBite.y = this.applePosition().y;
+      this.socket.emit("apple", {
+        apple: this.apple,
+        specialBite: this.specialBite
+      });
     }
   }, {
     key: "draw",
@@ -484,23 +485,33 @@ function () {
 
       this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); // APPLE ///
 
-      this.context.fillStyle = "red"; // this.context.fillStyle = this.gradient;
-      // this.context.shadowColor = 'orange'; // string
-      // this.context.shadowOffsetX = 0; // integer
-      // this.context.shadowOffsetY = 0; // integer
-      // this.context.shadowBlur = 10;
-
+      this.context.fillStyle = "red";
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
       this.context.clearRect(this.apple.x + 1.4, this.apple.y + 1.4, this.size - 2.7, this.size - 2.7); /////////
+      ///SPECIAL BITE//////
+
+      this.context.fillStyle = "white";
+      this.context.shadowBlur = 50;
+      this.context.fillRect(this.specialBite.x, this.specialBite.y, this.size, this.size); /////////
       //  ENEMY /////
 
       this.snakeEnemies.forEach(function (enemy, k) {
-        // console.log(enemy);
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
           _this3.context.fillStyle = s.color;
 
           _this3.context.fillRect(s.x, s.y, _this3.size, _this3.size);
+
+          if (s.comboFX === "immortal") {
+            _this3.context.lineCap = "round"; //,'round','square'];
+
+            _this3.context.fillStyle = "rgba(255,255,255," + 0.4;
+            ")";
+
+            for (var j = 0; j < s.length; j++) {
+              _this3.context.fillRect(s.x, s.y, _this3.size - 1, _this3.size - 1);
+            }
+          }
         }
       }); ///////
       /// PLAYER /////
@@ -509,6 +520,16 @@ function () {
         var s = this.snake[i];
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
+
+        if (this.snake[0].comboFX === "immortal") {
+          this.context.lineCap = "round"; //,'round','square'];
+
+          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+
+          for (var j = 0; j < 4; j++) {
+            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          }
+        }
       } ///////////////
 
 
@@ -618,9 +639,8 @@ function () {
 
           if (!this.isPaused) {
             this.draw();
-          }
+          } // console.log(this.isPaused);
 
-          console.log(this.isPaused);
         }
 
         if (h.includes(newDirection)) {
@@ -652,16 +672,22 @@ function () {
     value: function appleBiteScore() {
       var _this5 = this;
 
-      // console.log(this.trophy.getAttribute("data-badge"));
-      this.combo.value = (100 * this.comboScore / 12).toFixed(0);
+      this.combo.value = (100 * this.comboScore / 12).toFixed(0); // if (this.combo.value == 17) {
 
-      if (this.combo.value == 17) {
+      if (this.combo.value == 8) {
         this.combo.style.animation = "combo 1s ease-in-out infinite";
         this.comboScore = 0;
+        this.comboActivateEffect();
+        this.snake[0].comboFX = this.comboFX;
+        this.comboTitle.innerText = this.comboFX; // console.log("COMBO FX: ", this.comboFX);
+
         setTimeout(function () {
           _this5.combo.style.animation = "";
           _this5.combo.value = 0;
-        }, 3000);
+          _this5.comboTitle.innerText = "combo";
+          _this5.comboFX = null;
+          _this5.snake[0].comboFX = _this5.comboFX;
+        }, 20000);
       }
 
       this.trophy.innerText = this.score; // console.log(this.trophy.getAttribute("data-badge"));
@@ -692,18 +718,33 @@ function () {
 
       for (var i = 0; i < 6; i++) {
         color += letters[Math.floor(Math.random() * 16)];
-      }
+      } // console.log(color + " _");
+      // console.log(this.enemyColors.length);
 
-      console.log(color + " _");
-      console.log(this.enemyColors.length);
 
       if (_hash.includes(color) || this.enemyColors !== 0 ? this.enemyColors.includes(color) : null) {
-        console.log("FORBIDDEN COLOR");
+        // console.log("FORBIDDEN COLOR");
         this.getRandomColor();
       } else {
-        console.log("GOOD COLOR");
+        // console.log("GOOD COLOR");
         return color;
       }
+    }
+  }, {
+    key: "applePosition",
+    value: function applePosition() {
+      return {
+        x: Math.round(this.random(this.appleSize, this.canvas.width - this.appleSize) / this.appleSize) * this.appleSize,
+        y: Math.round(this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize) * this.appleSize
+      };
+    }
+  }, {
+    key: "comboActivateEffect",
+    value: function comboActivateEffect() {
+      // let comboEffect = ["immortal", "destroyer", "friend"];
+      var comboEffect = ["immortal"];
+      var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
+      this.comboFX = randFx;
     }
   }]);
 
@@ -10518,16 +10559,7 @@ snake.start(); //=======================//
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
 
-  if (_id === snake.getclientID()) {
-    /**
-     *[x] - combo animation
-     *[x] - combo rewards
-     *[x] - socket rooms
-     *[x] - redirect to start site
-     *[x] - game over/auto disconnect/redirect to start site/
-     *      if room - can join again same room
-     */
-    // console.log("enemy fallen id", snake.getclientID());
+  if (_id === snake.getclientID()) {// console.log("enemy fallen id", snake.getclientID());
     // Swal.fire({
     // title: "GAME OVER!",
     // confirmButtonText: "new game",
@@ -10570,7 +10602,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50555" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52935" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
