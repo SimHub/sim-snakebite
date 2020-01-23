@@ -1,16 +1,22 @@
-## Combo
+## SNAKE GAME TODO-LIST
 
--[x] combo animation  
--[x] combo rewards  
-  - [x] immortal 
-  - [ ] destroyer 
-  - [ ] friend
+-[ ] Snake class modular  
+-[ ] Start Page  
+-[ ] Redirect to start site  
+-[ ] Socket rooms  
+-[ ] Resize view  
+-[ ] Game over/auto disconnect/redirect to start site if room - can join again same room  
 
--[ ] snake effect  
--[ ] snake class modular  
--[ ] resize view  
--[ ] different appleBites  
--[ ] socket rooms  
--[ ] redirect to start site  
--[ ] game over/auto disconnect/redirect to start site if room - can join again same room  
+-[ ] Canvas Resize  
+-[x] Combo rewards  
+  - [x] immortal-styling  
+  - [ ] immortal  
+  - [ ] destroyer-styling  
+  - [ ] destroyer  
+  - [ ] friend-styling  
+  - [ ] friend  
+
+-[ ] Different appleBites  
+  - [ ] 12x points  
+  - [ ] 25x points  
 
