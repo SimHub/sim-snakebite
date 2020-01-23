@@ -505,8 +505,7 @@ function () {
           if (s.comboFX === "immortal") {
             _this3.context.lineCap = "round"; //,'round','square'];
 
-            _this3.context.fillStyle = "rgba(255,255,255," + 0.4;
-            ")";
+            _this3.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
 
             for (var j = 0; j < s.length; j++) {
               _this3.context.fillRect(s.x, s.y, _this3.size - 1, _this3.size - 1);
@@ -576,10 +575,12 @@ function () {
               if (s.y < 0) s.y = this.yEnd;else s.y -= this.size;
           }
 
-          for (var j = 1; j < this.snake.length; j += 1) {
-            if (this.snake[0].x === this.snake[j].x && this.snake[0].y === this.snake[j].y) {
-              // alert("GAME OVER");
-              this.socket.emit("gameover", this.snake[0]); // window.location.reload();
+          if (this.comboFX !== "immortal") {
+            for (var j = 1; j < this.snake.length; j += 1) {
+              if (this.snake[0].x === this.snake[j].x && this.snake[0].y === this.snake[j].y) {
+                // alert("GAME OVER");
+                this.socket.emit("gameover", this.snake[0]); // window.location.reload();
+              }
             }
           }
         } else {
@@ -10602,7 +10603,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52935" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55822" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

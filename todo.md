@@ -10,7 +10,7 @@
 -[ ] Canvas Resize  
 -[x] Combo rewards  
   - [x] immortal-styling  
-  - [ ] immortal  
+  - [x] immortal  
   - [ ] destroyer-styling  
   - [ ] destroyer  
   - [ ] friend-styling  

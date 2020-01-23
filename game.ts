@@ -240,7 +240,7 @@ export default class Snake {
         this.context.fillRect(s.x, s.y, this.size, this.size);
         if (s.comboFX === "immortal") {
           this.context.lineCap = "round"; //,'round','square'];
-          this.context.fillStyle = "rgba(255,255,255," + 0.4")";
+          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
           for (let j = 0; j < s.length; j++) {
             this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
           }
@@ -306,14 +306,16 @@ export default class Snake {
             else s.y -= this.size;
         }
 
-        for (let j = 1; j < this.snake.length; j += 1) {
-          if (
-            this.snake[0].x === this.snake[j].x &&
-            this.snake[0].y === this.snake[j].y
-          ) {
-            // alert("GAME OVER");
-            this.socket.emit("gameover", this.snake[0]);
-            // window.location.reload();
+        if (this.comboFX !== "immortal") {
+          for (let j = 1; j < this.snake.length; j += 1) {
+            if (
+              this.snake[0].x === this.snake[j].x &&
+              this.snake[0].y === this.snake[j].y
+            ) {
+              // alert("GAME OVER");
+              this.socket.emit("gameover", this.snake[0]);
+              // window.location.reload();
+            }
           }
         }
       } else {
@@ -466,7 +468,8 @@ export default class Snake {
     };
   }
   comboActivateEffect() {
-    let comboEffect = ["immortal", "destroyer", "friend"];
+    // let comboEffect = ["immortal", "destroyer", "friend"];
+    let comboEffect = ["immortal"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;
