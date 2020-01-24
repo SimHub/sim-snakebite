@@ -2,14 +2,12 @@ const express = require("express");
 const app = express();
 const http = require("http").Server(app);
 const socketIO = require("socket.io");
-const _ip = require("./utils.ts");
-const ipaddress = _ip.pupWlnIp;
-
-const port = process.env.PORT || _ip.port;
+const IP = require("./utils.ts");
+const port = process.env.PORT || IP.port;
 const server = express()
   .use(express.static("dist"))
-  .listen(_ip.port, ipaddress, () => {
-    console.log("Listening on " + ipaddress + ":" + port);
+  .listen(IP.port, IP.ip, () => {
+    console.log("Listening on " + IP.ip + ":" + port);
   });
 const io = socketIO(server);
 //let setEnemyId = new Map();

@@ -23,7 +23,7 @@ let arr = [];
 let joystick;
 
 //### Init socket&snake ###//
-_connectionManager.connect(`${IP.http}${IP.pupWlnIp}:${IP.port}`);
+_connectionManager.connect(`${IP.http}${IP.ip}:${IP.port}`);
 const _io = _connectionManager.io();
 // let snake = new Snake(container, canvas, _io);
 let snake = new Snake({ cnt: container, cnv: canvas, trophy: trophy, io: _io });

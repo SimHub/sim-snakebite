@@ -284,6 +284,10 @@ function () {
 }();
 
 exports.default = SnakePlayer;
+},{}],"img/destroyer.png":[function(require,module,exports) {
+module.exports = "/destroyer.80c6270a.png";
+},{}],"img/friend.png":[function(require,module,exports) {
+module.exports = "/friend.e1013a39.png";
 },{}],"game.ts":[function(require,module,exports) {
 "use strict";
 
@@ -321,10 +325,16 @@ function () {
 
     _classCallCheck(this, Snake);
 
-    // console.log(sn);
+    this.destroyerImg = new Image();
+    this.friendImg = new Image(); // console.log(sn);
+
     this.combo = document.querySelector("#combo");
     this.comboTitle = document.querySelector("#comboTitle");
-    this.comboFX = null;
+    this.comboFX = null; // this.destroyerImg = new Image();
+    // this.destroyerImg.src = require("./img/tron_blue.png");
+
+    this.destroyerImg.src = require("./img/destroyer.png");
+    this.friendImg.src = require("./img/friend.png");
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -336,8 +346,8 @@ function () {
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
-    this.yEnd = Math.round(this.canvas.height / this.size) * this.size; // console.log(typeof this.socket);
-    // console.log(this.socket);
+    this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
+    console.log(this.size); // console.log(this.socket);
 
     this.FPS = 60;
     this.score = 0;
@@ -498,37 +508,74 @@ function () {
       this.snakeEnemies.forEach(function (enemy, k) {
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
-          _this3.context.fillStyle = s.color;
 
-          _this3.context.fillRect(s.x, s.y, _this3.size, _this3.size);
+          _this3.setComboFX(s.comboFX, s, i); // this.context.fillStyle = s.color;
+          // this.context.fillRect(s.x, s.y, this.size, this.size);
+          // if (s.comboFX === "immortal") {
+          // this.context.lineCap = "round"; //,'round','square'];
+          // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+          // for (let j = 0; j < s.length; j++) {
+          // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          // }
+          // }
 
-          if (s.comboFX === "immortal") {
-            _this3.context.lineCap = "round"; //,'round','square'];
-
-            _this3.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-
-            for (var j = 0; j < s.length; j++) {
-              _this3.context.fillRect(s.x, s.y, _this3.size - 1, _this3.size - 1);
-            }
-          }
         }
       }); ///////
       /// PLAYER /////
 
       for (var i = 0; i < this.snake.length; i += 1) {
         var s = this.snake[i];
-        this.context.fillStyle = s.color;
-        this.context.fillRect(s.x, s.y, this.size, this.size);
-
-        if (this.snake[0].comboFX === "immortal") {
-          this.context.lineCap = "round"; //,'round','square'];
-
-          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-
-          for (var j = 0; j < 4; j++) {
-            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-          }
-        }
+        this.setComboFX(s.comboFX, s, i); // this.context.drawImage(
+        // this.destroyerImg,
+        // s.x,
+        // s.y,
+        // this.size,
+        // this.size + 3
+        // );
+        // switch (this.comboFX) {
+        // case "destroyer":
+        // this.context.shadowBlur = 8;
+        // this.context.shadowColor = "red";
+        // this.context.shadowOffsetX = 0;
+        // this.context.shadowOffsetY = 0;
+        // this.context.lineWidth = 2;
+        // this.context.strokeStyle = "red";
+        // this.context.strokeRect(s.x, s.y, this.size, this.size);
+        // this.context.fillStyle = s.color;
+        // this.context.fillRect(s.x, s.y, this.size, this.size);
+        // break;
+        // case "friend":
+        // this.context.shadowBlur = 8;
+        // this.context.shadowColor = "white";
+        // this.context.shadowOffsetX = 0;
+        // this.context.shadowOffsetY = 0;
+        // this.context.lineWidth = 2;
+        // this.context.strokeStyle = "white";
+        // this.context.strokeRect(s.x, s.y, this.size, this.size);
+        // this.context.fillStyle = s.color;
+        // this.context.fillRect(s.x, s.y, this.size, this.size);
+        // break;
+        // case "immortal":
+        // this.context.lineCap = "round"; //,'round','square'];
+        // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+        // for (let j = 0; j < 4; j++) {
+        // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+        // }
+        // break;
+        // default:
+        // this.context.fillStyle = s.color;
+        // this.context.fillRect(s.x, s.y, this.size, this.size);
+        // }
+        //*------------*\
+        // this.context.fillStyle = s.color;
+        // this.context.fillRect(s.x, s.y, this.size, this.size);
+        // if (this.snake[0].comboFX === "immortal") {
+        // this.context.lineCap = "round"; //,'round','square'];
+        // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+        // for (let j = 0; j < 4; j++) {
+        // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+        // }
+        // }
       } ///////////////
 
 
@@ -675,19 +722,20 @@ function () {
 
       this.combo.value = (100 * this.comboScore / 12).toFixed(0); // if (this.combo.value == 17) {
 
-      if (this.combo.value == 8) {
+      if (this.combo.value == 17) {
         this.combo.style.animation = "combo 1s ease-in-out infinite";
         this.comboScore = 0;
         this.comboActivateEffect();
         this.snake[0].comboFX = this.comboFX;
         this.comboTitle.innerText = this.comboFX; // console.log("COMBO FX: ", this.comboFX);
 
-        setTimeout(function () {
+        this.timer = setTimeout(function () {
           _this5.combo.style.animation = "";
           _this5.combo.value = 0;
           _this5.comboTitle.innerText = "combo";
           _this5.comboFX = null;
           _this5.snake[0].comboFX = _this5.comboFX;
+          clearTimeout(_this5.timer);
         }, 20000);
       }
 
@@ -732,6 +780,64 @@ function () {
       }
     }
   }, {
+    key: "setComboFX",
+    value: function setComboFX(comboFX, s, i) {
+      switch (comboFX) {
+        case "destroyer":
+          this.context.shadowBlur = 8;
+          this.context.shadowColor = "red";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 2;
+          this.context.strokeStyle = "red";
+          this.context.strokeRect(s.x, s.y, this.size, this.size);
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+          break;
+
+        case "friend":
+          this.context.shadowBlur = 8;
+          this.context.shadowColor = "white";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 2;
+          this.context.strokeStyle = "white";
+          this.context.strokeRect(s.x, s.y, this.size, this.size);
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+          break;
+
+        case "immortal":
+          this.context.lineCap = "round"; //,'round','square'];
+
+          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+
+          for (var j = 0; j < 4; j++) {
+            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          }
+
+          break;
+
+        default:
+          this.context.shadowBlur = 0;
+          this.context.shadowColor = "transparent";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 0;
+          this.context.strokeStyle = "transparent";
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+      }
+    }
+  }, {
+    key: "comboActivateEffect",
+    value: function comboActivateEffect() {
+      var comboEffect = ["immortal", "destroyer", "friend"]; // let comboEffect = ["friend"];
+
+      var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
+      this.comboFX = randFx;
+    }
+  }, {
     key: "applePosition",
     value: function applePosition() {
       return {
@@ -739,21 +845,13 @@ function () {
         y: Math.round(this.random(this.appleSize, this.canvas.height - this.appleSize) / this.appleSize) * this.appleSize
       };
     }
-  }, {
-    key: "comboActivateEffect",
-    value: function comboActivateEffect() {
-      // let comboEffect = ["immortal", "destroyer", "friend"];
-      var comboEffect = ["immortal"];
-      var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
-      this.comboFX = randFx;
-    }
   }]);
 
   return Snake;
 }();
 
 exports.default = Snake;
-},{"./snake":"snake.ts"}],"node_modules/parseuri/index.js":[function(require,module,exports) {
+},{"./snake":"snake.ts","./img/destroyer.png":"img/destroyer.png","./img/friend.png":"img/friend.png"}],"node_modules/parseuri/index.js":[function(require,module,exports) {
 /**
  * Parses an URI
  *
@@ -10472,12 +10570,13 @@ function () {
 
 exports.default = ConnectionManager;
 },{"socket.io-client":"node_modules/socket.io-client/lib/index.js"}],"utils.ts":[function(require,module,exports) {
+var locIp = "localhost";
+var pupEanIp = "192.168.2.104";
+var pupWlnIp = "192.168.2.101";
 module.exports = {
   http: "http://",
   https: "https://",
-  locIp: "localhost",
-  pupEanIp: "192.168.2.104",
-  pupWlnIp: "192.168.2.101",
+  ip: pupWlnIp,
   port: "3000"
 };
 },{}],"bundle.js":[function(require,module,exports) {
@@ -10521,7 +10620,7 @@ var _connectionManager = new _ConnectionManager.default();
 var arr = [];
 var joystick; //### Init socket&snake ###//
 
-_connectionManager.connect("".concat(_utils.default.http).concat(_utils.default.pupWlnIp, ":").concat(_utils.default.port));
+_connectionManager.connect("".concat(_utils.default.http).concat(_utils.default.ip, ":").concat(_utils.default.port));
 
 var _io = _connectionManager.io(); // let snake = new Snake(container, canvas, _io);
 
@@ -10603,7 +10702,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55822" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51080" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -36,6 +36,10 @@ export default class Snake {
   private combo: HTMLElement;
   private comboTitle: HTMLElement;
   private comboFX: string;
+  private destroyerImg: HTMLImageElement = new Image();
+  private friendImg: HTMLImageElement = new Image();
+  private timer:function (...args: any) => any;
+  private setComboFX:function (...args: any) => any;
 
   // public //
   public score: number;
@@ -47,6 +51,12 @@ export default class Snake {
     this.combo = document.querySelector("#combo");
     this.comboTitle = document.querySelector("#comboTitle");
     this.comboFX = null;
+
+    // this.destroyerImg = new Image();
+    // this.destroyerImg.src = require("./img/tron_blue.png");
+    this.destroyerImg.src = require("./img/destroyer.png");
+    this.friendImg.src = require("./img/friend.png");
+
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -61,7 +71,7 @@ export default class Snake {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
 
-    // console.log(typeof this.socket);
+    console.log(this.size);
     // console.log(this.socket);
 
     this.FPS = 60;
@@ -236,15 +246,20 @@ export default class Snake {
     this.snakeEnemies.forEach((enemy, k) => {
       for (let i = 0; i < enemy.length; i += 1) {
         const s = enemy[i];
-        this.context.fillStyle = s.color;
-        this.context.fillRect(s.x, s.y, this.size, this.size);
-        if (s.comboFX === "immortal") {
-          this.context.lineCap = "round"; //,'round','square'];
-          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-          for (let j = 0; j < s.length; j++) {
-            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-          }
-        }
+
+
+      this.setComboFX(s.comboFX,s,i);
+
+
+        // this.context.fillStyle = s.color;
+        // this.context.fillRect(s.x, s.y, this.size, this.size);
+        // if (s.comboFX === "immortal") {
+          // this.context.lineCap = "round"; //,'round','square'];
+          // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+          // for (let j = 0; j < s.length; j++) {
+            // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          // }
+        // }
       }
     });
     ///////
@@ -252,15 +267,62 @@ export default class Snake {
     /// PLAYER /////
     for (let i = 0; i < this.snake.length; i += 1) {
       const s = this.snake[i];
-      this.context.fillStyle = s.color;
-      this.context.fillRect(s.x, s.y, this.size, this.size);
-      if (this.snake[0].comboFX === "immortal") {
-        this.context.lineCap = "round"; //,'round','square'];
-        this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-        for (let j = 0; j < 4; j++) {
-          this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-        }
-      }
+
+
+      this.setComboFX(s.comboFX,s,i);
+      // this.context.drawImage(
+      // this.destroyerImg,
+      // s.x,
+      // s.y,
+      // this.size,
+      // this.size + 3
+      // );
+
+      // switch (this.comboFX) {
+        // case "destroyer":
+          // this.context.shadowBlur = 8;
+          // this.context.shadowColor = "red";
+          // this.context.shadowOffsetX = 0;
+          // this.context.shadowOffsetY = 0;
+          // this.context.lineWidth = 2;
+          // this.context.strokeStyle = "red";
+          // this.context.strokeRect(s.x, s.y, this.size, this.size);
+          // this.context.fillStyle = s.color;
+          // this.context.fillRect(s.x, s.y, this.size, this.size);
+          // break;
+        // case "friend":
+          // this.context.shadowBlur = 8;
+          // this.context.shadowColor = "white";
+          // this.context.shadowOffsetX = 0;
+          // this.context.shadowOffsetY = 0;
+          // this.context.lineWidth = 2;
+          // this.context.strokeStyle = "white";
+          // this.context.strokeRect(s.x, s.y, this.size, this.size);
+          // this.context.fillStyle = s.color;
+          // this.context.fillRect(s.x, s.y, this.size, this.size);
+          // break;
+        // case "immortal":
+          // this.context.lineCap = "round"; //,'round','square'];
+          // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+          // for (let j = 0; j < 4; j++) {
+            // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          // }
+          // break;
+        // default:
+          // this.context.fillStyle = s.color;
+          // this.context.fillRect(s.x, s.y, this.size, this.size);
+      // }
+
+      //*------------*\
+      // this.context.fillStyle = s.color;
+      // this.context.fillRect(s.x, s.y, this.size, this.size);
+      // if (this.snake[0].comboFX === "immortal") {
+      // this.context.lineCap = "round"; //,'round','square'];
+      // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+      // for (let j = 0; j < 4; j++) {
+      // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+      // }
+      // }
     }
     ///////////////
 
@@ -392,7 +454,7 @@ export default class Snake {
   appleBiteScore() {
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
     // if (this.combo.value == 17) {
-    if (this.combo.value == 8) {
+    if (this.combo.value == 17) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
       this.comboScore = 0;
       this.comboActivateEffect();
@@ -400,12 +462,13 @@ export default class Snake {
       this.comboTitle.innerText = this.comboFX;
       // console.log("COMBO FX: ", this.comboFX);
 
-      setTimeout(() => {
+    this.timer =   setTimeout(() => {
         this.combo.style.animation = "";
         this.combo.value = 0;
         this.comboTitle.innerText = "combo";
         this.comboFX = null;
         this.snake[0].comboFX = this.comboFX;
+        clearTimeout(this.timer);
       }, 20000);
     }
     this.trophy.innerText = this.score;
@@ -453,6 +516,56 @@ export default class Snake {
       return color;
     }
   }
+  setComboFX(comboFX,s,i){
+      switch (comboFX) {
+        case "destroyer":
+          this.context.shadowBlur = 8;
+          this.context.shadowColor = "red";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 2;
+          this.context.strokeStyle = "red";
+          this.context.strokeRect(s.x, s.y, this.size, this.size);
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+          break;
+        case "friend":
+          this.context.shadowBlur = 8;
+          this.context.shadowColor = "white";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 2;
+          this.context.strokeStyle = "white";
+          this.context.strokeRect(s.x, s.y, this.size, this.size);
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+          break;
+        case "immortal":
+          this.context.lineCap = "round"; //,'round','square'];
+          this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
+          for (let j = 0; j < 4; j++) {
+            this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
+          }
+          break;
+        default:
+          this.context.shadowBlur = 0;
+          this.context.shadowColor = "transparent";
+          this.context.shadowOffsetX = 0;
+          this.context.shadowOffsetY = 0;
+          this.context.lineWidth = 0;
+          this.context.strokeStyle = "transparent";
+          this.context.fillStyle = s.color;
+          this.context.fillRect(s.x, s.y, this.size, this.size);
+      }
+
+  }
+  comboActivateEffect() {
+    let comboEffect = ["immortal", "destroyer", "friend"];
+    // let comboEffect = ["friend"];
+
+    var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
+    this.comboFX = randFx;
+  }
   applePosition() {
     return {
       x:
@@ -466,12 +579,5 @@ export default class Snake {
             this.appleSize
         ) * this.appleSize
     };
-  }
-  comboActivateEffect() {
-    // let comboEffect = ["immortal", "destroyer", "friend"];
-    let comboEffect = ["immortal"];
-
-    var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
-    this.comboFX = randFx;
   }
 }
