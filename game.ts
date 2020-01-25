@@ -39,6 +39,7 @@ export default class Snake {
   private timer: () => {};
   private setComboFX: () => {};
   private setComboStyle: () => {};
+  private immortal: boolean = false;
 
   // public //
   public score: number;
@@ -248,8 +249,8 @@ export default class Snake {
     /// PLAYER /////
     for (let i = 0; i < this.snake.length; i += 1) {
       const s = this.snake[i];
-
-      this.setComboStyle(s.comboFX, s, i);
+      let snakeLength = this.snake.length;
+      this.setComboStyle(s.comboFX, s, snakeLength);
     }
     ///////////////
 
@@ -296,16 +297,17 @@ export default class Snake {
         }
 
         this.setComboFX(this.snake);
-        // if (this.comboFX !== "immortal") {
-        // for (let j = 1; j < this.snake.length; j += 1) {
-        // if (
-        // this.snake[0].x === this.snake[j].x &&
-        // this.snake[0].y === this.snake[j].y
-        // ) {
-        // this.socket.emit("gameover", this.snake[0]);
-        // }
-        // }
-        // }
+        // console.log(this.immortal);
+        if (!this.immortal) {
+          for (let j = 1; j < this.snake.length; j += 1) {
+            if (
+              this.snake[0].x === this.snake[j].x &&
+              this.snake[0].y === this.snake[j].y
+            ) {
+              this.socket.emit("gameover", this.snake[0].id);
+            }
+          }
+        }
       } else {
         this.snake[i].x = this.snake[i - 1].x;
         this.snake[i].y = this.snake[i - 1].y;
@@ -380,7 +382,7 @@ export default class Snake {
   appleBiteScore() {
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
     // if (this.combo.value == 17) {
-    if (this.combo.value == 17) {
+    if (this.combo.value == 8) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
       this.comboScore = 0;
       this.comboActivateEffect();
@@ -443,10 +445,8 @@ export default class Snake {
     }
   }
   setComboFX(snake) {
-    // console.log(snake);
+    // console.log(snake[0].comboFX);
     switch (snake[0].comboFX) {
-      case "immortal":
-        break;
       case "destroyer":
         // console.log(snake);
         this.snakeEnemies.forEach((enemy, k) => {
@@ -459,14 +459,13 @@ export default class Snake {
           }
         });
         break;
+      case "immortal":
+        this.immortal = true;
+        break;
       case "friend":
         break;
       default:
-        for (let j = 1; j < snake.length; j += 1) {
-          if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
-            this.socket.emit("gameover", snake[0].id);
-          }
-        }
+        this.immortal = false;
     }
   }
   setComboStyle(comboFX, s, i) {
@@ -494,9 +493,11 @@ export default class Snake {
         this.context.fillRect(s.x, s.y, this.size, this.size);
         break;
       case "immortal":
-        this.context.lineCap = "round"; //,'round','square'];
-        this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-        for (let j = 0; j < 4; j++) {
+        this.context.fillStyle = s.color;
+        this.context.fillRect(s.x, s.y, this.size, this.size);
+        this.context.stroke();
+        this.context.fillStyle = "rgba(255,255,255,0.1)";
+        for (let j = 0; j < i; j++) {
           this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
         }
         break;
@@ -513,7 +514,7 @@ export default class Snake {
   }
   comboActivateEffect() {
     // let comboEffect = ["immortal", "destroyer", "friend"];
-    let comboEffect = ["destroyer"];
+    let comboEffect = ["immortal"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;
