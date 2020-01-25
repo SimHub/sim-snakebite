@@ -73,9 +73,13 @@ function onConnection(socket) {
   socket.on("leave", msg => {
     // ?
   });
-  socket.on("gameover", msg => {
-    snakeArr = snakeArr.filter(i => i.id === socket.client.id);
-    io.emit("gameover", clientID);
+  socket.on("gameover", playerId => {
+    console.log("GAME OVER ID:", playerId);
+    // snakeArr = snakeArr.filter(i => i.id === socket.client.id);
+    snakeArr = snakeArr.filter(i => i.id !== playerId);
+    // io.emit("gameover", clientID);
+    console.log(snakeArr);
+    io.emit("gameover", playerId);
     io.emit("enemyId", snakeArr);
   });
 

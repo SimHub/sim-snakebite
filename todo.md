@@ -11,12 +11,14 @@
 -[x] Combo rewards  
   - [x] immortal-styling  
   - [x] immortal  
-  - [ ] destroyer-styling  
+  - [x] destroyer-styling  
   - [ ] destroyer  
-  - [ ] friend-styling  
+  - [x] friend-styling  
   - [ ] friend  
 
 -[ ] Different appleBites  
-  - [ ] 12x points  
-  - [ ] 25x points  
+  - [ ] 1x points  
+  - [ ] 5x points  
+  - [ ] 15x points  
+  - [ ] 25x comboPoints  
 

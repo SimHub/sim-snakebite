@@ -432,15 +432,12 @@ function () {
       console.log("someone has gone ", enemyID);
 
       _this.snakeEnemies.forEach(function (enemy) {
-        console.log(enemy[0].enemyId, enemyID);
-
+        // console.log(enemy[0].enemyId, enemyID);
         if (enemy[0].enemyId === enemyID) {
-          console.log(enemy[0].enemyId === enemyID);
-          console.log(enemy);
+          // console.log(enemy[0].enemyId === enemyID);
+          // console.log(enemy);
+          _this.snakeEnemies.delete(enemy); // console.log(this.snakeEnemies);
 
-          _this.snakeEnemies.delete(enemy);
-
-          console.log(_this.snakeEnemies);
         }
       });
 
@@ -509,73 +506,14 @@ function () {
         for (var i = 0; i < enemy.length; i += 1) {
           var s = enemy[i];
 
-          _this3.setComboFX(s.comboFX, s, i); // this.context.fillStyle = s.color;
-          // this.context.fillRect(s.x, s.y, this.size, this.size);
-          // if (s.comboFX === "immortal") {
-          // this.context.lineCap = "round"; //,'round','square'];
-          // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-          // for (let j = 0; j < s.length; j++) {
-          // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-          // }
-          // }
-
+          _this3.setComboStyle(s.comboFX, s, i);
         }
       }); ///////
       /// PLAYER /////
 
       for (var i = 0; i < this.snake.length; i += 1) {
         var s = this.snake[i];
-        this.setComboFX(s.comboFX, s, i); // this.context.drawImage(
-        // this.destroyerImg,
-        // s.x,
-        // s.y,
-        // this.size,
-        // this.size + 3
-        // );
-        // switch (this.comboFX) {
-        // case "destroyer":
-        // this.context.shadowBlur = 8;
-        // this.context.shadowColor = "red";
-        // this.context.shadowOffsetX = 0;
-        // this.context.shadowOffsetY = 0;
-        // this.context.lineWidth = 2;
-        // this.context.strokeStyle = "red";
-        // this.context.strokeRect(s.x, s.y, this.size, this.size);
-        // this.context.fillStyle = s.color;
-        // this.context.fillRect(s.x, s.y, this.size, this.size);
-        // break;
-        // case "friend":
-        // this.context.shadowBlur = 8;
-        // this.context.shadowColor = "white";
-        // this.context.shadowOffsetX = 0;
-        // this.context.shadowOffsetY = 0;
-        // this.context.lineWidth = 2;
-        // this.context.strokeStyle = "white";
-        // this.context.strokeRect(s.x, s.y, this.size, this.size);
-        // this.context.fillStyle = s.color;
-        // this.context.fillRect(s.x, s.y, this.size, this.size);
-        // break;
-        // case "immortal":
-        // this.context.lineCap = "round"; //,'round','square'];
-        // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-        // for (let j = 0; j < 4; j++) {
-        // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-        // }
-        // break;
-        // default:
-        // this.context.fillStyle = s.color;
-        // this.context.fillRect(s.x, s.y, this.size, this.size);
-        // }
-        //*------------*\
-        // this.context.fillStyle = s.color;
-        // this.context.fillRect(s.x, s.y, this.size, this.size);
-        // if (this.snake[0].comboFX === "immortal") {
-        // this.context.lineCap = "round"; //,'round','square'];
-        // this.context.fillStyle = "rgba(255,255,255," + (i + 1) / 10 + ")";
-        // for (let j = 0; j < 4; j++) {
-        // this.context.fillRect(s.x, s.y, this.size - 1, this.size - 1);
-        // }
-        // }
+        this.setComboStyle(s.comboFX, s, i);
       } ///////////////
 
 
@@ -622,14 +560,16 @@ function () {
               if (s.y < 0) s.y = this.yEnd;else s.y -= this.size;
           }
 
-          if (this.comboFX !== "immortal") {
-            for (var j = 1; j < this.snake.length; j += 1) {
-              if (this.snake[0].x === this.snake[j].x && this.snake[0].y === this.snake[j].y) {
-                // alert("GAME OVER");
-                this.socket.emit("gameover", this.snake[0]); // window.location.reload();
-              }
-            }
-          }
+          this.setComboFX(this.snake); // if (this.comboFX !== "immortal") {
+          // for (let j = 1; j < this.snake.length; j += 1) {
+          // if (
+          // this.snake[0].x === this.snake[j].x &&
+          // this.snake[0].y === this.snake[j].y
+          // ) {
+          // this.socket.emit("gameover", this.snake[0]);
+          // }
+          // }
+          // }
         } else {
           this.snake[i].x = this.snake[i - 1].x;
           this.snake[i].y = this.snake[i - 1].y; // this.socket.emit('tail', this.snake);
@@ -781,7 +721,44 @@ function () {
     }
   }, {
     key: "setComboFX",
-    value: function setComboFX(comboFX, s, i) {
+    value: function setComboFX(snake) {
+      var _this6 = this;
+
+      // console.log(snake);
+      switch (snake[0].comboFX) {
+        case "immortal":
+          break;
+
+        case "destroyer":
+          // console.log(snake);
+          this.snakeEnemies.forEach(function (enemy, k) {
+            var s = enemy;
+
+            for (var j = 0; j < enemy.length; j += 1) {
+              if (snake[0].x === s[j].x && snake[0].y === s[j].y) {
+                console.log("GOTCHA: ", enemy[0].enemyId);
+
+                _this6.socket.emit("gameover", enemy[0].enemyId);
+              }
+            }
+          });
+          break;
+
+        case "friend":
+          break;
+
+        default:
+          for (var j = 1; j < snake.length; j += 1) {
+            if (snake[0].x === snake[j].x && snake[0].y === snake[j].y) {
+              this.socket.emit("gameover", snake[0].id);
+            }
+          }
+
+      }
+    }
+  }, {
+    key: "setComboStyle",
+    value: function setComboStyle(comboFX, s, i) {
       switch (comboFX) {
         case "destroyer":
           this.context.shadowBlur = 8;
@@ -832,8 +809,8 @@ function () {
   }, {
     key: "comboActivateEffect",
     value: function comboActivateEffect() {
-      var comboEffect = ["immortal", "destroyer", "friend"]; // let comboEffect = ["friend"];
-
+      // let comboEffect = ["immortal", "destroyer", "friend"];
+      var comboEffect = ["destroyer"];
       var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
       this.comboFX = randFx;
     }
@@ -10576,7 +10553,7 @@ var pupWlnIp = "192.168.2.101";
 module.exports = {
   http: "http://",
   https: "https://",
-  ip: pupWlnIp,
+  ip: pupEanIp,
   port: "3000"
 };
 },{}],"bundle.js":[function(require,module,exports) {
@@ -10659,8 +10636,8 @@ snake.start(); //=======================//
 _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
 
-  if (_id === snake.getclientID()) {// console.log("enemy fallen id", snake.getclientID());
-    // Swal.fire({
+  if (_id === snake.getclientID()) {
+    console.log("enemy fallen id", snake.getclientID()); // Swal.fire({
     // title: "GAME OVER!",
     // confirmButtonText: "new game",
     // width: 600,
@@ -10702,7 +10679,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51080" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50156" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

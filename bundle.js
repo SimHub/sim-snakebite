@@ -59,7 +59,7 @@ snake.start();
 _io.on("gameover", _id => {
   console.log("enemy fallen ", _id);
   if (_id === snake.getclientID()) {
-    // console.log("enemy fallen id", snake.getclientID());
+    console.log("enemy fallen id", snake.getclientID());
     // Swal.fire({
     // title: "GAME OVER!",
     // confirmButtonText: "new game",
