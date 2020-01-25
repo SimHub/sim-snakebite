@@ -337,8 +337,8 @@ function () {
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
-    this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
-    console.log(this.size); // console.log(this.socket);
+    this.yEnd = Math.round(this.canvas.height / this.size) * this.size; // console.log(this.size);
+    // console.log(this.socket);
 
     this.FPS = 60;
     this.score = 0;
@@ -722,11 +722,13 @@ function () {
           this.snakeEnemies.forEach(function (enemy, k) {
             var s = enemy;
 
-            for (var j = 0; j < enemy.length; j += 1) {
-              if (snake[0].x === s[j].x && snake[0].y === s[j].y) {
-                console.log("GOTCHA: ", enemy[0].enemyId);
+            if (enemy[0].comboFX !== "immortal") {
+              for (var j = 0; j < enemy.length; j += 1) {
+                if (snake[0].x === s[j].x && snake[0].y === s[j].y) {
+                  console.log("GOTCHA: ", enemy[0].enemyId);
 
-                _this6.socket.emit("gameover", enemy[0].enemyId);
+                  _this6.socket.emit("gameover", enemy[0].enemyId);
+                }
               }
             }
           });
@@ -798,7 +800,7 @@ function () {
     key: "comboActivateEffect",
     value: function comboActivateEffect() {
       // let comboEffect = ["immortal", "destroyer", "friend"];
-      var comboEffect = ["immortal"];
+      var comboEffect = ["immortal", "destroyer"];
       var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
       this.comboFX = randFx;
     }
@@ -10668,7 +10670,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58582" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49514" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -66,7 +66,7 @@ export default class Snake {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
 
-    console.log(this.size);
+    // console.log(this.size);
     // console.log(this.socket);
 
     this.FPS = 60;
@@ -451,10 +451,12 @@ export default class Snake {
         // console.log(snake);
         this.snakeEnemies.forEach((enemy, k) => {
           const s = enemy;
-          for (let j = 0; j < enemy.length; j += 1) {
-            if (snake[0].x === s[j].x && snake[0].y === s[j].y) {
-              console.log("GOTCHA: ", enemy[0].enemyId);
-              this.socket.emit("gameover", enemy[0].enemyId);
+          if (enemy[0].comboFX !== "immortal") {
+            for (let j = 0; j < enemy.length; j += 1) {
+              if (snake[0].x === s[j].x && snake[0].y === s[j].y) {
+                console.log("GOTCHA: ", enemy[0].enemyId);
+                this.socket.emit("gameover", enemy[0].enemyId);
+              }
             }
           }
         });
@@ -514,7 +516,7 @@ export default class Snake {
   }
   comboActivateEffect() {
     // let comboEffect = ["immortal", "destroyer", "friend"];
-    let comboEffect = ["immortal"];
+    let comboEffect = ["immortal", "destroyer"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;
