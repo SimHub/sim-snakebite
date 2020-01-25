@@ -36,8 +36,6 @@ export default class Snake {
   private combo: HTMLElement;
   private comboTitle: HTMLElement;
   private comboFX: string;
-  private destroyerImg: HTMLImageElement = new Image();
-  private friendImg: HTMLImageElement = new Image();
   private timer: () => {};
   private setComboFX: () => {};
   private setComboStyle: () => {};
@@ -52,11 +50,6 @@ export default class Snake {
     this.combo = document.querySelector("#combo");
     this.comboTitle = document.querySelector("#comboTitle");
     this.comboFX = null;
-
-    // this.destroyerImg = new Image();
-    // this.destroyerImg.src = require("./img/tron_blue.png");
-    this.destroyerImg.src = require("./img/destroyer.png");
-    this.friendImg.src = require("./img/friend.png");
 
     this.socket = sn.io;
     this.trophy = sn.trophy;
