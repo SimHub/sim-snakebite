@@ -10637,7 +10637,8 @@ _io.on("gameover", function (_id) {
   console.log("enemy fallen ", _id);
 
   if (_id === snake.getclientID()) {
-    console.log("enemy fallen id", snake.getclientID()); // Swal.fire({
+    console.log("enemy fallen id", snake.getclientID());
+    window.location.replace("".concat(_utils.default.http).concat(_utils.default.ip, ":").concat(_utils.default.port)); // Swal.fire({
     // title: "GAME OVER!",
     // confirmButtonText: "new game",
     // width: 600,
@@ -10679,7 +10680,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50156" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62186" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

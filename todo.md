@@ -1,16 +1,17 @@
 ## SNAKE GAME TODO-LIST
 
 -[ ] Snake class modular  
--[ ] Start Page  
--[ ] Redirect to start site  
+-[x] Start Page  
+-[ ] Styling - Start Page  
 -[ ] Socket rooms  
 -[ ] Resize view  
--[ ] Game over/auto disconnect/redirect to start site if room - can join again same room  
+-[x] Game Over / auto disconnect / Redirect to start-site   
+-[ ] if room - can join again same room  
 
 -[ ] Canvas Resize  
 -[x] Combo rewards  
   - [x] immortal-styling  
-  - [x] immortal  
+  - [x] immortal   / not fully tested 🤔
   - [x] destroyer-styling  
   - [ ] destroyer  
   - [x] friend-styling  
