@@ -1,21 +1,29 @@
 ## SNAKE GAME TODO-LIST
 
 -[ ] Snake class modular  
+
 -[x] Start Page  
--[ ] Styling - Start Page  
+  - [ ] Styling - Start Page  
+
 -[ ] Socket rooms  
--[ ] Resize view  
+  - [ ] if room - can join again same room  
+
 -[x] Game Over / auto disconnect / Redirect to start-site   
--[ ] if room - can join again same room  
 
 -[ ] Canvas Resize  
+
 -[x] Combo rewards  
   - [x] immortal-styling  
-  - [x] immortal   / not fully tested 🤔
+  - [ - ] immortal / not fully tested 🤔  
+  - [x] immortal / against destroyer  
   - [x] destroyer-styling  
-  - [ ] destroyer  
+  - [x] destroyer  
   - [x] friend-styling  
-  - [ ] friend  
+  - [ - ] friend / failed on friend-combo 😞
+
+-[ ] multiple appleBites  
+
+-[ ] appleBites bite animation  
 
 -[ ] Different appleBites  
   - [ ] 1x points  

@@ -37,8 +37,8 @@ export default class Snake {
   private comboTitle: HTMLElement;
   private comboFX: string;
   private timer: () => {};
-  private setComboFX: () => {};
-  private setComboStyle: () => {};
+  private setComboFX: (...args: any) => {};
+  private setComboStyle: (...args: any) => {};
   private immortal: boolean = false;
 
   // public //
@@ -136,7 +136,7 @@ export default class Snake {
           this.snakeEnemies.add(snl);
         }
       });
-      // console.log("new enemy - ", this.snakeEnemies);
+      // console.log('new enemy - ', this.snakeEnemies);
     });
 
     this.socket.on("enemyDirection", data => {
@@ -146,6 +146,8 @@ export default class Snake {
         }
       });
     });
+
+    // this.socket.on("comboFX-friend", ({ combo, id }) => {});
 
     this.socket.on("snakeTick", enemy => {
       let newEnemy = enemy.snake;
@@ -171,12 +173,8 @@ export default class Snake {
     this.socket.on("user disconnected", enemyID => {
       console.log("someone has gone ", enemyID);
       this.snakeEnemies.forEach(enemy => {
-        // console.log(enemy[0].enemyId, enemyID);
         if (enemy[0].enemyId === enemyID) {
-          // console.log(enemy[0].enemyId === enemyID);
-          // console.log(enemy);
           this.snakeEnemies.delete(enemy);
-          // console.log(this.snakeEnemies);
         }
       });
       console.log(this.snakeEnemies);
@@ -194,6 +192,7 @@ export default class Snake {
   }
   start() {
     this.setApple(); // SET APPLE
+
     window.addEventListener("keydown", e => this.keyDown(e));
     window.setTimeout(() => {
       this.tick(), this.speed;
@@ -251,6 +250,7 @@ export default class Snake {
       const s = this.snake[i];
       let snakeLength = this.snake.length;
       this.setComboStyle(s.comboFX, s, snakeLength);
+      // this.setComboFX(this.snake);
     }
     ///////////////
 
@@ -269,6 +269,7 @@ export default class Snake {
         //** Todo : enemy tail logic
 
         this.speed *= 0.99;
+
         this.setApple();
         // const c = document.createElement('i');
         // console.log('PLAYER GOT APPLE', this.snake[i]);
@@ -396,6 +397,7 @@ export default class Snake {
         this.comboTitle.innerText = "combo";
         this.comboFX = null;
         this.snake[0].comboFX = this.comboFX;
+        this.immortal = false;
         clearTimeout(this.timer);
       }, 20000);
     }
@@ -409,7 +411,8 @@ export default class Snake {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
 
-    this.setApple();
+    this.setApple(); // SET APPLE
+
     this.draw();
   }
   getRandomDirection() {
@@ -464,13 +467,28 @@ export default class Snake {
       case "immortal":
         this.immortal = true;
         break;
-      case "friend":
-        break;
+      // case "friend":
+      // this.snakeEnemies.forEach((enemy, k, set) => {
+      // // const s = enemy;
+      // console.log(set);
+      // if (enemy.length > 1) {
+      // for (let j = 0; j < enemy.length; j += 1) {
+      // if (snake[0].x === enemy[j].x && snake[0].y === enemy[j].y) {
+      // console.log(enemy[0].enemyId);
+      // let id = enemy[0].enemyId;
+      // this.socket.emit("comboFX-friend", { combo: "immortal", id });
+      // }
+      // }
+      // }
+      // }
+      // });
+      // console.log(this.snakeEnemies);
+      // break;
       default:
         this.immortal = false;
     }
   }
-  setComboStyle(comboFX, s, i) {
+  setComboStyle(comboFX: string, s: any, i: number) {
     switch (comboFX) {
       case "destroyer":
         this.context.shadowBlur = 8;
@@ -483,18 +501,19 @@ export default class Snake {
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
         break;
-      case "friend":
-        this.context.shadowBlur = 8;
-        this.context.shadowColor = "white";
-        this.context.shadowOffsetX = 0;
-        this.context.shadowOffsetY = 0;
-        this.context.lineWidth = 2;
-        this.context.strokeStyle = "white";
-        this.context.strokeRect(s.x, s.y, this.size, this.size);
-        this.context.fillStyle = s.color;
-        this.context.fillRect(s.x, s.y, this.size, this.size);
-        break;
+      // case "friend":
+      // this.context.shadowBlur = 8;
+      // this.context.shadowColor = "white";
+      // this.context.shadowOffsetX = 0;
+      // this.context.shadowOffsetY = 0;
+      // this.context.lineWidth = 2;
+      // this.context.strokeStyle = "white";
+      // this.context.strokeRect(s.x, s.y, this.size, this.size);
+      // this.context.fillStyle = s.color;
+      // this.context.fillRect(s.x, s.y, this.size, this.size);
+      // break;
       case "immortal":
+        console.log(comboFX);
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
         this.context.stroke();
@@ -517,6 +536,7 @@ export default class Snake {
   comboActivateEffect() {
     // let comboEffect = ["immortal", "destroyer", "friend"];
     let comboEffect = ["immortal", "destroyer"];
+    // let comboEffect = ["friend"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;

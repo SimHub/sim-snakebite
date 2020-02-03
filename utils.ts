@@ -5,6 +5,6 @@ const pupWlnIp = "192.168.2.101";
 module.exports = {
   http: "http://",
   https: "https://",
-  ip: pupEanIp,
+  ip: locIp,
   port: "3000"
 };

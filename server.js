@@ -55,6 +55,9 @@ function onConnection(socket) {
     // console.log("ENEMY-DIRECTION-SERVER ", direction);
     socket.broadcast.emit("enemyDirection", direction);
   });
+  socket.on("comboFX-friend", enemy => {
+    io.emit("comboFX-friend", enemy);
+  });
   socket.on("apple", apple => {
     // console.log("APPLE: ", apple);
     io.emit("apple", apple);
