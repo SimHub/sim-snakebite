@@ -223,7 +223,6 @@ export default class Snake {
       this.size - 2.7,
       this.size - 2.7
     );
-    /////////
 
     ///SPECIAL BITE//////
     this.context.fillStyle = "white";
@@ -250,6 +249,7 @@ export default class Snake {
       const s = this.snake[i];
       let snakeLength = this.snake.length;
       this.setComboStyle(s.comboFX, s, snakeLength);
+
       // this.setComboFX(this.snake);
     }
     ///////////////
@@ -513,7 +513,7 @@ export default class Snake {
       // this.context.fillRect(s.x, s.y, this.size, this.size);
       // break;
       case "immortal":
-        console.log(comboFX);
+        // console.log(comboFX);
         this.context.fillStyle = s.color;
         this.context.fillRect(s.x, s.y, this.size, this.size);
         this.context.stroke();
@@ -535,8 +535,8 @@ export default class Snake {
   }
   comboActivateEffect() {
     // let comboEffect = ["immortal", "destroyer", "friend"];
-    let comboEffect = ["immortal", "destroyer"];
-    // let comboEffect = ["friend"];
+    // let comboEffect = ["immortal", "destroyer"];
+    let comboEffect = ["friend"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;

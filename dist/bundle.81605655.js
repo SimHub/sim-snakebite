@@ -482,8 +482,7 @@ function () {
 
       this.context.fillStyle = "red";
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
-      this.context.clearRect(this.apple.x + 1.4, this.apple.y + 1.4, this.size - 2.7, this.size - 2.7); /////////
-      ///SPECIAL BITE//////
+      this.context.clearRect(this.apple.x + 1.4, this.apple.y + 1.4, this.size - 2.7, this.size - 2.7); ///SPECIAL BITE//////
 
       this.context.fillStyle = "white";
       this.context.shadowBlur = 50;
@@ -786,7 +785,7 @@ function () {
         // break;
 
         case "immortal":
-          console.log(comboFX);
+          // console.log(comboFX);
           this.context.fillStyle = s.color;
           this.context.fillRect(s.x, s.y, this.size, this.size);
           this.context.stroke();
@@ -813,8 +812,8 @@ function () {
     key: "comboActivateEffect",
     value: function comboActivateEffect() {
       // let comboEffect = ["immortal", "destroyer", "friend"];
-      var comboEffect = ["immortal", "destroyer"]; // let comboEffect = ["friend"];
-
+      // let comboEffect = ["immortal", "destroyer"];
+      var comboEffect = ["friend"];
       var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
       this.comboFX = randFx;
     }
