@@ -1,4 +1,5 @@
 import SnakePlayer from "./snake";
+import GFX from "./gameEffects";
 interface snakeProps {
   cnt: HTMLElement;
   cnv: HTMLCanvasElement;
@@ -40,8 +41,9 @@ export default class Snake {
   private setComboFX: (...args: any) => {};
   private setComboStyle: (...args: any) => {};
   private immortal: boolean = false;
+  private lastApplePosition: {} = null;
 
-  // public //
+  // PUBLIC //
   public score: number;
   public comboScore: number;
   public isPaused: boolean;
@@ -265,6 +267,9 @@ export default class Snake {
         this.snake[i].y === this.apple.y
       ) {
         this.snake.push({});
+        this.score++;
+        this.lastApplePosition = { x: this.apple.x, y: this.apple.y };
+        GFX.neonTFX(this.score.toString(), this.lastApplePosition);
 
         //** Todo : enemy tail logic
 
@@ -273,7 +278,6 @@ export default class Snake {
         this.setApple();
         // const c = document.createElement('i');
         // console.log('PLAYER GOT APPLE', this.snake[i]);
-        this.score++;
         this.comboScore++;
         this.appleBiteScore();
       }
@@ -324,6 +328,7 @@ export default class Snake {
     window.setTimeout(() => this.tick(), this.speed);
     this.directionLock = false;
   }
+
   joystickControl(newDirection) {
     // console.log("logMobileDir: ", newDirection);
     if (!this.directionLock) {

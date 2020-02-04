@@ -1,9 +1,10 @@
-import "./node_modules/nes.css/css/nes.css";
-import "typeface-press-start-2p";
 import "bulma/css/bulma.css";
 import "bulma-badge/dist/css/bulma-badge.min.css";
 import "bulma-tooltip/dist/css/bulma-tooltip.min.css";
+import "typeface-press-start-2p";
+import "./node_modules/nes.css/css/nes.css";
 import "typeface-orbitron";
+import "./node_modules/animate.css/animate.css";
 // import Swal from "sweetalert2";
 import nipplejs from "nipplejs";
 import "./scss/main.scss";

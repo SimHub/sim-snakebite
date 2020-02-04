@@ -25,6 +25,8 @@
 
 -[ ] appleBites bite animation  
 
+-[x] Score animation  
+
 -[ ] Different appleBites  
   - [ ] 1x points  
   - [ ] 5x points  
