@@ -320,17 +320,17 @@ function () {
 
       _efx.id = "pointFX";
 
-      _efx.classList.add("animated", "bounceOutLeft", "slow"); // _efx.innerText = "+" + score;
-
+      _efx.classList.add("animated", "bounceOutLeft", "slow");
 
       _efx.innerHTML = "<div class=\"neon\">\n            <span class=\"text\" data-text=\"+".concat(score, "\">+").concat(score, "</span>\n            <span class=\"gradient\"></span>\n            <span class=\"spotlight\"></span>\n        </div>"); // _efx.style.color = "red";
 
       _efx.style.position = "absolute";
       _efx.style.left = pos.x + "px";
       _efx.style.top = pos.y + "px";
-      gameBox.appendChild(_efx); // // setTimeout(function() {
-      // // _efx.remove();
-      // // }, 2000);
+      gameBox.appendChild(_efx);
+      setTimeout(function () {
+        _efx.remove();
+      }, 2000);
     }
   }]);
 
@@ -10747,7 +10747,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53152" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49343" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -6,7 +6,6 @@ export default class GFX {
     const _efx = document.createElement("div");
     _efx.id = "pointFX";
     _efx.classList.add("animated", "bounceOutLeft", "slow");
-    // _efx.innerText = "+" + score;
     _efx.innerHTML = `<div class="neon">
             <span class="text" data-text="+${score}">+${score}</span>
             <span class="gradient"></span>
@@ -18,8 +17,8 @@ export default class GFX {
     _efx.style.top = pos.y + "px";
     gameBox.appendChild(_efx);
 
-    // // setTimeout(function() {
-    // // _efx.remove();
-    // // }, 2000);
+    setTimeout(function() {
+      _efx.remove();
+    }, 2000);
   }
 }
