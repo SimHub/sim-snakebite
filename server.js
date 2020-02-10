@@ -91,8 +91,8 @@ function onConnection(socket) {
     let disconnectClientID = socket.client.id.substring(0, 5);
     count = 0;
     socket.broadcast.emit("user disconnected", disconnectClientID);
-    console.log("disconnect ", socket.client.id);
-    console.log("disconnect ", disconnectClientID);
+    // console.log("disconnect ", socket.client.id);
+    // console.log("disconnect ", disconnectClientID);
     // console.log(setEnemyId.filter(i => i != socket.client.id));
     // setEnemyId.filter(i => i != socket.client.id);
 

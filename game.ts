@@ -13,30 +13,30 @@ export default class Snake {
   private trophy: HTMLElement;
   private direction: string;
   // private enemyDirection: string;
-  private directionLock: boolean;
+  private directionLock: boolean = false;
   private xEnd: number;
   private yEnd: number;
-  private clientId: string;
+  private clientId: string = null;
   // private enemyId: [] | string;
   private posX: number;
   private posY: number;
   // private snl: any;
-  private FPS: number;
+  private FPS: number = 60;
   private snake: any;
   private snakeColor: string;
-  private newEnemyIDs: [];
-  private enemyColors: [];
-  private snakeEnemies: any;
+  private newEnemyIDs: [] = [];
+  private enemyColors: [] = [];
+  private snakeEnemies: any = new Set();
   private size: number;
   private appleSize: number;
-  private apple: {};
-  private specialBite: {};
-  private speed: number;
+  private apple: {} = {};
+  private specialBite: {} = {};
+  private speed: number = 200;
   private container: HTMLElement;
   private gradient: object;
-  private combo: HTMLElement;
-  private comboTitle: HTMLElement;
-  private comboFX: string;
+  private combo: HTMLElement = document.querySelector("#combo");
+  private comboTitle: HTMLElement = document.querySelector("#comboTitle");
+  private comboFX: string = null;
   private timer: () => {};
   private setComboFX: (...args: any) => {};
   private setComboStyle: (...args: any) => {};
@@ -44,15 +44,15 @@ export default class Snake {
   private lastApplePosition: {} = null;
 
   // PUBLIC //
-  public score: number;
-  public comboScore: number;
-  public isPaused: boolean;
+  public score: number = 0;
+  public comboScore: number = 0;
+  public isPaused: boolean = false;
 
   constructor(sn: snakeProps) {
     // console.log(sn);
-    this.combo = document.querySelector("#combo");
-    this.comboTitle = document.querySelector("#comboTitle");
-    this.comboFX = null;
+    // this.combo = document.querySelector("#combo");
+    // this.comboTitle = document.querySelector("#comboTitle");
+    // this.comboFX = null;
 
     this.socket = sn.io;
     this.trophy = sn.trophy;
@@ -71,13 +71,13 @@ export default class Snake {
     // console.log(this.size);
     // console.log(this.socket);
 
-    this.FPS = 60;
-    this.score = 0;
-    this.comboScore = 0;
-    this.isPaused = false;
-    this.clientId = null;
+    // this.FPS = 60;
+    // this.score = 0;
+    // this.comboScore = 0;
+    // this.isPaused = false;
+    // this.clientId = null;
     // this.enemyId = null;
-    this.directionLock = false;
+    // this.directionLock = false;
     this.direction = this.getRandomDirection();
     // this.posX = Math.floor(Math.random() * this.canvas.width);
     // this.posY = Math.floor(Math.random() * this.canvas.height);
@@ -89,7 +89,7 @@ export default class Snake {
       Math.round(
         this.random(this.size, this.canvas.height - this.size) / this.size
       ) * this.size;
-    this.enemyColors = [];
+    // this.enemyColors = [];
     this.snakeColor = this.getRandomColor();
     this.snake = new SnakePlayer(
       this.posX,
@@ -104,13 +104,14 @@ export default class Snake {
       this.enemyColors = colors;
     });
     // console.log(this.snake[0].color);
-    this.snakeEnemies = new Set();
-    this.apple = {};
-    this.specialBite = {};
+    // this.snakeEnemies = new Set();
+    // this.apple = {};
+    // this.specialBite = {};
     // this.enemyDirection = "left";
-    this.speed = 200;
-    this.newEnemyIDs = [];
-    this.enemyChange = false;
+    // this.speed = 200;
+    // this.newEnemyIDs = [];
+    //
+    // this.enemyChange = false;
 
     /// socket con ///
     this.socket.on("clientId", id => {

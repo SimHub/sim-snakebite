@@ -1,35 +1,38 @@
 ## SNAKE GAME TODO-LIST
 
--[ ] Snake class modular  
+-[x] Snake class modular  
+  - [x] gameEffects.ts   
 
 -[x] Start Page  
   - [ ] Styling - Start Page  
 
 -[ ] Socket rooms  
-  - [ ] if room - can join again same room  
 
--[x] Game Over / auto disconnect / Redirect to start-site   
+-[x] Game Over  
+  - [ ] auto disconnect  
+  - [ ] Redirect to start-site   
+  - [ ] if room - can join again same room  
 
 -[ ] Canvas Resize  
 
 -[x] Combo rewards  
   - [x] immortal-styling  
   - [ - ] immortal / not fully tested 🤔  
-  - [x] immortal / against destroyer  
+  - [x] immortal against destroyer  
   - [x] destroyer-styling  
   - [x] destroyer  
-  - [x] friend-styling  
-  - [ - ] friend / failed on friend-combo 😞
+  - [ - ] friend / failed on friend-combo 😞  
+      - [x] friend-styling  
 
--[ ] multiple appleBites  
+-[ ] Multiple appleBites  
 
--[ ] appleBites bite animation  
+-[x] AppleBites bite animation  
 
 -[x] Score animation  
 
--[ ] Different appleBites  
-  - [ ] 1x points  
-  - [ ] 5x points  
-  - [ ] 15x points  
-  - [ ] 25x comboPoints  
+-[x] Different appleBites  
+  - [x] 1x points - color: "red"  
+  - [ ] 5x points - color: ""  
+  - [ ] 15x points - color: ""  
+  - [ ] 25x comboPoints - color: ""  
 

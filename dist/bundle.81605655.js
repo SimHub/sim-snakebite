@@ -377,12 +377,30 @@ function () {
 
     _classCallCheck(this, Snake);
 
-    this.immortal = false;
-    this.lastApplePosition = null; // console.log(sn);
+    // console.log(sn);
+    // this.combo = document.querySelector("#combo");
+    // this.comboTitle = document.querySelector("#comboTitle");
+    // this.comboFX = null;
+    // private enemyDirection: string;
+    this.directionLock = false;
+    this.clientId = null; // private snl: any;
 
+    this.FPS = 60;
+    this.newEnemyIDs = [];
+    this.enemyColors = [];
+    this.snakeEnemies = new Set();
+    this.apple = {};
+    this.specialBite = {};
+    this.speed = 200;
     this.combo = document.querySelector("#combo");
     this.comboTitle = document.querySelector("#comboTitle");
     this.comboFX = null;
+    this.immortal = false;
+    this.lastApplePosition = null; // PUBLIC //
+
+    this.score = 0;
+    this.comboScore = 0;
+    this.isPaused = false;
     this.socket = sn.io;
     this.trophy = sn.trophy;
     this.container = sn.cnt;
@@ -396,34 +414,35 @@ function () {
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
     this.yEnd = Math.round(this.canvas.height / this.size) * this.size; // console.log(this.size);
     // console.log(this.socket);
+    // this.FPS = 60;
+    // this.score = 0;
+    // this.comboScore = 0;
+    // this.isPaused = false;
+    // this.clientId = null;
+    // this.enemyId = null;
+    // this.directionLock = false;
 
-    this.FPS = 60;
-    this.score = 0;
-    this.comboScore = 0;
-    this.isPaused = false;
-    this.clientId = null; // this.enemyId = null;
-
-    this.directionLock = false;
     this.direction = this.getRandomDirection(); // this.posX = Math.floor(Math.random() * this.canvas.width);
     // this.posY = Math.floor(Math.random() * this.canvas.height);
 
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
-    this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
-    this.enemyColors = [];
+    this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size; // this.enemyColors = [];
+
     this.snakeColor = this.getRandomColor();
     this.snake = new snake_1.default(this.posX, this.posY, null, this.snakeColor, this.comboFX, this.direction).snake();
     this.socket.emit("snakeColor", this.snake[0].color);
     this.socket.on("snakeColor", function (colors) {
       _this.enemyColors = colors;
     }); // console.log(this.snake[0].color);
-
-    this.snakeEnemies = new Set();
-    this.apple = {};
-    this.specialBite = {}; // this.enemyDirection = "left";
-
-    this.speed = 200;
-    this.newEnemyIDs = [];
-    this.enemyChange = false; /// socket con ///
+    // this.snakeEnemies = new Set();
+    // this.apple = {};
+    // this.specialBite = {};
+    // this.enemyDirection = "left";
+    // this.speed = 200;
+    // this.newEnemyIDs = [];
+    //
+    // this.enemyChange = false;
+    /// socket con ///
 
     this.socket.on("clientId", function (id) {
       _this.clientId = id;
@@ -10747,7 +10766,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49537" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49153" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
