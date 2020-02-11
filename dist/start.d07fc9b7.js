@@ -210,6 +210,29 @@ var _utils = _interopRequireDefault(require("./utils"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var startBtn = document.querySelector("#start");
+var createRoom = document.querySelector("#createRoom");
+var newRandomCode = document.querySelector("#newRandomCode");
+createRoom.addEventListener("click", function (e) {
+  e.preventDefault();
+  var random = randCode(20);
+  newRandomCode.value = random; //toBeVeryfied.text(random);
+
+  newRandomCode.value = random;
+  startBtn.setAttribute("href", "/" + random);
+});
+
+function randCode(length) {
+  var code = "";
+  var rand = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < length; i++) {
+    code += rand.charAt(Math.floor(Math.random() * rand.length));
+  }
+
+  return code;
+} ///// START GAME ////
+
+
 startBtn.addEventListener("click", function () {
   location.assign("".concat(_utils.default.http).concat(_utils.default.ip, ":").concat(_utils.default.port, "/game.html")); // location.reload(true);
 });
@@ -241,7 +264,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49153" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55513" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

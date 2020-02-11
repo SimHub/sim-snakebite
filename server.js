@@ -4,11 +4,10 @@ const http = require("http").Server(app);
 const socketIO = require("socket.io");
 const IP = require("./utils.ts");
 const port = process.env.PORT || IP.port;
-const server = express()
-  .use(express.static("dist"))
-  .listen(IP.port, IP.ip, () => {
-    console.log("Listening on " + IP.ip + ":" + port);
-  });
+// const server = express()
+const server = app.use(express.static("dist")).listen(IP.port, IP.ip, () => {
+  console.log("Listening on " + IP.ip + ":" + port);
+});
 const io = socketIO(server);
 //let setEnemyId = new Map();
 let setEnemyId = [];
@@ -17,8 +16,26 @@ let clientIDs;
 let count = 0;
 let snakeArr = [];
 let enemyColors = [];
+let rooms = {};
+
+app.get("/", function(req, res) {
+  res.sendFile("dist/", { root: __dirname });
+  console.log(res, req);
+});
+
+app.get("/:id", function(req, res) {
+  let r = req.params.id;
+  if (r.includes("game.html")) {
+    Array.from(r).splice(0, 8);
+  }
+  console.log(r);
+  rooms = { room: r };
+  res.sendFile("dist/game.html", { root: __dirname });
+  console.log(rooms);
+});
 
 function onConnection(socket) {
+  socket.join(rooms.room);
   clientID = socket.client.id.substring(0, 5);
   console.log("Connect ", socket.client.id);
   console.log("Connect ", clientID);
@@ -30,7 +47,7 @@ function onConnection(socket) {
 
   socket.on("init", msg => {
     socket.emit("init", msg);
-    socket.emit("clientId", clientID);
+    socket.emit("clientId", { id: clientID, room: rooms.room });
     socket.on("enemyId", msg => {
       snakeArr.push(msg);
       console.log("AllIDS:", snakeArr);

@@ -249,12 +249,13 @@ Object.defineProperty(exports, "__esModule", {
 var SnakePlayer =
 /*#__PURE__*/
 function () {
-  function SnakePlayer(posX, posY, id, color, comboFX, direction) {
+  function SnakePlayer(posX, posY, id, room, color, comboFX, direction) {
     _classCallCheck(this, SnakePlayer);
 
     this.x = posX;
     this.y = posY;
     this.id = id;
+    this.room = room;
     this.color = color;
     this.comboFX = comboFX;
     this.direction = direction;
@@ -267,6 +268,7 @@ function () {
         x: this.x,
         y: this.y,
         enemyId: this.id,
+        room: this.room,
         color: this.color,
         comboFX: this.comboFX,
         direction: this.direction
@@ -279,6 +281,7 @@ function () {
         x: this.x,
         y: this.y,
         id: this.id,
+        room: this.room,
         color: this.color,
         comboFX: this.comboFX,
         direction: this.direction
@@ -377,13 +380,10 @@ function () {
 
     _classCallCheck(this, Snake);
 
-    // console.log(sn);
-    // this.combo = document.querySelector("#combo");
-    // this.comboTitle = document.querySelector("#comboTitle");
-    // this.comboFX = null;
     // private enemyDirection: string;
     this.directionLock = false;
-    this.clientId = null; // private snl: any;
+    this.clientId = null;
+    this.clientRoom = null; // private snl: any;
 
     this.FPS = 60;
     this.newEnemyIDs = [];
@@ -412,43 +412,27 @@ function () {
     this.size = Math.round(this.canvas.width / 50);
     this.appleSize = Math.round(this.canvas.width / 50);
     this.xEnd = Math.round(this.canvas.width / this.size) * this.size;
-    this.yEnd = Math.round(this.canvas.height / this.size) * this.size; // console.log(this.size);
-    // console.log(this.socket);
-    // this.FPS = 60;
-    // this.score = 0;
-    // this.comboScore = 0;
-    // this.isPaused = false;
-    // this.clientId = null;
-    // this.enemyId = null;
-    // this.directionLock = false;
-
-    this.direction = this.getRandomDirection(); // this.posX = Math.floor(Math.random() * this.canvas.width);
-    // this.posY = Math.floor(Math.random() * this.canvas.height);
-
+    this.yEnd = Math.round(this.canvas.height / this.size) * this.size;
+    this.direction = this.getRandomDirection();
     this.posX = Math.round(this.random(this.size, this.canvas.width - this.size) / this.size) * this.size;
-    this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size; // this.enemyColors = [];
-
+    this.posY = Math.round(this.random(this.size, this.canvas.height - this.size) / this.size) * this.size;
     this.snakeColor = this.getRandomColor();
-    this.snake = new snake_1.default(this.posX, this.posY, null, this.snakeColor, this.comboFX, this.direction).snake();
+    this.snake = new snake_1.default(this.posX, this.posY, null, null, this.snakeColor, this.comboFX, this.direction).snake();
     this.socket.emit("snakeColor", this.snake[0].color);
     this.socket.on("snakeColor", function (colors) {
       _this.enemyColors = colors;
-    }); // console.log(this.snake[0].color);
-    // this.snakeEnemies = new Set();
-    // this.apple = {};
-    // this.specialBite = {};
-    // this.enemyDirection = "left";
-    // this.speed = 200;
-    // this.newEnemyIDs = [];
-    //
-    // this.enemyChange = false;
-    /// socket con ///
+    }); /// socket con ///
 
-    this.socket.on("clientId", function (id) {
-      _this.clientId = id;
+    this.socket.on("clientId", function (client) {
+      console.log(client);
+      _this.clientId = client.id;
+      _this.clientRoom = client.room;
       _this.snake[0].id = _this.clientId;
+      _this.snake[0].room = _this.clientRoom;
 
       _this.socket.emit("enemyId", _this.snake[0]);
+
+      console.log(_this.snake[0]);
     });
     this.socket.on("enemyId", function (id) {
       // console.log(this.snakeColor);
@@ -460,12 +444,13 @@ function () {
       _toConsumableArray(_this.newEnemyIDs).forEach(function (_id) {
         // console.log(_id);
         if (_id.id !== _this.clientId) {
-          var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.color, _id.comboFX, _id.direction).enemySnake();
+          var snl = new snake_1.default(_id.x, _id.y, _id.id, _id.room, _id.color, _id.comboFX, _id.direction).enemySnake();
 
           _this.snakeEnemies.add(snl);
         }
-      }); // console.log('new enemy - ', this.snakeEnemies);
+      });
 
+      console.log("new enemy - ", _this.snakeEnemies);
     });
     this.socket.on("enemyDirection", function (data) {
       _this.snakeEnemies.forEach(function (i, k) {
@@ -10766,7 +10751,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49153" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55513" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
