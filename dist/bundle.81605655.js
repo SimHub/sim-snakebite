@@ -10622,7 +10622,7 @@ var pupWlnIp = "192.168.2.101";
 module.exports = {
   http: "http://",
   https: "https://",
-  ip: locIp,
+  ip: pupWlnIp,
   port: "3000"
 };
 },{}],"bundle.js":[function(require,module,exports) {
@@ -10751,7 +10751,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56351" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57914" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
