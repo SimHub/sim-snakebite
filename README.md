@@ -13,15 +13,15 @@
 
 ## USAGE   
 
-
+<video src="/setup1.mp4" width="600"></video>
 
 ### SNAKE GAME TODO-LIST  
 ------------------------------
--[ ] Canvas Resize  
 -[x] Combo rewards  
   - [ - ] immortal / not fully tested 🤔  
   - [ - ] friend / failed on friend-combo 😞  
       - [x] friend-styling  
+-[ ] Canvas Resize  
 -[ ] Multiple appleBites  
 -[x] Different appleBites  
   - [x] 1x points - color: "red"  
