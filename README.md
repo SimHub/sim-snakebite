@@ -2,9 +2,11 @@
 
 ### Multiplayer snake game
 
-### JOIN OR INIVITE FRIENDS TO THE GAME  
+## HOW TO PLAY!  
+
+### 1. Invite Friends to join the Game
 
 <img src="/snake_join.jpg" alt="snake jpg" width="420" >  
 
-### PLAY WITH FRIENDS!  😃 🕹 🎮
+### 2. Play with Friends! 😃 🕹 🎮
 <img src="/snake_low.gif" alt="snake gif">  
