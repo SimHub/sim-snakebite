@@ -12199,13 +12199,10 @@ var define;
         module.hot.accept(reloadCSS);
       
 },{"./files/orbitron-latin-400.woff2":[["orbitron-latin-400.4e3b75ca.woff2","node_modules/typeface-orbitron/files/orbitron-latin-400.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-400.woff2"],"./files/orbitron-latin-400.woff":[["orbitron-latin-400.d703e557.woff","node_modules/typeface-orbitron/files/orbitron-latin-400.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-400.woff"],"./files/orbitron-latin-500.woff2":[["orbitron-latin-500.9c014073.woff2","node_modules/typeface-orbitron/files/orbitron-latin-500.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-500.woff2"],"./files/orbitron-latin-500.woff":[["orbitron-latin-500.92053d70.woff","node_modules/typeface-orbitron/files/orbitron-latin-500.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-500.woff"],"./files/orbitron-latin-600.woff2":[["orbitron-latin-600.6494b23f.woff2","node_modules/typeface-orbitron/files/orbitron-latin-600.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-600.woff2"],"./files/orbitron-latin-600.woff":[["orbitron-latin-600.5066270e.woff","node_modules/typeface-orbitron/files/orbitron-latin-600.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-600.woff"],"./files/orbitron-latin-700.woff2":[["orbitron-latin-700.8e7f6707.woff2","node_modules/typeface-orbitron/files/orbitron-latin-700.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-700.woff2"],"./files/orbitron-latin-700.woff":[["orbitron-latin-700.2375d0a5.woff","node_modules/typeface-orbitron/files/orbitron-latin-700.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-700.woff"],"./files/orbitron-latin-800.woff2":[["orbitron-latin-800.cc7130a4.woff2","node_modules/typeface-orbitron/files/orbitron-latin-800.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-800.woff2"],"./files/orbitron-latin-800.woff":[["orbitron-latin-800.428fb449.woff","node_modules/typeface-orbitron/files/orbitron-latin-800.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-800.woff"],"./files/orbitron-latin-900.woff2":[["orbitron-latin-900.70c306d0.woff2","node_modules/typeface-orbitron/files/orbitron-latin-900.woff2"],"node_modules/typeface-orbitron/files/orbitron-latin-900.woff2"],"./files/orbitron-latin-900.woff":[["orbitron-latin-900.55fdb5b3.woff","node_modules/typeface-orbitron/files/orbitron-latin-900.woff"],"node_modules/typeface-orbitron/files/orbitron-latin-900.woff"],"_css_loader":"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"utils.ts":[function(require,module,exports) {
-var locIp = "localhost";
-var pupEanIp = "192.168.2.104";
-var pupWlnIp = "192.168.2.101";
 module.exports = {
   http: "http://",
   https: "https://",
-  ip: pupWlnIp,
+  ip: "localhost",
   port: "3000"
 };
 },{}],"start.js":[function(require,module,exports) {
@@ -12353,7 +12350,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61049" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59248" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
