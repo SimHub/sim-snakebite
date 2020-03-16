@@ -13,7 +13,7 @@
 
 ## USAGE   
 
-<video src="/setup1.mp4" width="600"></video>
+![](setup1.mp4)
 
 ### SNAKE GAME TODO-LIST  
 ------------------------------
