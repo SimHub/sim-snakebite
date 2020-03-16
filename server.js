@@ -5,6 +5,7 @@ const socketIO = require("socket.io");
 const IP = require("./utils.ts");
 const port = process.env.PORT || IP.port;
 // const server = express()
+// const server = app.use(express.static("dist")).listen(IP.port, IP.ip, () => {
 const server = app.use(express.static("dist")).listen(IP.port, IP.ip, () => {
   console.log("Listening on " + IP.ip + ":" + port);
 });
