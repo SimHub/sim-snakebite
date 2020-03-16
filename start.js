@@ -4,6 +4,7 @@ import IP from "./utils";
 const startBtn = document.querySelector("#start");
 const createRoom = document.querySelector("#createRoom");
 const newRandomCode = document.querySelector("#newRandomCode");
+const joinRoomCode = document.querySelector("#joinRoomCode");
 
 createRoom.addEventListener("click", function(e) {
   e.preventDefault();
@@ -22,8 +23,18 @@ function randCode(length) {
   return code;
 }
 
-///// START GAME ////
-startBtn.addEventListener("click", () => {
-  location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
+/* ///// START GAME //// */
+startBtn.addEventListener("click", e => {
+  e.preventDefault();
+  // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
+  if (newRandomCode.value) {
+    // console.log(newRandomCode.value);
+    // location.assign(`${IP.http}${IP.ip}:${IP.port}/${newRandomCode.value}`);
+    location.assign(`${IP.http}${IP.ip}:${IP.port}/${newRandomCode.value}
+`);
+  } else {
+    console.log("empty");
+  }
+  // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
   // location.reload(true);
 });

@@ -6,7 +6,9 @@
 -[x] Start Page  
   - [ ] Styling - Start Page  
 
--[ ] Socket rooms  
+-[x] Socket rooms  
+  - [ ] create room  
+  - [ ] join room  
 
 -[x] Game Over  
   - [ ] auto disconnect  

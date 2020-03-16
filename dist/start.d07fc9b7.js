@@ -212,6 +212,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var startBtn = document.querySelector("#start");
 var createRoom = document.querySelector("#createRoom");
 var newRandomCode = document.querySelector("#newRandomCode");
+var joinRoomCode = document.querySelector("#joinRoomCode");
 createRoom.addEventListener("click", function (e) {
   e.preventDefault();
   var random = randCode(20);
@@ -230,11 +231,22 @@ function randCode(length) {
   }
 
   return code;
-} ///// START GAME ////
+}
+/* ///// START GAME //// */
 
 
-startBtn.addEventListener("click", function () {
-  location.assign("".concat(_utils.default.http).concat(_utils.default.ip, ":").concat(_utils.default.port, "/game.html")); // location.reload(true);
+startBtn.addEventListener("click", function (e) {
+  e.preventDefault(); // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
+
+  if (newRandomCode.value) {
+    // console.log(newRandomCode.value);
+    // location.assign(`${IP.http}${IP.ip}:${IP.port}/${newRandomCode.value}`);
+    location.assign("".concat(_utils.default.http).concat(_utils.default.ip, ":").concat(_utils.default.port, "/").concat(newRandomCode.value, "\n"));
+  } else {
+    console.log("empty");
+  } // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
+  // location.reload(true);
+
 });
 },{"bulma/css/bulma.css":"node_modules/bulma/css/bulma.css","./utils":"utils.ts"}],"../../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -264,7 +276,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55513" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54005" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
