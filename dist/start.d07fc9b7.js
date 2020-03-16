@@ -12237,17 +12237,10 @@ var newRandomCode = document.querySelector("#newRandomCode");
 var joinRoom = document.querySelector("#joinRoom");
 var joinRoomCode = document.querySelector("#joinRoomCode");
 var btn = document.querySelector("#btn");
-var codeUrlLength = 20; // createRoom.addEventListener("click", function(e) {
-// e.preventDefault();
-// let random = randCode(20);
-// newRandomCode.value = random;
-// //toBeVeryfied.text(random);
-// newRandomCode.value = random;
-// startBtn.setAttribute("href", "/" + random);
-// });
-
+var codeUrlLength = 20;
 var random = randCode(20);
 newRandomCode.value = random;
+joinRoomCode.innerHTML = " ";
 
 function randCode(length) {
   var code = "";
@@ -12288,6 +12281,10 @@ function listener(event) {
   var target = e.target;
 
   if (target.parentNode.dataset.link === "join") {
+    joinRoomCode.innerHTML = "";
+    joinRoomCode.value = "";
+    joinRoom.setAttribute("disabled", "true");
+    (0, _jquery.default)("#joinCheckIcon").removeClass().addClass("far fa-question-circle custom-icon").css("color", "grey");
     joinRoomCode.addEventListener("input", listener);
   }
 

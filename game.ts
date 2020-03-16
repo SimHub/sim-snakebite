@@ -208,14 +208,14 @@ export default class Snake {
     );
 
     ///SPECIAL BITE//////
-    this.context.fillStyle = "white";
-    this.context.shadowBlur = 50;
-    this.context.fillRect(
-      this.specialBite.x,
-      this.specialBite.y,
-      this.size,
-      this.size
-    );
+    // this.context.fillStyle = "white";
+    // this.context.shadowBlur = 50;
+    // this.context.fillRect(
+    // this.specialBite.x,
+    // this.specialBite.y,
+    // this.size,
+    // this.size
+    // );
     /////////
 
     //  ENEMY /////
@@ -368,8 +368,8 @@ export default class Snake {
   }
   appleBiteScore() {
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
-    if (this.combo.value == 17) {
-      // if (this.combo.value == 8) {
+    // if (this.combo.value == 17) {
+    if (this.combo.value == 100) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
       this.comboScore = 0;
       this.comboActivateEffect();

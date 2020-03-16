@@ -544,10 +544,15 @@ function () {
       this.context.fillStyle = "red";
       this.context.fillRect(this.apple.x, this.apple.y, this.size, this.size);
       this.context.clearRect(this.apple.x + 1.4, this.apple.y + 1.4, this.size - 2.7, this.size - 2.7); ///SPECIAL BITE//////
-
-      this.context.fillStyle = "white";
-      this.context.shadowBlur = 50;
-      this.context.fillRect(this.specialBite.x, this.specialBite.y, this.size, this.size); /////////
+      // this.context.fillStyle = "white";
+      // this.context.shadowBlur = 50;
+      // this.context.fillRect(
+      // this.specialBite.x,
+      // this.specialBite.y,
+      // this.size,
+      // this.size
+      // );
+      /////////
       //  ENEMY /////
 
       this.snakeEnemies.forEach(function (enemy, k) {
@@ -713,10 +718,9 @@ function () {
     value: function appleBiteScore() {
       var _this5 = this;
 
-      this.combo.value = (100 * this.comboScore / 12).toFixed(0);
+      this.combo.value = (100 * this.comboScore / 12).toFixed(0); // if (this.combo.value == 17) {
 
-      if (this.combo.value == 17) {
-        // if (this.combo.value == 8) {
+      if (this.combo.value == 100) {
         this.combo.style.animation = "combo 1s ease-in-out infinite";
         this.comboScore = 0;
         this.comboActivateEffect();
