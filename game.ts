@@ -368,8 +368,8 @@ export default class Snake {
   }
   appleBiteScore() {
     this.combo.value = ((100 * this.comboScore) / 12).toFixed(0);
-    // if (this.combo.value == 17) {
-    if (this.combo.value == 8) {
+    if (this.combo.value == 17) {
+      // if (this.combo.value == 8) {
       this.combo.style.animation = "combo 1s ease-in-out infinite";
       this.comboScore = 0;
       this.comboActivateEffect();
@@ -521,8 +521,8 @@ export default class Snake {
   }
   comboActivateEffect() {
     // let comboEffect = ["immortal", "destroyer", "friend"];
-    // let comboEffect = ["immortal", "destroyer"];
-    let comboEffect = ["friend"];
+    let comboEffect = ["immortal", "destroyer"];
+    // let comboEffect = ["friend"];
 
     var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
     this.comboFX = randFx;

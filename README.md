@@ -1,6 +1,6 @@
 ## SIM-SNAKEBITE  
 
-### Multiplayer snake game
+### Multiplayer snake game - written in Typescript
 
 ## HOW TO PLAY!  
 

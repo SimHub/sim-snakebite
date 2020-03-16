@@ -713,9 +713,10 @@ function () {
     value: function appleBiteScore() {
       var _this5 = this;
 
-      this.combo.value = (100 * this.comboScore / 12).toFixed(0); // if (this.combo.value == 17) {
+      this.combo.value = (100 * this.comboScore / 12).toFixed(0);
 
-      if (this.combo.value == 8) {
+      if (this.combo.value == 17) {
+        // if (this.combo.value == 8) {
         this.combo.style.animation = "combo 1s ease-in-out infinite";
         this.comboScore = 0;
         this.comboActivateEffect();
@@ -878,8 +879,8 @@ function () {
     key: "comboActivateEffect",
     value: function comboActivateEffect() {
       // let comboEffect = ["immortal", "destroyer", "friend"];
-      // let comboEffect = ["immortal", "destroyer"];
-      var comboEffect = ["friend"];
+      var comboEffect = ["immortal", "destroyer"]; // let comboEffect = ["friend"];
+
       var randFx = comboEffect[Math.floor(Math.random() * comboEffect.length)];
       this.comboFX = randFx;
     }
@@ -10751,7 +10752,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50035" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61049" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
