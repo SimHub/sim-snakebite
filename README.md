@@ -2,4 +2,4 @@
 
 ### Multiplayer snake game
 
-<img src="/snake.gif" alt="snake gif">
+<img src="/snake_low.gif" alt="snake gif">
