@@ -36,9 +36,40 @@ function randCode(length) {
   return code;
 }
 
+//// JOIN ROOM ////
+$("#urlCodeLengthInfo").html(codeUrlLength);
+
+function listener(event) {
+  let val = joinRoomCode.value;
+  if (val.length >= codeUrlLength) {
+    joinRoom.removeAttribute("disabled");
+    $("#joinCheckIcon")
+      .removeClass()
+      .addClass("far fa-check-circle custom-icon")
+      .css("color", "green");
+    joinRoom.addEventListener("click", e => {
+      e.preventDefault();
+      if (newRandomCode.value) {
+        location.assign(`${IP.http}${IP.ip}:${IP.port}/${val}
+`);
+      }
+    });
+  } else {
+    console.log("NOOP");
+    joinRoom.setAttribute("disabled", "true");
+    $("#joinCheckIcon")
+      .removeClass()
+      .addClass("far fa-question-circle custom-icon")
+      .css("color", "grey");
+  }
+}
+
 //// TABS ////
 $(".tablinks").on("click", e => {
   let target = e.target;
+  if (target.parentNode.dataset.link === "join") {
+    joinRoomCode.addEventListener("input", listener);
+  }
   $(".tablinks").each((key, item) => {
     $(item).removeClass("is-active");
     $(target)
@@ -76,15 +107,8 @@ function clip(e) {
 /* ///// START GAME //// */
 startBtn.addEventListener("click", e => {
   e.preventDefault();
-  // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
   if (newRandomCode.value) {
-    // console.log(newRandomCode.value);
-    // location.assign(`${IP.http}${IP.ip}:${IP.port}/${newRandomCode.value}`);
     location.assign(`${IP.http}${IP.ip}:${IP.port}/${newRandomCode.value}
 `);
-  } else {
-    console.log("empty");
   }
-  // location.assign(`${IP.http}${IP.ip}:${IP.port}/game.html`);
-  // location.reload(true);
 });

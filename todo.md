@@ -4,11 +4,11 @@
   - [x] gameEffects.ts   
 
 -[x] Start Page  
-  - [ ] Styling - Start Page  
+  - [x] Styling - Start Page  
 
 -[x] Socket rooms  
-  - [ ] create room  
-  - [ ] join room  
+  - [x] create room  
+  - [x] join room  
 
 -[x] Game Over  
   - [ ] auto disconnect  
