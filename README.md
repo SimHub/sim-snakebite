@@ -13,7 +13,11 @@
 
 ## USAGE   
 
-![](setup.gif)
+#### install  
+![:npm install -> :npm run start](setup_low.gif)  
+
+#### development  
+![:npm run dev -> :node server.js](setupDev.gif)  
 
 ### SNAKE GAME TODO-LIST  
 ------------------------------
