@@ -23,7 +23,7 @@
     "express": "^4.17.1",
     "jquery": "^3.4.1",
     "nes.css": "^2.3.0",
-    "nipplejs": "^0.8.4",
+    "nipplejs": "^0.8.5",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "sweetalert2": "^9.10.3",
