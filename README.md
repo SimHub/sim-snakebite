@@ -33,17 +33,17 @@
 
 ## TODO LIST - (feel free to contribute) 
 ------------------------------
--[ ] Join ROOM   
--[ ] Joystick/Gamepad 🕹 🎮 
+- [ ] Join ROOM   
+- [ ] Joystick/Gamepad 🕹 🎮 
 
--[x] COMBOS   
+- [x] COMBOS   
   - [x] Destroyer👊🏽
   - [ - ] immortal / not fully tested 🤔  
   - [ - ] friend / failed on friend-combo 😞  
       - [x] friend-styling  
       - [ ] Canvas Resize 
 
--[x] APPLEBITE  
+- [x] APPLEBITE  
   - [ ] Multiple appleBites  
   - [x] 1x points - color: "red"  
   - [ ] 5x points - color: ""  
