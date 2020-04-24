@@ -31,7 +31,7 @@
     : node server.js // separate terminal  
 
 
-### SNAKE GAME TODO-LIST - (feel free to contribute) 
+## TODO LIST - (feel free to contribute) 
 ------------------------------
 -[ ] Join ROOM   
 -[ ] Joystick/Gamepad 🕹 🎮 
