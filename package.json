@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.1",
-    "@types/node": "^13.9.2",
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "@types/node": "^13.13.2",
     "animate.css": "^3.7.2",
-    "bulma": "^0.8.0",
+    "bulma": "^0.8.2",
     "bulma-badge": "^3.0.1",
     "bulma-divider": "^0.2.0",
     "bulma-tooltip": "^3.0.2",
@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "cssnano": "^4.1.10",
-    "sass": "^1.24.0",
-    "typescript": "^3.7.4"
+    "sass": "^1.26.5",
+    "typescript": "^3.8.3"
   }
 }
