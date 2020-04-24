@@ -1,15 +1,16 @@
 ## SIM-SNAKEBITE  
 
 ### Multiplayer snake game - written in Typescript
+## Play with Friends! 😃 
 
-## HOW TO PLAY!  
 
-### 1. Invite Friends to join the Game
 
-<img src="/snake_join.jpg" alt="snake jpg" width="420" >  
-
-### 2. Play with Friends! 😃 🕹 🎮
 <img src="/snake_low.gif" alt="snake gif">  
+
+## What you need   
+
+  - node js
+  - npm 
 
 ## USAGE   
 
@@ -23,14 +24,12 @@
     : npm install  
     : npm run start  
 
-![:npm install -> :npm run start](setup_low.gif)  
 
 #### development 
 
     : npm run dev  
     : node server.js // separate terminal  
 
-![:npm run dev -> :node server.js](setupDev.gif)  
 
 ### SNAKE GAME TODO-LIST  
 ------------------------------
@@ -39,6 +38,8 @@
   - [ - ] friend / failed on friend-combo 😞  
       - [x] friend-styling  
 -[ ] Canvas Resize  
+-[ ] Join ROOM   
+-[ ] Joystick/Gamepad 🕹 🎮  
 -[ ] Multiple appleBites  
 -[x] Different appleBites  
   - [x] 1x points - color: "red"  

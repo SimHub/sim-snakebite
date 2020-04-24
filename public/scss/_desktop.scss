@@ -1,0 +1,125 @@
+#wrapper {
+  display: grid;
+  grid-template-areas:
+    "navleft navcenter navcenter2 navright"
+    "upleft upcenter upcenter2 upright"
+    "midleft midcenter midcenter2 midright"
+    "btleft btcenter btcenter2 btright"
+    "ftleft ftcenter ftcenter2 ftright";
+  grid-template-rows: 1fr 160px 248px 173px 1fr;
+  grid-template-columns: 1fr 170px 170px 1fr;
+}
+/*******/
+section#dialog {
+  // display:block;
+}
+.snake-title,
+.snake-title2 {
+  display: block;
+  width: 500px;
+  height: 400px;
+  z-index: 0;
+}
+.snake-title {
+  background: url("../img/Snake-game-logo.svg") no-repeat;
+  background-size: contain;
+}
+// .snake-title2 {
+// position: absolute;
+// background: url("../img/Snake-game-logo2.svg") no-repeat;
+// background-size: contain;
+// right: 0;
+// bottom: 0;
+// transform: rotate(180deg);
+// }
+#playerBox {
+  grid-area: midright;
+}
+.date {
+  display: none;
+  grid-area: midright;
+  align-self: center;
+  margin: 15px;
+  font-weight: 200;
+  font-size: 1.5em;
+}
+
+#iconbox {
+  grid-area: ftright;
+  width: 200px;
+  display: flex;
+  justify-content: start;
+  align-items: start;
+  margin-top: -45px;
+  margin-left: 21px;
+  #joystickIcon {
+    // display: none;
+    width: 35px;
+    margin-left: 12px;
+  }
+  #keyboardIcon {
+    // display: none;
+    margin-top: 10px;
+    width: 45px;
+  }
+}
+#cross {
+  display: block;
+  grid-area: ftright;
+  align-self: center;
+}
+#author,
+#inspiredBy {
+  grid-area: ftleft;
+  margin: 23px;
+  font-size: 1em;
+  font-weight: 100;
+}
+#console {
+  grid-area: 2/2 / span 3 / span 2;
+  border: 6px solid #000000;
+  box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+  border-radius: 15px;
+  z-index: 99;
+
+  #gameBox {
+    box-shadow: 81px 134px 94px rgba(0, 0, 0, 0.16);
+    border-radius: 15px;
+  }
+  #gameStats {
+    // grid-area: btcenter2;
+    // align-self: flex-start;
+    // justify-self: baseline;
+    // display: flex;
+    // justify-content: space-evenly;
+    // align-items: center;
+    // width: 100%;
+    // box-sizing: border-box;
+    // text-align: center;
+    // line-height: 35px;
+    // color: white;
+
+    // #enemyStats {
+    // border: 6px solid black;
+    // width: 299px;
+    // height: 61px;
+    // display: -webkit-box;
+    // display: flex;
+    // overflow-x: scroll;
+    // overflow: hidden;
+    // -webkit-overflow-scrolling: touch;
+    // }
+  }
+}
+
+#trophy {
+  font-size: 2.5em;
+}
+
+/********/
+#canvas {
+  // background: black;
+}
+.nes-container {
+  padding: 0;
+}

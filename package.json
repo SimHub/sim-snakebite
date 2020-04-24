@@ -4,9 +4,9 @@
   "description": "",
   "main": "bundle.js",
   "scripts": {
-    "dev": "parcel index.html game.html",
+    "dev": "parcel public/index.html public/game.html",
     "start": "node server.js",
-    "build": "parcel build index.html game.html"
+    "build": "parcel build public/index.html public/game.html"
   },
   "keywords": [],
   "author": "",
@@ -26,7 +26,6 @@
     "nipplejs": "^0.8.5",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "sweetalert2": "^9.10.3",
     "typeface-orbitron": "^1.1.3",
     "typeface-press-start-2p": "0.0.72"
   },
