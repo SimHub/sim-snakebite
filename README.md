@@ -1,6 +1,14 @@
-## SIM-SNAKEBITE  
-
+# SIM-SNAKEBITE  
 ### Multiplayer snake game - written in Typescript
+
+![GitHub
+contributors](https://img.shields.io/github/contributors/simhub/sim-snakebite?style=for-the-badge)
+![GitHub All Releases](https://img.shields.io/github/downloads/simhub/sim-snakebite/total?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/simhub/sim-snakebite?style=for-the-badge)
+![GitHub stars](https://img.shields.io/github/stars/simhub/sim-snakebite?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/simhub/sim-snakebite?style=for-the-badge)
+![GitHub search hit counter](https://img.shields.io/github/search/simhub/sim-snakebite/goto?style=for-the-badge)
+
 ## Play with Friends! 😃 
 
 
