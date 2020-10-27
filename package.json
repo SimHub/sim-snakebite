@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.1",
-    "@types/node": "^13.13.21",
+    "@types/node": "^13.13.23",
     "animate.css": "^3.7.2",
     "bulma": "^0.9.1",
     "bulma-badge": "^3.0.1",
