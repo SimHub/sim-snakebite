@@ -14,6 +14,7 @@
   "dependencies": {
     "@types/node": "^13.13.24",
     "@fortawesome/fontawesome-free": "^5.15.3",
+
     "animate.css": "^3.7.2",
     "bulma": "^0.9.1",
     "bulma-badge": "^3.0.1",
@@ -24,8 +25,9 @@
     "jquery": "^3.5.1",
     "nes.css": "^2.3.0",
     "nipplejs": "^0.8.7",
-    "typeface-orbitron": "^1.1.13",
+
     "socket.io": "^3.0.0",
+    "typeface-orbitron": "^1.1.13",
     "socket.io-client": "^4.0.0",
     "typeface-press-start-2p": "0.0.72"
   },
