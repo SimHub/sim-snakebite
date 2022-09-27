@@ -19,8 +19,10 @@
     "bulma-badge": "^3.0.1",
     "bulma-divider": "^0.2.0",
     "bulma-tooltip": "^3.0.2",
+
+    "express": "^4.17.3",
     "clipboard": "^2.0.10",
-    "express": "^4.17.2",
+
     "jquery": "^3.5.1",
     "nes.css": "^2.3.0",
     "nipplejs": "^0.9.0",
