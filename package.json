@@ -26,8 +26,8 @@
     "jquery": "^3.5.1",
     "nes.css": "^2.3.0",
     "nipplejs": "^0.9.1",
-    "socket.io": "^3.0.0",
-    "socket.io-client": "^4.4.1",
+    "socket.io": "^4.5.2",
+    "socket.io-client": "^4.5.0",
     "typeface-orbitron": "^1.1.13",
     "typeface-press-start-2p": "0.0.72"
   },
